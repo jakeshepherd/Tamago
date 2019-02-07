@@ -63,6 +63,7 @@ public class Database extends SQLiteOpenHelper {
      * @param expiryDate
      *      New expiry date
      * @return
+     *      true if update works
      */
     public boolean updateData(String foodNum, String foodName, String expiryDate){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
