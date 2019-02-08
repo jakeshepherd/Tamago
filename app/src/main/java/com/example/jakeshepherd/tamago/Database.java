@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Database extends SQLiteOpenHelper {
 
     // gonna start the primary key as just 1,2,3,4,... for now cos confusing
@@ -97,5 +100,46 @@ public class Database extends SQLiteOpenHelper {
         return sqLiteDatabase.delete(TABLE_NAME, "FOOD_NUMBER = ?", new String[] {id});
     }
 
+    /**
+     * Get specific food name
+     * @return
+     *      String relating to the foodID that was requested
+     */
+    public String getFoodName(int foodID){
+        List<String> list = new ArrayList<>();
+        Cursor res = getAllData();
 
+        if(res.moveToFirst()){
+            while(!res.isAfterLast()){
+                String name = res.getString(res.getColumnIndex("FOOD_NAME"));
+                list.add(name);
+                res.moveToNext();
+            }
+        }
+
+        return list.get(foodID);
+    }
+
+    /**
+     * Get all food stored in database
+     * @return
+     *      ArrayList containing all food in database
+     */
+    public List<String> getAllFoodNames(){
+        List<String> list = new ArrayList<>();
+        Cursor res = getAllData();
+
+        if(res.moveToFirst()){
+            while(!res.isAfterLast()){
+                String name = res.getString(res.getColumnIndex("FOOD_NAME"));
+                list.add(name);
+                res.moveToNext();
+            }
+        }
+
+        return list;
+    }
+
+    //TODO -- getAllFoodCategories, getAllExpiryDates
+    
 }
