@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +32,16 @@ public class MainActivity extends AppCompatActivity {
 
         // just some database testing
         Database db = new Database(this);
-        db.insertData("Egg", "11/11/11");
-        db.insertData("Sausages", "25/11/11");
-        db.insertData("Bacon", "30/11/11");
-        db.insertData("Mushrooms", "12/11/11");
-        db.insertData("Beans", "12/11/13");
+        db.insertData("Egg", "11/11/11", "From Cow");
+        db.insertData("Sausages", "25/11/11", "From Cow");
+        db.insertData("Bacon", "30/11/11", "From pig");
+        db.insertData("Mushrooms", "12/11/11", "From plant");
+        db.insertData("Beans", "12/11/13", "From plant");
+
+        TextView textView = findViewById(R.id.tester);
+        textView.setText(db.getExpiryDate(3));
+
+
     }
 
     @Override
