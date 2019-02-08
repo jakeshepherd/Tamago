@@ -19,7 +19,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String COL_3 = "EXPIRY_DATE";
     private static final String COL_4 = "FOOD_CATEGORY";
 
-
     Database(Context context){
         super(context, DATABASE_NAME, null, 1);
     }
@@ -52,17 +51,6 @@ public class Database extends SQLiteOpenHelper {
     }
 
     /**
-     * Collects all data from database
-     * @return
-     *      Return cursor containing data from database
-     */
-    public Cursor getAllData(){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME;
-        return sqLiteDatabase.rawQuery(query, null);
-    }
-
-    /**
      * Update database, depending on the food number requested
      * @param foodNum
      *      Food to be updated
@@ -87,6 +75,16 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
+    /**
+     * Collects all data from database
+     * @return
+     *      Return cursor containing data from database
+     */
+    public Cursor getAllData(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME;
+        return sqLiteDatabase.rawQuery(query, null);
+    }
 
     /**
      * Remove row of data from the database
@@ -140,6 +138,60 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    //TODO -- getAllFoodCategories, getAllExpiryDates
-    
+    public String getExpiryDate(int foodID){
+        List<String> list = new ArrayList<>();
+        Cursor res = getAllData();
+
+        if(res.moveToFirst()){
+            while(!res.isAfterLast()){
+                String name = res.getString(res.getColumnIndex("EXPIRY_DATE"));
+                list.add(name);
+                res.moveToNext();
+            }
+        }
+
+        return list.get(foodID);
+    }
+    public List<String> getAllExpiryDates(){
+        List<String> list = new ArrayList<>();
+        Cursor res = getAllData();
+
+        if(res.moveToFirst()){
+            while(!res.isAfterLast()){
+                String name = res.getString(res.getColumnIndex("EXPIRY_DATE"));
+                list.add(name);
+                res.moveToNext();
+            }
+        }
+        return list;
+    }
+
+    public String getFoodCategory(int foodID){
+        List<String> list = new ArrayList<>();
+        Cursor res = getAllData();
+
+        if(res.moveToFirst()){
+            while(!res.isAfterLast()){
+                String name = res.getString(res.getColumnIndex("FOOD_CATEGORY"));
+                list.add(name);
+                res.moveToNext();
+            }
+        }
+
+        return list.get(foodID);
+    }
+
+    public List<String> getAllCategories(){
+        List<String> list = new ArrayList<>();
+        Cursor res = getAllData();
+
+        if(res.moveToFirst()){
+            while(!res.isAfterLast()){
+                String name = res.getString(res.getColumnIndex("FOOD_CATEGORY"));
+                list.add(name);
+                res.moveToNext();
+            }
+        }
+        return list;
+    }
 }

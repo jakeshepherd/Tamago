@@ -39,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
         db.insertData("Beans", "12/11/13", "From plant");
 
         TextView textView = findViewById(R.id.tester);
+        textView.setText(db.getExpiryDate(3));
 
-        textView.setText(db.getAllFoodNames());
+
     }
 
     @Override
