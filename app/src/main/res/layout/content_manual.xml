@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/manualentrylayout">
+
+    <ImageView
+        android:id="@+id/cameraImage"
+        android:layout_width="182dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="114dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="115dp"
+        android:layout_marginBottom="489dp"
+        android:contentDescription="@string/a_simple_camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/camera" />
+
+    <TextView
+        android:id="@+id/scanFood"
+        android:layout_width="115dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="223dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginBottom="472dp"
+        android:text="@string/scan_food"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:justificationMode="inter_word" />
+
+    <EditText
+        android:id="@+id/foodItem"
+        android:layout_width="315dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="272dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="357dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/food_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/expirationDate"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="439dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="191dp"
+        android:ems="10"
+        android:inputType="date"
+        android:text="@string/expiration_date_yyyy_mm_dd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/quantity"
+        android:layout_width="313dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="356dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="273dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/quantity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
