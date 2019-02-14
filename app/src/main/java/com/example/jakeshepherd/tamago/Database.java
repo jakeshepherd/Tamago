@@ -64,7 +64,7 @@ public class Database extends SQLiteOpenHelper {
      * @return
      *      true if update works
      */
-    public boolean updateData(String foodNum, String foodName, String expiryDate, String foodCategory, int foodQuantity){
+    public boolean updateData(String foodNum, String foodName, String expiryDate, String foodCategory, int foodAmount){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -72,7 +72,7 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_2, foodName);
         contentValues.put(COL_3, expiryDate);
         contentValues.put(COL_4, foodCategory);
-        contentValues.put(COL_5, foodQuantity);
+        contentValues.put(COL_5, foodAmount);
 
 
         sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[] {foodNum});
