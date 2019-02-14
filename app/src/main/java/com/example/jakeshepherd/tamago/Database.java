@@ -3,9 +3,13 @@ package com.example.jakeshepherd.tamago;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +42,17 @@ public class Database extends SQLiteOpenHelper {
     /**
      * Insert individual data to the database
      */
-    public boolean insertData(String foodName, String expiryDate, String foodCategory){
+
+    public boolean insertDataFromObject(foodItem toAdd){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_2, foodName);
-        contentValues.put(COL_3, expiryDate);
-        contentValues.put(COL_4, foodCategory);
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //String date = sdf.format(toAdd.getExpiryDate());
+
+        contentValues.put(COL_2, toAdd.getFoodName());
+        contentValues.put(COL_3, toAdd.getExpiryDate().toString());
+        contentValues.put(COL_4, toAdd.getFoodCategory());
 
         long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         return result != -1;
@@ -193,5 +201,12 @@ public class Database extends SQLiteOpenHelper {
             }
         }
         return list;
+    }
+
+    public int getNumberOfRows(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
+        db.close();
+        return (int)count;
     }
 }
