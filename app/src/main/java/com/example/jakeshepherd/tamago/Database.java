@@ -18,6 +18,8 @@ public class Database extends SQLiteOpenHelper {
     private static final String COL_2 = "FOOD_NAME";
     private static final String COL_3 = "EXPIRY_DATE";
     private static final String COL_4 = "FOOD_CATEGORY";
+    private static final String COL_5 = "FOOD_QUANTITY";
+
 
     Database(Context context){
         super(context, DATABASE_NAME, null, 1);
@@ -26,7 +28,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, " +
-                "FOOD_CATEGORY TEXT)");
+                "FOOD_CATEGORY TEXT, FOOD_QUANTITY INTEGER)");
     }
 
     @Override
@@ -38,13 +40,14 @@ public class Database extends SQLiteOpenHelper {
     /**
      * Insert individual data to the database
      */
-    public boolean insertData(String foodName, String expiryDate, String foodCategory){
+    public boolean insertData(String foodName, String expiryDate, String foodCategory, int foodQuantity){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_2, foodName);
         contentValues.put(COL_3, expiryDate);
         contentValues.put(COL_4, foodCategory);
+        contentValues.put(COL_5, foodQuantity);
 
         long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         return result != -1;
@@ -61,7 +64,7 @@ public class Database extends SQLiteOpenHelper {
      * @return
      *      true if update works
      */
-    public boolean updateData(String foodNum, String foodName, String expiryDate, String foodCategory){
+    public boolean updateData(String foodNum, String foodName, String expiryDate, String foodCategory, int foodQuantity){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -69,6 +72,8 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_2, foodName);
         contentValues.put(COL_3, expiryDate);
         contentValues.put(COL_4, foodCategory);
+        contentValues.put(COL_5, foodQuantity);
+
 
         sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[] {foodNum});
 
@@ -194,4 +199,22 @@ public class Database extends SQLiteOpenHelper {
         }
         return list;
     }
+
+    public int getFoodQuantity(int foodID){
+        List<Integer> list = new ArrayList<>();
+        Cursor res = getAllData();
+
+        if(res.moveToFirst()){
+            while(!res.isAfterLast()){
+                int quantity = res.getColumnIndex("FOOD_QUANTITY");
+                list.add(quantity);
+                res.moveToNext();
+            }
+        }
+
+        return list.get(foodID);
+
+    }
+
+
 }
