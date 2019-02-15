@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,12 +31,31 @@ public class MainActivity extends AppCompatActivity {
 
 
         // just some database testing
-        Database db = new Database(this);
+        //Database db = new Database(this);
+        Database db2 = new Database (this);
+        /*
         db.insertData("Egg", "11/11/11");
         db.insertData("Sausages", "25/11/11");
         db.insertData("Bacon", "30/11/11");
         db.insertData("Mushrooms", "12/11/11");
         db.insertData("Beans", "12/11/13");
+        */
+
+        //Update object database testing
+        foodItem egg = new foodItem("Egg", "2019-02-11", "From Cow");
+        foodItem sausages = new foodItem("Sausages", "2019-02-12", "From Cow");
+        foodItem bacon = new foodItem("Bacon", "2019-02-15", "From pig");
+        foodItem mushrooms = new foodItem("Mushrooms", "2019-02-19", "From plant");
+        foodItem beans = new foodItem("Beans", "2019-02-18", "From plant");
+
+        db2.insertDataFromObject(egg);
+        db2.insertDataFromObject(sausages);
+        db2.insertDataFromObject(bacon);
+        db2.insertDataFromObject(mushrooms);
+        db2.insertDataFromObject(beans);
+
+        TextView textView = findViewById(R.id.tester);
+        textView.setText(db2.getFoodName(3));
     }
 
     @Override
