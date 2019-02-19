@@ -1,7 +1,6 @@
 package com.example.jakeshepherd.tamago;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +8,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 import android.widget.TextView;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    /* Button insert;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        insert = (Button) findViewById(R.id.insertButton);
+
+        insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Button Test", Toast.LENGTH_LONG).show();//display the text of button1
+            }
+        });
+    } */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,22 +41,16 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "MANUAL FORM SHOULD GO ON THIS BUTTON PRESS", Snackbar.LENGTH_LONG)
+                        //.setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, ManualEntry.class));
             }
         });
 
 
         // just some database testing
-        //Database db = new Database(this);
+
         Database db2 = new Database (this);
-        /*
-        db.insertData("Egg", "11/11/11");
-        db.insertData("Sausages", "25/11/11");
-        db.insertData("Bacon", "30/11/11");
-        db.insertData("Mushrooms", "12/11/11");
-        db.insertData("Beans", "12/11/13");
-        */
 
         //Update object database testing
         foodItem egg = new foodItem("Egg", "2019-02-11", "From Cow");

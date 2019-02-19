@@ -1,5 +1,6 @@
 package com.example.jakeshepherd.tamago;
 
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,7 @@ public class foodItem {
         return foodName;
     }
 
+
     public LocalDate getExpiryDate(){
         return expiryDate;
     }
@@ -35,3 +37,4 @@ public class foodItem {
 
     }
 }
+

@@ -7,7 +7,10 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,19 +46,10 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /*
-    public boolean insertData(String foodName, String expiryDate){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_2, foodName);
-        contentValues.put(COL_3, expiryDate);
-        contentValues.put(COL_4)
-
-        long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-        return result != -1;
-    }
-    */
+    /**
+     * Insert individual data to the database
+     */
 
     public boolean insertDataFromObject(foodItem toAdd){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -178,7 +172,7 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    /*
+    
     public String getFoodCategory(int foodID){
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
@@ -209,29 +203,10 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    */
-
-    public int getFoodQuantity(int foodID){
-        List<Integer> list = new ArrayList<>();
-        Cursor res = getAllData();
-
-        if(res.moveToFirst()){
-            while(!res.isAfterLast()){
-                int quantity = res.getColumnIndex("FOOD_QUANTITY");
-                list.add(quantity);
-                res.moveToNext();
-            }
-        }
-
-        return list.get(foodID);
-
-    }
-
     public int getNumberOfRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
         db.close();
         return (int)count;
     }
-
 }
