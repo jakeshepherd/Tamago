@@ -49,25 +49,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         // just some database testing
-        /* Database db = new Database(this);
+
+        Database db2 = new Database (this);
 
         //Update object database testing
-        foodItem egg = new foodItem("Egg", "2019-02-11", "From Cow", 2, "Eggs");
-        foodItem sausages = new foodItem("Sausages", "2019-02-12", "From Cow", 6, "Sausages");
-        foodItem bacon = new foodItem("Bacon", "2019-02-15", "From pig", 8, "Rashers");
-        foodItem mushrooms = new foodItem("Mushrooms", "2019-02-19", "From plant", 10, "Shrooms");
-        foodItem beans = new foodItem("Beans", "2019-02-18", "From plant", 100, "Grams");
+        foodItem egg = new foodItem("Egg", "2019-02-11", "From Cow");
+        foodItem sausages = new foodItem("Sausages", "2019-02-12", "From Cow");
+        foodItem bacon = new foodItem("Bacon", "2019-02-15", "From pig");
+        foodItem mushrooms = new foodItem("Mushrooms", "2019-02-19", "From plant");
+        foodItem beans = new foodItem("Beans", "2019-02-18", "From plant");
 
-        db.insertDataFromObject(egg);
-        db.insertDataFromObject(sausages);
-        db.insertDataFromObject(bacon);
-        db.insertDataFromObject(mushrooms);
-        db.insertDataFromObject(beans);
+        db2.insertDataFromObject(egg);
+        db2.insertDataFromObject(sausages);
+        db2.insertDataFromObject(bacon);
+        db2.insertDataFromObject(mushrooms);
+        db2.insertDataFromObject(beans);
 
         TextView textView = findViewById(R.id.tester);
-        textView.setText(db.getFoodName(5)); */
-
-
+        textView.setText(db2.getFoodName(3));
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -21,16 +22,22 @@ public class Database extends SQLiteOpenHelper {
     private static final String COL_1 = "FOOD_NUMBER";
     private static final String COL_2 = "FOOD_NAME";
     private static final String COL_3 = "EXPIRY_DATE";
-    private static final String COL_4 = "FOOD_CATEGORY";
+
+    //Commenting out all foodCategory lines
+    //private static final String COL_4 = "FOOD_CATEGORY";
+
 
     Database(Context context){
         super(context, DATABASE_NAME, null, 1);
     }
 
-    @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, " +
-                "FOOD_CATEGORY TEXT)");
+        db.execSQL("drop table  " + TABLE_NAME);
+
+        //This line works
+        db.execSQL("create table " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT)");
+        //This line doesn't (but is what we need to!)
+        //db.execSQL("create table " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, FOOD_CATEGORY)");
     }
 
     @Override
@@ -38,6 +45,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
 
     /**
      * Insert individual data to the database
@@ -47,41 +55,13 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //String date = sdf.format(toAdd.getExpiryDate());
-
         contentValues.put(COL_2, toAdd.getFoodName());
-        contentValues.put(COL_3, toAdd.getExpiryDate());
-        //.toString());
-        contentValues.put(COL_4, toAdd.getFoodCategory());
+        contentValues.put(COL_3, toAdd.getExpiryDate().toString());
+
+        //contentValues.put(COL_4, toAdd.getFoodCategory());
 
         long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         return result != -1;
-    }
-
-    /**
-     * Update database, depending on the food number requested
-     * @param foodNum
-     *      Food to be updated
-     * @param foodName
-     *      New food name
-     * @param expiryDate
-     *      New expiry date
-     * @return
-     *      true if update works
-     */
-    public boolean updateData(String foodNum, String foodName, String expiryDate, String foodCategory){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(COL_1, foodNum);
-        contentValues.put(COL_2, foodName);
-        contentValues.put(COL_3, expiryDate);
-        contentValues.put(COL_4, foodCategory);
-
-        sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[] {foodNum});
-
-        return true;
     }
 
     /**
@@ -96,15 +76,32 @@ public class Database extends SQLiteOpenHelper {
     }
 
     /**
-     * Remove row of data from the database
-     * @param id
-     *      id identifies the row (or primary key)
+     * Update database, depending on the food number requested
+     * @param foodNum
+     *      Food to be updated
+     * @param toUpdate
+     *       Item to be updated
      * @return
-     *      updated table with deleted row
+     *      true if update works
      */
+    public boolean updateData(String foodNum, foodItem toUpdate){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_1, foodNum);
+        contentValues.put(COL_2, toUpdate.getFoodName());
+        contentValues.put(COL_3, toUpdate.getExpiryDate().toString());
+
+        //contentValues.put(COL_4, toUpdate.getFoodCategory();
+
+        sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[] {foodNum});
+
+        return true;
+    }
+
     public Integer deleteRowData(String id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        return sqLiteDatabase.delete(TABLE_NAME, "FOOD_NUMBER = ?", new String[] {id});
+        return sqLiteDatabase.delete(TABLE_NAME, "BILL_NUMBER = ?", new String[] {id});
     }
 
     /**
@@ -175,6 +172,7 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
+    
     public String getFoodCategory(int foodID){
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
@@ -189,6 +187,7 @@ public class Database extends SQLiteOpenHelper {
 
         return list.get(foodID);
     }
+
 
     public List<String> getAllCategories(){
         List<String> list = new ArrayList<>();
