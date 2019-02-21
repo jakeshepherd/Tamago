@@ -8,4 +8,17 @@
     tools:context=".ShoppingListView"
     tools:showIn="@layout/activity_shopping_list_view">
 
+    <TextView
+        android:id="@+id/Tester"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginBottom="420dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

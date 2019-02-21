@@ -17,7 +17,7 @@ public class ShoppingList {
         shoppingListItems.add(toAdd);
     }
 
-    public ArrayList<foodItem> viewShoppingList(){
+    public ArrayList<foodItem> getShoppingList(){
         return shoppingListItems;
     }
 }
