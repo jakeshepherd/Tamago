@@ -21,8 +21,11 @@
         </activity>
         <activity
             android:name=".ManualEntry"
-            android:label="Manual Entry">
-        </activity>
+            android:label="Manual Entry"></activity>
+        <activity
+            android:name=".ShoppingListView"
+            android:label="@string/title_activity_shopping_list_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ public class foodItem {
     private String foodName;
     private LocalDate expiryDate;
     private String foodCategory;
+    private int quantity;
 
     public foodItem(String newFoodName, String newExpiryDate, String newFoodCategory){
         foodName = newFoodName;
@@ -16,6 +17,11 @@ public class foodItem {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         expiryDate = LocalDate.parse(newExpiryDate, formatter);
+    }
+
+    public foodItem(String newFoodName, int newQuantity){
+        foodName = newFoodName;
+        quantity = newQuantity;
     }
 
     public String getFoodName(){
