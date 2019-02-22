@@ -5,9 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +75,7 @@ public class ShoppingListView extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Open adding to shopping list", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -84,15 +89,22 @@ public class ShoppingListView extends AppCompatActivity {
     }
 
     public void viewShoppingList(){
-        TextView textView = findViewById(R.id.scrollerText);
-        String stringListOfFood = "";
-        int i = 0;
+        TextView scrollingText;
+        LinearLayout linearLayout=findViewById(R.id.scrllinear);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        while(i<foodArray.size()){
-            stringListOfFood = stringListOfFood + foodArray.get(i).getFoodName() + "\n";
-            i++;
+        for (int i = 0; i < foodArray.size(); i++) {
+            scrollingText = new TextView(this);
+            scrollingText.setText(new StringBuilder().append(new StringBuilder().append("  ").append(foodArray.get(i).getFoodName()).toString()));
+            scrollingText.setTextSize(30);
+            linearLayout.addView(scrollingText, lp);
         }
-        textView.setText(stringListOfFood);
+
+
+
+
+
     }
 
     private void showMessage(String msg) {
@@ -100,7 +112,4 @@ public class ShoppingListView extends AppCompatActivity {
         Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
         t.show();
     }
-
-
-
 }
