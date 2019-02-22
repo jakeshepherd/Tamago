@@ -1,6 +1,7 @@
 package com.example.jakeshepherd.tamago;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 public class ShoppingListView extends AppCompatActivity {
     ShoppingList shoppingList;
     ArrayList<foodItem> foodArray;
+    TextView scrollingText1, scrollingText2;
+
 
 
     @Override
@@ -71,6 +75,11 @@ public class ShoppingListView extends AppCompatActivity {
         addToShoppingList(new foodItem("Yogurt", 1));
         addToShoppingList(new foodItem("Granola", 100));
 
+        showShoppingList();
+        setupOnClickListeners();
+    }
+
+    public void setupOnClickListeners(){
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,32 +88,41 @@ public class ShoppingListView extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        viewShoppingList();
     }
 
-    //Testing
-    public void addToShoppingList(foodItem toAdd){
-        shoppingList.addToShoppingList(toAdd);
-    }
-
-    public void viewShoppingList(){
-        TextView scrollingText;
+    public void showShoppingList(){
         LinearLayout linearLayout=findViewById(R.id.scrllinear);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
         for (int i = 0; i < foodArray.size(); i++) {
-            scrollingText = new TextView(this);
-            scrollingText.setText(new StringBuilder().append(new StringBuilder().append("  ").append(foodArray.get(i).getFoodName()).toString()));
-            scrollingText.setTextSize(30);
-            linearLayout.addView(scrollingText, lp);
+            // build TextView 1
+            scrollingText1 = new TextView(this);
+
+            scrollingText1.setText(new StringBuilder().append("  ").append(foodArray.get(i).getFoodName()).toString());
+            scrollingText1.setTextSize(30);
+            scrollingText1.setTextColor(Color.BLACK);
+
+            CheckBox cb = new CheckBox(getApplicationContext());
+            cb.setText("Finished?");
+            linearLayout.addView(cb);
+
+            linearLayout.addView(scrollingText1, lp);
+
+            // build TextView 2
+            scrollingText2 = new TextView(this);
+
+            scrollingText2.setText(new StringBuilder().append("     Amount: ").append(foodArray.get(i).getQuantity()).toString());
+            scrollingText2.setTextSize(14);
+            scrollingText2.setTextColor(Color.DKGRAY);
+
+            linearLayout.addView(scrollingText2, lp);
         }
+    }
 
-
-
-
-
+    //Testing
+    public void addToShoppingList(foodItem toAdd){
+        shoppingList.addToShoppingList(toAdd);
     }
 
     private void showMessage(String msg) {
@@ -113,3 +131,4 @@ public class ShoppingListView extends AppCompatActivity {
         t.show();
     }
 }
+
