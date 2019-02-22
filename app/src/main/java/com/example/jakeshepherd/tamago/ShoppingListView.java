@@ -50,6 +50,21 @@ public class ShoppingListView extends AppCompatActivity {
         addToShoppingList(new foodItem("Banana", 6));
         addToShoppingList(new foodItem("Yogurt", 1));
         addToShoppingList(new foodItem("Granola", 100));
+        addToShoppingList(new foodItem("Egg", 2));
+        addToShoppingList(new foodItem("Bacon", 500));
+        addToShoppingList(new foodItem("Banana", 6));
+        addToShoppingList(new foodItem("Yogurt", 1));
+        addToShoppingList(new foodItem("Granola", 100));
+        addToShoppingList(new foodItem("Egg", 2));
+        addToShoppingList(new foodItem("Bacon", 500));
+        addToShoppingList(new foodItem("Banana", 6));
+        addToShoppingList(new foodItem("Yogurt", 1));
+        addToShoppingList(new foodItem("Granola", 100));
+        addToShoppingList(new foodItem("Egg", 2));
+        addToShoppingList(new foodItem("Bacon", 500));
+        addToShoppingList(new foodItem("Banana", 6));
+        addToShoppingList(new foodItem("Yogurt", 1));
+        addToShoppingList(new foodItem("Granola", 100));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
