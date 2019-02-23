@@ -42,5 +42,9 @@ public class foodItem {
         return period.getDays();
 
     }
+
+    public int getQuantity(){
+        return quantity;
+    }
 }
 
