@@ -20,4 +20,9 @@ public class ShoppingList {
     public ArrayList<foodItem> getShoppingList(){
         return shoppingListItems;
     }
+
+    public void removeItem(foodItem foodItem){
+        shoppingListItems.remove(foodItem);
+    }
+
 }

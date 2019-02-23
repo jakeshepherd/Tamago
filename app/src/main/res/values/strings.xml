@@ -9,4 +9,5 @@
     <string name="a_simple_camera">Camera Logo</string>
     <string name="title_activity_shopping_list_view">ShoppingListView</string>
     <string name="enter_shopping_list">Enter Shopping List...</string>
+    <string name="todo">TODO</string>
 </resources>
