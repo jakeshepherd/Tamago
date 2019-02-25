@@ -6,11 +6,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,27 +19,24 @@ public class Database extends SQLiteOpenHelper {
     private static final String COL_1 = "FOOD_NUMBER";
     private static final String COL_2 = "FOOD_NAME";
     private static final String COL_3 = "EXPIRY_DATE";
-
-    //Commenting out all foodCategory lines
-    //private static final String COL_4 = "FOOD_CATEGORY";
+    private static final String COL_4 = "FOOD_CATEGORY";
 
 
-    Database(Context context){
+    Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
+    @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("drop table  " + TABLE_NAME);
-
+        db.execSQL("drop table if exists " + TABLE_NAME);
         //This line works
-        db.execSQL("create table " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT)");
+        //db.execSQL("create table if not exists " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT);");
         //This line doesn't (but is what we need to!)
-        //db.execSQL("create table " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, FOOD_CATEGORY)");
+        db.execSQL("create table if not exists " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, FOOD_CATEGORY TEXT);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
@@ -51,40 +45,37 @@ public class Database extends SQLiteOpenHelper {
      * Insert individual data to the database
      */
 
-    public boolean insertDataFromObject(foodItem toAdd){
+    protected boolean insertDataFromObject(FoodItem toAdd) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_2, toAdd.getFoodName());
         contentValues.put(COL_3, toAdd.getExpiryDate().toString());
-
-        //contentValues.put(COL_4, toAdd.getFoodCategory());
-
-        long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-        return result != -1;
+        contentValues.put(COL_4, toAdd.getFoodCategory());
+        boolean temp = (sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1);
+        return temp;
     }
 
     /**
      * Collects all data from database
-     * @return
-     *      Return cursor containing data from database
+     *
+     * @return Return cursor containing data from database
      */
-    public Cursor getAllData(){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME;
-        return sqLiteDatabase.rawQuery(query, null);
+    protected Cursor getAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME ;
+        Cursor temp = db.rawQuery(query, null);
+        return temp;
     }
 
     /**
      * Update database, depending on the food number requested
-     * @param foodNum
-     *      Food to be updated
-     * @param toUpdate
-     *       Item to be updated
-     * @return
-     *      true if update works
+     *
+     * @param foodNum  Food to be updated
+     * @param toUpdate Item to be updated
+     * @return true if update works
      */
-    public boolean updateData(String foodNum, foodItem toUpdate){
+    protected boolean updateData(String foodNum, FoodItem toUpdate) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -94,27 +85,27 @@ public class Database extends SQLiteOpenHelper {
 
         //contentValues.put(COL_4, toUpdate.getFoodCategory();
 
-        sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[] {foodNum});
+        sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[]{foodNum});
 
         return true;
     }
 
-    public Integer deleteRowData(String id){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        return sqLiteDatabase.delete(TABLE_NAME, "BILL_NUMBER = ?", new String[] {id});
+    protected void deleteRowData(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME + " where " + COL_1 + " = " + id);
     }
 
     /**
      * Get specific food name
-     * @return
-     *      String relating to the foodID that was requested
+     *
+     * @return String relating to the foodID that was requested
      */
-    public String getFoodName(int foodID){
+    protected String getFoodName(int foodID) {
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
 
-        if(res.moveToFirst()){
-            while(!res.isAfterLast()){
+        if (res.moveToFirst()) {
+            while (!res.isAfterLast()) {
                 String name = res.getString(res.getColumnIndex("FOOD_NAME"));
                 list.add(name);
                 res.moveToNext();
@@ -126,15 +117,15 @@ public class Database extends SQLiteOpenHelper {
 
     /**
      * Get all food stored in database
-     * @return
-     *      ArrayList containing all food in database
+     *
+     * @return ArrayList containing all food in database
      */
-    public List<String> getAllFoodNames(){
+    protected List<String> getAllFoodNames() {
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
 
-        if(res.moveToFirst()){
-            while(!res.isAfterLast()){
+        if (res.moveToFirst()) {
+            while (!res.isAfterLast()) {
                 String name = res.getString(res.getColumnIndex("FOOD_NAME"));
                 list.add(name);
                 res.moveToNext();
@@ -144,12 +135,12 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    public String getExpiryDate(int foodID){
+    protected String getExpiryDate(int foodID) {
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
 
-        if(res.moveToFirst()){
-            while(!res.isAfterLast()){
+        if (res.moveToFirst()) {
+            while (!res.isAfterLast()) {
                 String name = res.getString(res.getColumnIndex("EXPIRY_DATE"));
                 list.add(name);
                 res.moveToNext();
@@ -158,12 +149,13 @@ public class Database extends SQLiteOpenHelper {
 
         return list.get(foodID);
     }
-    public List<String> getAllExpiryDates(){
+
+    protected List<String> getAllExpiryDates() {
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
 
-        if(res.moveToFirst()){
-            while(!res.isAfterLast()){
+        if (res.moveToFirst()) {
+            while (!res.isAfterLast()) {
                 String name = res.getString(res.getColumnIndex("EXPIRY_DATE"));
                 list.add(name);
                 res.moveToNext();
@@ -172,29 +164,28 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    
-    public String getFoodCategory(int foodID){
+
+    protected String getFoodCategory(int foodID) {
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
 
-        if(res.moveToFirst()){
-            while(!res.isAfterLast()){
+        if (res.moveToFirst()) {
+            while (!res.isAfterLast()) {
                 String name = res.getString(res.getColumnIndex("FOOD_CATEGORY"));
                 list.add(name);
                 res.moveToNext();
             }
         }
-
         return list.get(foodID);
     }
 
 
-    public List<String> getAllCategories(){
+    protected List<String> getAllCategories() {
         List<String> list = new ArrayList<>();
         Cursor res = getAllData();
 
-        if(res.moveToFirst()){
-            while(!res.isAfterLast()){
+        if (res.moveToFirst()) {
+            while (!res.isAfterLast()) {
                 String name = res.getString(res.getColumnIndex("FOOD_CATEGORY"));
                 list.add(name);
                 res.moveToNext();
@@ -203,10 +194,26 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    public int getNumberOfRows(){
+    protected int getNumberOfRows() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
-        db.close();
-        return (int)count;
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
+        return count;
+    }
+
+    protected void deleteTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("drop table if exists " + TABLE_NAME);
+        Log.d("info", "dropped table: " + TABLE_NAME);
+    }
+
+    protected void deleteAllRows(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME);
+    }
+
+    protected void manuallyCreateTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("create table if not exists " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, FOOD_CATEGORY TEXT);");
+        Log.d("info", "manually created new table: " + TABLE_NAME);
     }
 }
