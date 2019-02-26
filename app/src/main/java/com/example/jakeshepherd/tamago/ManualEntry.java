@@ -34,10 +34,12 @@ public class ManualEntry extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            boolean validName, validQuantity, validDate, validCategory, alreadyExpired;
-            String foodName = ((EditText)findViewById(R.id.foodItem)).getText().toString();
-            String foodQuantity = ((EditText)findViewById(R.id.quantity)).getText().toString();
-            String foodExpirationDate = ((EditText)findViewById(R.id.expirationDate)).getText().toString();
+            boolean validName, validCategory, validQuantity, validDate, alreadyExpired;
+            String foodName, foodCategory, foodQuantity, foodExpirationDate;
+            foodName = ((EditText)findViewById(R.id.foodItem)).getText().toString().trim();
+            foodCategory = ((EditText)findViewById(R.id.foodCategory)).getText().toString().trim();
+            foodQuantity = ((EditText)findViewById(R.id.quantity)).getText().toString().trim();
+            foodExpirationDate = ((EditText)findViewById(R.id.expirationDate)).getText().toString().trim();
             int integerQuantity;
 
             try{
@@ -48,16 +50,18 @@ public class ManualEntry extends AppCompatActivity {
             }
 
             validName = checkName(foodName);
+            validCategory = checkName(foodCategory);    // checkName() method is sufficient for this, so far
             validQuantity = checkQuantity(integerQuantity);
-            // validCategory = checkName()
             validDate = checkDateFormat(foodExpirationDate);
             alreadyExpired = isExpired(foodExpirationDate);
 
-            if(validName && validQuantity && validDate && !alreadyExpired)
+            if(validName && validQuantity && validQuantity && validDate && !alreadyExpired)
                 Snackbar.make(view, "Accepted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             else {
                 if (!validName)
                     Snackbar.make(view, "Invalid name", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                if (!validCategory)
+                    Snackbar.make(view, "Invalid food category", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 if (!validQuantity)
                     Snackbar.make(view, "Invalid quantity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 if (!validDate)
@@ -67,17 +71,16 @@ public class ManualEntry extends AppCompatActivity {
                 return;
             }
             Database db = new Database(ManualEntry.this);
-            db.insertDataFromObject(new FoodItem(foodName, foodExpirationDate, "temp"));
+            db.insertDataFromObject(new FoodItem(foodName, foodExpirationDate, foodCategory));
             List <String> listOfData = db.getAllFoodNames();
             for(String x: listOfData)
                 Log.d("data", x);
-            //TextView textView = findViewById(R.id.tester);
-            //textView.setText(db.getFoodName(0) + "\n" + db.getExpiryDate(0) + "\n" + db.getFoodCategory(0));
+            setContentView(R.layout.activity_main);
         }
     }
 
     protected boolean checkName(String name) {
-        if(name.trim().equals("")) {
+        if(name.equals("")) {
             Log.d("myTag", "Insert a food name");
             return false;
         }

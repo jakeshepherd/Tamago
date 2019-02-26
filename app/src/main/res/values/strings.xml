@@ -7,4 +7,6 @@
     <string name="quantity">Quantity</string>
     <string name="insert">Insert</string>
     <string name="a_simple_camera">Camera Logo</string>
+    <string name="food_category">Food Category</string>
+    <string name="appName">Tamago</string>
 </resources>
