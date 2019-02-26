@@ -25,58 +25,66 @@ public class ManualEntry extends AppCompatActivity {
 
         Button insert = findViewById(R.id.insertButton);
 
-        ClickListener clickListenerObject = new ClickListener();
-        insert.setOnClickListener(clickListenerObject);
+        insert.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                boolean validName, validCategory, validQuantity, validDate, alreadyExpired;
+                String foodName, foodCategory, foodQuantity, foodExpirationDate;
+                foodName = ((EditText)findViewById(R.id.foodItem)).getText().toString().trim();
+                foodCategory = ((EditText)findViewById(R.id.foodCategory)).getText().toString().trim();
+                foodQuantity = ((EditText)findViewById(R.id.quantity)).getText().toString().trim();
+                foodExpirationDate = ((EditText)findViewById(R.id.expirationDate)).getText().toString().trim();
+                int integerQuantity;
 
-    }
+                try{
+                    integerQuantity = Integer.parseInt(foodQuantity);
+                }
+                catch(NumberFormatException e){
+                    integerQuantity = 0;
+                }
 
-    private class ClickListener implements View.OnClickListener{
+                validName = checkName(foodName);
+                validCategory = checkName(foodCategory);    // checkName() method is sufficient for this, so far
+                validQuantity = checkQuantity(integerQuantity);
+                validDate = checkDateFormat(foodExpirationDate);
+                alreadyExpired = isExpired(foodExpirationDate);
 
-        @Override
-        public void onClick(View view) {
-            boolean validName, validCategory, validQuantity, validDate, alreadyExpired;
-            String foodName, foodCategory, foodQuantity, foodExpirationDate;
-            foodName = ((EditText)findViewById(R.id.foodItem)).getText().toString().trim();
-            foodCategory = ((EditText)findViewById(R.id.foodCategory)).getText().toString().trim();
-            foodQuantity = ((EditText)findViewById(R.id.quantity)).getText().toString().trim();
-            foodExpirationDate = ((EditText)findViewById(R.id.expirationDate)).getText().toString().trim();
-            int integerQuantity;
+                int numberOfErrors = 0;
+                if(!validName) numberOfErrors ++;
+                if(!validCategory) numberOfErrors ++;
+                if(!validQuantity) numberOfErrors ++;
+                if(!validDate) numberOfErrors ++;
+                if(alreadyExpired) numberOfErrors ++;
 
-            try{
-                integerQuantity = Integer.parseInt(foodQuantity);
+                if(numberOfErrors == 0)
+                    Snackbar.make(view, "Accepted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                else if(numberOfErrors == 1){
+                    if (!validName)
+                        Snackbar.make(view, "Invalid name", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    if (!validCategory)
+                        Snackbar.make(view, "Invalid food category", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    if (!validQuantity)
+                        Snackbar.make(view, "Invalid quantity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    if (!validDate)
+                        Snackbar.make(view, "Invalid date format", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    else if(alreadyExpired)
+                        Snackbar.make(view, "Food has already expired", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+                else{
+                    Snackbar.make(view, "Multiple input errors", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+
+                Database db = new Database(ManualEntry.this);
+                db.insertDataFromObject(new FoodItem(foodName, foodExpirationDate, foodCategory));
+                List <String> listOfData = db.getAllFoodNames();
+                for(String x: listOfData)
+                    Log.d("data", x);
+                finish();
             }
-            catch(NumberFormatException e){
-                integerQuantity = 0;
-            }
+        });
 
-            validName = checkName(foodName);
-            validCategory = checkName(foodCategory);    // checkName() method is sufficient for this, so far
-            validQuantity = checkQuantity(integerQuantity);
-            validDate = checkDateFormat(foodExpirationDate);
-            alreadyExpired = isExpired(foodExpirationDate);
-
-            if(validName && validQuantity && validQuantity && validDate && !alreadyExpired)
-                Snackbar.make(view, "Accepted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            else {
-                if (!validName)
-                    Snackbar.make(view, "Invalid name", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                if (!validCategory)
-                    Snackbar.make(view, "Invalid food category", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                if (!validQuantity)
-                    Snackbar.make(view, "Invalid quantity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                if (!validDate)
-                    Snackbar.make(view, "Invalid date format", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                else if(alreadyExpired)
-                    Snackbar.make(view, "Food has already expired", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                return;
-            }
-            Database db = new Database(ManualEntry.this);
-            db.insertDataFromObject(new FoodItem(foodName, foodExpirationDate, foodCategory));
-            List <String> listOfData = db.getAllFoodNames();
-            for(String x: listOfData)
-                Log.d("data", x);
-            setContentView(R.layout.activity_main);
-        }
     }
 
     protected boolean checkName(String name) {

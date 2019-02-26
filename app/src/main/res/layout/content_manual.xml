@@ -24,11 +24,11 @@
 
     <TextView
         android:id="@+id/scanFood"
-        android:layout_width="115dp"
+        android:layout_width="0dp"
         android:layout_height="36dp"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="223dp"
-        android:layout_marginEnd="148dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="472dp"
         android:text="@string/scan_food"
         android:textAlignment="center"
@@ -106,7 +106,7 @@
         android:layout_marginBottom="150dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/expiration_date_yyyy_mm_dd"
+        android:hint="@string/expiration_date"
         android:inputType="date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
