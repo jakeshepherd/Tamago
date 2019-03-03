@@ -1,5 +1,6 @@
 package com.example.jakeshepherd.tamago;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity{
+
+    Database db = new Database(this);
+    LinearLayout fridge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -46,5 +52,24 @@ public class MainActivity extends AppCompatActivity{
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        updateFridge();
+    }
+
+    private void updateFridge(){
+        TextView temp;
+        fridge = findViewById(R.id.fridge);
+        for(int i = 0; i < db.getNumberOfRows(); i ++){
+            temp = new TextView(this);
+            temp.setText(db.getFoodName(i) + "\n" + db.getFoodCategory(i) + "\n" +
+                    db.getFoodQuantity(i) + "\n" + db.getFoodExpiryDate(i));
+            temp.setTextSize(30);
+            temp.setTextColor(Color.BLACK);
+            fridge.addView(temp, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+        }
     }
 }
