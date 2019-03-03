@@ -53,14 +53,14 @@ public class MainActivity extends AppCompatActivity{
         if (id == R.id.action_settings)
             return true;
 
-
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Log.d("debugTag", db.getNumberOfRows() + "");
         fridge.removeView(foodView);
         updateFridge();
-        Log.d("debugTag", "wassup");
     }
 
     private void updateFridge(){
