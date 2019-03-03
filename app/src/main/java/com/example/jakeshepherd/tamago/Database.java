@@ -63,10 +63,7 @@ public class Database extends SQLiteOpenHelper {
      * @return Return cursor containing data from database
      */
     protected Cursor getAllData() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME ;
-        Cursor temp = db.rawQuery(query, null);
-        return temp;
+        return this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
     /**
@@ -115,7 +112,7 @@ public class Database extends SQLiteOpenHelper {
         Cursor res = getAllData();
         if (res.moveToFirst()) {
             while (!res.isAfterLast()){
-                list.add(res.getString(res.getColumnIndex("FOOD_NAME")));
+                list.add(res.getString(res.getColumnIndex(COL_2)));
                 res.moveToNext();
             }
         }
@@ -132,7 +129,7 @@ public class Database extends SQLiteOpenHelper {
 
         if (res.moveToFirst()) {
             while (!res.isAfterLast()){
-                list.add(res.getString(res.getColumnIndex("FOOD_CATEGORY")));
+                list.add(res.getString(res.getColumnIndex(COL_3)));
                 res.moveToNext();
             }
         }
@@ -149,7 +146,7 @@ public class Database extends SQLiteOpenHelper {
         if (res.moveToFirst()) {
             while (!res.isAfterLast()) {
                 try{
-                    list.add(Integer.parseInt(res.getString(res.getColumnIndex("FOOD_QUANTITY"))));
+                    list.add(Integer.parseInt(res.getString(res.getColumnIndex(COL_2))));
                 }
                 catch(NumberFormatException e){
                     Log.d("DatabaseError", "Couldn't parse string");
@@ -171,7 +168,7 @@ public class Database extends SQLiteOpenHelper {
 
         if (res.moveToFirst()) {
             while (!res.isAfterLast()){
-                list.add(res.getString(res.getColumnIndex("EXPIRY_DATE")));
+                list.add(res.getString(res.getColumnIndex(COL_3)));
                 res.moveToNext();
             }
         }

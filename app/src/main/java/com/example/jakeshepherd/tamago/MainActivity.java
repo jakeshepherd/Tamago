@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivityForResult(new Intent(MainActivity.this, ManualEntry.class), -1);
             }
         });
+        updateFridge();
     }
 
     
