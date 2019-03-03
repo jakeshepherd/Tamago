@@ -78,7 +78,7 @@ public class ManualEntry extends AppCompatActivity {
                 }
 
                 Database db = new Database(ManualEntry.this);
-                db.insertDataFromObject(new FoodItem(foodName, foodExpirationDate, foodCategory));
+                db.insertDataFromObject(new FoodItem(foodName, foodCategory, integerQuantity, foodExpirationDate));
                 List <String> listOfData = db.getAllFoodNames();
                 for(String x: listOfData)
                     Log.d("data", x);
@@ -100,9 +100,7 @@ public class ManualEntry extends AppCompatActivity {
     }
 
     protected boolean checkQuantity(int quantity) {
-        if(quantity <= 0)
-            return false;
-        else return true;
+        return quantity > 0;
     }
 
     protected boolean checkDateFormat(String date) {   // more comprehensive date checking

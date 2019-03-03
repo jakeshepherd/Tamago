@@ -15,25 +15,28 @@ import java.util.List;
 public class Database extends SQLiteOpenHelper {
 
     // gonna start the primary key as just 1,2,3,4,... for now cos confusing
-    private static final String DATABASE_NAME = "Food.db";
-    private static final String TABLE_NAME = "Food_Table";
-    private static final String COL_1 = "FOOD_NUMBER";
-    private static final String COL_2 = "FOOD_NAME";
-    private static final String COL_3 = "EXPIRY_DATE";
-    private static final String COL_4 = "FOOD_CATEGORY";
-
+    private static final String DATABASE_NAME = "Food.db",
+            TABLE_NAME = "Food_Table",
+            COL_1 = "FOOD_ID",
+            COL_2 = "FOOD_NAME",
+            COL_3 = "FOOD_CATEGORY",
+            COL_4 = "FOOD_QUANTITY",
+            COL_5 = "EXPIRY_DATE",
+            typeInt = " INTEGER ",
+            typeString = " TEXT ";
 
     Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) {   // I know this pains to look at but it means it's easy to change the column names
         db.execSQL("drop table if exists " + TABLE_NAME);
-        //This line works
-        //db.execSQL("create table if not exists " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT);");
-        //This line doesn't (but is what we need to!)
-        db.execSQL("create table if not exists " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, FOOD_CATEGORY TEXT);");
+        // "create table if not exists " + TABLE_NAME + "(FOOD_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        // FOOD_NAME TEXT, FOOD_CATEGORY TEXT, FOOD_QUANTITY INTEGER, EXPIRY_DATE TEXT)"
+        db.execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt + " PRIMARY KEY" +
+                " AUTOINCREMENT, " + COL_2 + typeString + ", " + COL_3 + typeString + ", " +  COL_4 + typeInt
+                + ", " + COL_5 + typeString + ")");
     }
 
     @Override
@@ -51,10 +54,11 @@ public class Database extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_2, toAdd.getFoodName());
-        contentValues.put(COL_3, toAdd.getExpiryDate().toString());
-        contentValues.put(COL_4, toAdd.getFoodCategory());
-        boolean temp = (sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1);
-        return temp;
+        contentValues.put(COL_3, toAdd.getFoodCategory());
+        contentValues.put(COL_4, toAdd.getFoodQuantity());
+        contentValues.put(COL_5, toAdd.getExpiryDate());
+
+        return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
     }
 
     /**
@@ -79,12 +83,11 @@ public class Database extends SQLiteOpenHelper {
 
         contentValues.put(COL_1, foodNum);
         contentValues.put(COL_2, toUpdate.getFoodName());
-        contentValues.put(COL_3, toUpdate.getExpiryDate().toString());
-
-        //contentValues.put(COL_4, toUpdate.getFoodCategory();
+        contentValues.put(COL_3, toUpdate.getFoodCategory());
+        contentValues.put(COL_4, toUpdate.getFoodQuantity());
+        contentValues.put(COL_5, toUpdate.getExpiryDate());
 
         sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[]{foodNum});
-
         return true;
     }
 
@@ -146,7 +149,7 @@ public class Database extends SQLiteOpenHelper {
         if (res.moveToFirst()) {
             while (!res.isAfterLast()) {
                 try{
-                    list.add(Integer.parseInt(res.getString(res.getColumnIndex(COL_2))));
+                    list.add(Integer.parseInt(res.getString(res.getColumnIndex(COL_4))));
                 }
                 catch(NumberFormatException e){
                     Log.d("DatabaseError", "Couldn't parse string");
@@ -168,7 +171,7 @@ public class Database extends SQLiteOpenHelper {
 
         if (res.moveToFirst()) {
             while (!res.isAfterLast()){
-                list.add(res.getString(res.getColumnIndex(COL_3)));
+                list.add(res.getString(res.getColumnIndex(COL_5)));
                 res.moveToNext();
             }
         }
@@ -197,7 +200,9 @@ public class Database extends SQLiteOpenHelper {
 
     protected void manuallyCreateTable(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("create table if not exists " + TABLE_NAME + "(FOOD_NUMBER INTEGER PRIMARY KEY AUTOINCREMENT, FOOD_NAME TEXT, EXPIRY_DATE TEXT, FOOD_CATEGORY TEXT);");
+        db.execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt + " PRIMARY KEY" +
+                " AUTOINCREMENT, " + COL_2 + typeString + ", " + COL_3 + typeString + ", " +  COL_4 + typeInt
+                + ", " + COL_5 + typeString + ")");
         Log.d("info", "manually created new table: " + TABLE_NAME);
     }
 }
