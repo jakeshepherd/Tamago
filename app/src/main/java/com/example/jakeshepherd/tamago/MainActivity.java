@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity{
 
     Database db = new Database(this);
     LinearLayout fridge;
+    TextView foodView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -56,19 +57,20 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        fridge.removeView(foodView);
         updateFridge();
+        Log.d("debugTag", "wassup");
     }
 
     private void updateFridge(){
-        TextView temp;
         fridge = findViewById(R.id.fridge);
         for(int i = 0; i < db.getNumberOfRows(); i ++){
-            temp = new TextView(this);
-            temp.setText(db.getFoodName(i) + "\n" + db.getFoodCategory(i) + "\n" +
+            foodView = new TextView(this);
+            foodView.setText(db.getFoodName(i) + "\n" + db.getFoodCategory(i) + "\n" +
                     db.getFoodQuantity(i) + "\n" + db.getFoodExpiryDate(i));
-            temp.setTextSize(30);
-            temp.setTextColor(Color.BLACK);
-            fridge.addView(temp, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+            foodView.setTextSize(30);
+            foodView.setTextColor(Color.BLACK);
+            fridge.addView(foodView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
         }
     }
