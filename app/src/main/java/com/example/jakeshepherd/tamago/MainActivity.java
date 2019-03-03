@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity{
@@ -25,13 +26,19 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        final TextView tester = findViewById(R.id.tester);
+
+        if(db.getNumberOfRows() > 1)
+            tester.setVisibility(View.GONE);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(MainActivity.this, ManualEntry.class), -1);
+                if(tester.getVisibility() == View.VISIBLE && db.getNumberOfRows() > 1)
+                    tester.setVisibility(View.GONE);
             }
         });
-        db.deleteAllRows();
         updateFridge();
     }
 
@@ -66,11 +73,13 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void updateFridge(){
+        String temp;
         fridge = findViewById(R.id.fridge);
         for(int i = 0; i < db.getNumberOfRows(); i ++){
-            foodView = new TextView(this);
-            foodView.setText(db.getFoodName(i) + "\n" + db.getFoodCategory(i) + "\n" +
-                    db.getFoodQuantity(i) + "\n" + db.getFoodExpiryDate(i));
+            foodView = new TextView(findViewById(R.id.scrollView).getContext());
+            temp = db.getFoodName(i) + "\n" + db.getFoodCategory(i) + "\n" +
+                    db.getFoodQuantity(i) + "\n" + db.getFoodExpiryDate(i);
+            foodView.setText(temp);
             foodView.setTextSize(30);
             foodView.setTextColor(Color.BLACK);
             fridge.addView(foodView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
