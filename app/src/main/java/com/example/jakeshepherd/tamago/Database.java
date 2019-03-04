@@ -22,8 +22,9 @@ public class Database extends SQLiteOpenHelper {
             COL_3 = "FOOD_CATEGORY",
             COL_4 = "FOOD_QUANTITY",
             COL_5 = "EXPIRY_DATE",
-            typeInt = " INTEGER ",
-            typeString = " TEXT ";
+            typeInt = " INTEGER",
+            typeString = " TEXT";
+    private static int finalID = 1;
 
     Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -34,8 +35,8 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + TABLE_NAME);
         // "create table if not exists " + TABLE_NAME + "(FOOD_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         // FOOD_NAME TEXT, FOOD_CATEGORY TEXT, FOOD_QUANTITY INTEGER, EXPIRY_DATE TEXT)"
-        db.execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt + " PRIMARY KEY" +
-                " AUTOINCREMENT, " + COL_2 + typeString + ", " + COL_3 + typeString + ", " +  COL_4 + typeInt
+        db.execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt + " PRIMARY KEY, "
+                + COL_2 + typeString + ", " + COL_3 + typeString + ", " +  COL_4 + typeInt
                 + ", " + COL_5 + typeString + ")");
     }
 
@@ -53,11 +54,12 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(COL_1, finalID ++);
         contentValues.put(COL_2, toAdd.getFoodName());
         contentValues.put(COL_3, toAdd.getFoodCategory());
         contentValues.put(COL_4, toAdd.getFoodQuantity());
         contentValues.put(COL_5, toAdd.getExpiryDate());
-
+        Log.d("debug", "finalID: " + finalID);
         return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
     }
 
@@ -94,7 +96,32 @@ public class Database extends SQLiteOpenHelper {
     protected void deleteRowData(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_NAME + " where " + COL_1 + " = " + id);
+        id ++;
+        while(id < getNumberOfRows()){
+            db.execSQL("update " + TABLE_NAME + " set " + COL_1 + " = " + (id - 1) + " where " + COL_1 + " = " + id);
+            id ++;
+        }
+        finalID --;
     }
+
+    protected List <Integer> getAllFoodIDs() {
+        List <Integer> list = new ArrayList<>();
+        Cursor res = getAllData();
+        if (res.moveToFirst()) {
+            while (!res.isAfterLast()) {
+                try{
+                    list.add(Integer.parseInt(res.getString(res.getColumnIndex(COL_1))));
+                }
+                catch(NumberFormatException e){
+                    Log.d("DatabaseError", "Couldn't parse string");
+                    break;
+                }
+                res.moveToNext();
+            }
+        }
+        return list;
+    }
+
 
     /**
      * Get specific food name
@@ -200,9 +227,9 @@ public class Database extends SQLiteOpenHelper {
 
     protected void manuallyCreateTable(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt + " PRIMARY KEY" +
-                " AUTOINCREMENT, " + COL_2 + typeString + ", " + COL_3 + typeString + ", " +  COL_4 + typeInt
-                + ", " + COL_5 + typeString + ")");
+        db.execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt +
+                " PRIMARY KEY, " + COL_2 + typeString + ", " + COL_3 + typeString
+                + ", " + COL_4 + typeInt + ", " + COL_5 + typeString + ")");
         Log.d("info", "manually created new table: " + TABLE_NAME);
     }
 }

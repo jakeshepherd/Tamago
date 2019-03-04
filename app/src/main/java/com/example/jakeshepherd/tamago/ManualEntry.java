@@ -82,7 +82,7 @@ public class ManualEntry extends AppCompatActivity {
                 List <String> listOfData = db.getAllFoodNames();
                 for(String x: listOfData)
                     Log.d("data", x);
-                setResult(Activity.RESULT_OK, new Intent());
+                setResult(2, new Intent());
                 finish();
             }
         });

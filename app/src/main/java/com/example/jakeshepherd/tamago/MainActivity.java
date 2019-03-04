@@ -4,29 +4,32 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity{
 
-    Database db = new Database(this);
-    LinearLayout fridge;
-    TextView foodView;
+    private Database db = new Database(this);
+    private LinearLayout fridge;
+    private TextView foodView, tester;
+    private FloatingActionButton fab, del;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        db.deleteTable();
+        db.manuallyCreateTable();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        final TextView tester = findViewById(R.id.tester);
+        fab = findViewById(R.id.fab);
+        del = findViewById(R.id.delete);
+        tester = findViewById(R.id.tester);
 
         if(db.getNumberOfRows() > 1)
             tester.setVisibility(View.GONE);
@@ -34,9 +37,19 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, ManualEntry.class), -1);
-                if(tester.getVisibility() == View.VISIBLE && db.getNumberOfRows() > 1)
-                    tester.setVisibility(View.GONE);
+                startActivityForResult(new Intent(MainActivity.this, ManualEntry.class), 2);
+            }
+        });
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.deleteRowData(db.getNumberOfRows());
+                Log.d("debug", "Number of Rows: " + db.getNumberOfRows());
+                Log.d("debug", "Food IDs: " + db.getAllFoodIDs());
+                fridge.removeAllViews();
+                updateFridge();
+                if(tester.getVisibility() == View.GONE && db.getNumberOfRows() == 0)
+                    tester.setVisibility(View.VISIBLE);
             }
         });
         updateFridge();
@@ -67,9 +80,10 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        Log.d("debugTag", db.getNumberOfRows() + "");
-        fridge.removeView(foodView);
+        fridge.removeAllViews();
         updateFridge();
+        if(tester.getVisibility() == View.VISIBLE && db.getNumberOfRows() > 0)
+            tester.setVisibility(View.GONE);
     }
 
     private void updateFridge(){
