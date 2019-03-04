@@ -1,6 +1,7 @@
 package com.example.jakeshepherd.tamago;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class ShoppingListView extends AppCompatActivity {
         foodArray = shoppingList.getShoppingList();
 
         // testing stuff
+        /*
         addToShoppingList(new foodItem("Egg", 2));
         addToShoppingList(new foodItem("Bacon", 500));
         addToShoppingList(new foodItem("Banana", 6));
@@ -79,6 +81,7 @@ public class ShoppingListView extends AppCompatActivity {
         addToShoppingList(new foodItem("Banana", 6));
         addToShoppingList(new foodItem("Yogurt", 1));
         addToShoppingList(new foodItem("Granola", 100));
+        */
 
         showShoppingList();
         setupOnClickListeners();
@@ -89,8 +92,7 @@ public class ShoppingListView extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Open adding to shopping list", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivityForResult(new Intent(ShoppingListView.this,ShoppingListEntry.class),1);
             }
         });
 
@@ -113,6 +115,9 @@ public class ShoppingListView extends AppCompatActivity {
         LinearLayout linearLayout=findViewById(R.id.scrllinear);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
+        //-------
+
+        //-------
 
         // iterates through entire foodArray
         for (int i = 0; i < foodArray.size(); i++) {
@@ -145,6 +150,17 @@ public class ShoppingListView extends AppCompatActivity {
         Context c = getApplicationContext();
         Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
         t.show();
+    }
+
+    private void refreshShoppingList(){
+        LinearLayout linearLayout=findViewById(R.id.scrllinear);
+        linearLayout.removeView(scrollingText1);
+        linearLayout.removeView(scrollingText2);
+        showShoppingList();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        refreshShoppingList();
     }
 }
 
