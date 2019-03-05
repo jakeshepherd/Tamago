@@ -8,6 +8,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/deleteTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fab"
+        android:layout_toStartOf="@+id/fab"
+        android:text="Done" />
+
+    <EditText
+        android:id="@+id/deleteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fab"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginBottom="-26dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="egg" />
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/shoppingListToolbar"
         android:layout_width="match_parent"

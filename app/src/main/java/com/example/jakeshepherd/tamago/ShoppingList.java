@@ -25,4 +25,8 @@ public class ShoppingList {
         shoppingListItems.remove(foodItem);
     }
 
+    public void removeByIndex(int i){
+        shoppingListItems.remove(i);
+    }
+
 }

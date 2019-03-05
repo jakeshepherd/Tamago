@@ -1,36 +1,31 @@
 package com.example.jakeshepherd.tamago;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 
 //TODO -- popup for adding stuff to shopping list
 public class ShoppingListView extends AppCompatActivity {
     ShoppingList shoppingList;
     ArrayList<foodItem> foodArray;
     TextView scrollingText1, scrollingText2;
+    String foodName;
+    int foodQuantity;
+    int refreshCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +39,10 @@ public class ShoppingListView extends AppCompatActivity {
         // local arraylist to store shopping list
         foodArray = shoppingList.getShoppingList();
 
+
+
         // testing stuff
-        /*
+
         addToShoppingList(new foodItem("Egg", 2));
         addToShoppingList(new foodItem("Bacon", 500));
         addToShoppingList(new foodItem("Banana", 6));
@@ -81,7 +78,6 @@ public class ShoppingListView extends AppCompatActivity {
         addToShoppingList(new foodItem("Banana", 6));
         addToShoppingList(new foodItem("Yogurt", 1));
         addToShoppingList(new foodItem("Granola", 100));
-        */
 
         showShoppingList();
         setupOnClickListeners();
@@ -101,9 +97,19 @@ public class ShoppingListView extends AppCompatActivity {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMessage("Should delete...");
+                startActivityForResult(new Intent(ShoppingListView.this, ShoppingListDelete.class), 2);
             }
         });
+
+        Button del = findViewById(R.id.deleteTextButton);
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("WORK", "PLEASE JUST WORK");
+            }
+        });
+
+
     }
 
     /**
@@ -119,12 +125,15 @@ public class ShoppingListView extends AppCompatActivity {
 
         //-------
 
+        refreshCount++;
+        Log.d("RefreshCount: ", String.valueOf(refreshCount));
+
         // iterates through entire foodArray
         for (int i = 0; i < foodArray.size(); i++) {
             // build TextView 1
             scrollingText1 = new TextView(this);
 
-            scrollingText1.setText(new StringBuilder().append("  ").append(foodArray.get(i).getFoodName()).toString());
+            scrollingText1.setText(new StringBuilder().append("  ").append(i).append(": ").append(foodArray.get(i).getFoodName()).toString());
             scrollingText1.setTextSize(30);
             scrollingText1.setTextColor(Color.BLACK);
 
@@ -154,13 +163,61 @@ public class ShoppingListView extends AppCompatActivity {
 
     private void refreshShoppingList(){
         LinearLayout linearLayout=findViewById(R.id.scrllinear);
-        linearLayout.removeView(scrollingText1);
-        linearLayout.removeView(scrollingText2);
+        linearLayout.removeAllViews();
         showShoppingList();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        refreshShoppingList();
+        if(requestCode == 2){
+            if(resultCode == Activity.RESULT_OK){
+                foodName = data.getStringExtra("FoodName");
+                foodQuantity = data.getIntExtra("FoodQuantity", 0);
+                showMessage("name: " + foodName + " Quantity: " + foodQuantity);
+
+                // todo -- params might need changing
+                removeFromShoppingList(foodName);
+                refreshShoppingList();
+
+            }
+
+            if(resultCode == Activity.RESULT_CANCELED){
+                Log.d("UserInputEmpty", "Nothing returned");
+            }
+        }
+    }
+
+    public int searchShoppingList(String foodName){
+        for(int i = 0; i<foodArray.size(); i++){
+            if(foodArray.get(i).getFoodName().equals(foodName)){
+                Log.d("success?", "FOOD NAME FOUND");
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+
+    public void removeFromShoppingList(String foodName){
+        int i = searchShoppingList(foodName);
+        if(i>=0){
+            for(int j = 0; j<foodArray.size(); j++){
+                Log.d("BEFORE food " + j, foodArray.get(j).getFoodName());
+            }
+            shoppingList.removeByIndex(i);
+            //foodArray.remove(i);
+
+            foodArray = shoppingList.getShoppingList();
+
+            for(int j = 0; j<foodArray.size(); j++){
+                Log.d("AFTER food " + j, foodArray.get(j).getFoodName());
+            }
+
+        }else{
+            //todo -- better error thing
+            Log.d("error", "ERROR");
+        }
+
     }
 }
 
