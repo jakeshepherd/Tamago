@@ -31,10 +31,10 @@
             android:name=".ShoppingListView"
             android:label="@string/title_activity_shopping_list_view"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ShoppingListEntry"
             android:label="ShoppingListEntry" />
+        <activity android:name=".ShoppingListDelete"></activity>
     </application>
 
 </manifest>

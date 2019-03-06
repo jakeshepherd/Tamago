@@ -3,77 +3,59 @@ package com.example.jakeshepherd.tamago;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 
 public class ShoppingListEntry extends AppCompatActivity {
 
-    ShoppingList shoppingList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list_entry);
 
-        Button insert = (Button) findViewById(R.id.insertButton);
+        setupOnClickListeners();
+    }
 
-        shoppingList = ShoppingList.getInstance();
+    /**
+     * On button click, check length of name and quantity then:
+     * Set errors
+     * then send data back through intents
+     */
+    public void setupOnClickListeners(){
+        Button insertButton = findViewById(R.id.insertButton);
 
-        insert.setOnClickListener(new View.OnClickListener() {
+        insertButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String foodName = ((EditText)findViewById(R.id.foodItem)).getText().toString();
-                String quantity = ((EditText)findViewById(R.id.quantity)).getText().toString();
-                int integerQuantity = Integer.parseInt(quantity);
+            public void onClick(View v) {
+                Intent returnIntent = new Intent();
 
-                //-----------
+                EditText foodName = findViewById(R.id.editRemoveName);
+                EditText foodQuantity = findViewById(R.id.editDeleteQuantity);
 
-                //-----------
-                if (checkName((foodName)) && checkQuantity(integerQuantity)) {
-                    Snackbar.make(view, "All accepted", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
-                    Snackbar.make(view, "Not all accepted", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                if(foodName.getText().length() == 0 || foodQuantity.getText().length() == 0){
+                    if(foodName.getText().length() == 0){
+                        foodName.setError("Cannot be blank");
+                    }
+                    if(foodQuantity.getText().length() == 0){
+                        foodQuantity.setError("Cannot be blank");
+                    }
+                }else{
+                    if(Integer.parseInt(foodQuantity.getText().toString()) <= 0){
+                        foodQuantity.setError("Must be more than 0");
+                    }else{
+                        returnIntent.putExtra("FoodName", String.valueOf(foodName.getText()));
+                        returnIntent.putExtra("FoodQuantity", Integer.parseInt(String.valueOf(foodQuantity.getText())));
+
+                        setResult(Activity.RESULT_OK, returnIntent);
+                        finish();
+                    }
+
                 }
-
-                addToShoppingList(new foodItem(foodName, integerQuantity));
-                setResult(Activity.RESULT_CANCELED, new Intent());
-                finish();
             }
         });
 
     }
-
-    public boolean checkName(String name) {
-        if(name == "") {
-            System.err.print("Insert a food name.");
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    public boolean checkQuantity(int quantity) {
-        if(quantity <= 0) {
-            System.err.print("Insert a quantity.");
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    public void addToShoppingList(foodItem toAdd){
-        shoppingList.addToShoppingList(toAdd);
-    }
-
 }

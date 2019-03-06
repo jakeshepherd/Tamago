@@ -40,7 +40,7 @@
         tools:justificationMode="inter_word" />
 
     <EditText
-        android:id="@+id/foodItem"
+        android:id="@+id/editRemoveName"
         android:layout_width="315dp"
         android:layout_height="46dp"
         android:layout_marginStart="48dp"
@@ -57,20 +57,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/quantity"
-        android:layout_width="313dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="356dp"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="273dp"
-        android:autofillHints=""
+        android:id="@+id/editDeleteQuantity"
+        android:layout_width="318dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="222dp"
         android:ems="10"
         android:hint="Quantity"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editRemoveName" />
 
 </android.support.constraint.ConstraintLayout>

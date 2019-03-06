@@ -1,19 +1,12 @@
 package com.example.jakeshepherd.tamago;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.content.Intent;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Button;
-import android.widget.Toast;
-import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,8 +24,8 @@ public class ManualEntry extends AppCompatActivity {
         insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String foodName = ((EditText)findViewById(R.id.foodItem)).getText().toString();
-                String quantity = ((EditText)findViewById(R.id.quantity)).getText().toString();
+                String foodName = ((EditText)findViewById(R.id.editRemoveName)).getText().toString();
+                String quantity = ((EditText)findViewById(R.id.editDeleteQuantity)).getText().toString();
                 int integerQuantity = Integer.parseInt(quantity);
                 String expirationDate = ((EditText)findViewById(R.id.expirationDate)).getText().toString();
                 if (checkName((foodName)) && checkQuantity(integerQuantity) && checkDateFormat(expirationDate)) {

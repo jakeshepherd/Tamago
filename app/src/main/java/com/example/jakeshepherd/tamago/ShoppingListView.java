@@ -1,36 +1,31 @@
 package com.example.jakeshepherd.tamago;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+// TODO -- move everything to caps
 
-//TODO -- popup for adding stuff to shopping list
 public class ShoppingListView extends AppCompatActivity {
     ShoppingList shoppingList;
     ArrayList<foodItem> foodArray;
     TextView scrollingText1, scrollingText2;
+    String foodName, foodNameToAdd;
+    int foodQuantityToAdd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,49 +39,52 @@ public class ShoppingListView extends AppCompatActivity {
         // local arraylist to store shopping list
         foodArray = shoppingList.getShoppingList();
 
+
         // testing stuff
-        /*
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        */
+
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
 
         showShoppingList();
         setupOnClickListeners();
     }
 
+    /**
+     * Set up on click listeners for delete and add button
+     */
     public void setupOnClickListeners(){
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,9 +99,49 @@ public class ShoppingListView extends AppCompatActivity {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMessage("Should delete...");
+                startActivityForResult(new Intent(ShoppingListView.this, ShoppingListDelete.class), 2);
             }
         });
+    }
+
+    /**
+     * When intents have been run, will return their code as well as extra data
+     * This is then accessed and used in this class
+     * @param requestCode
+     *      Code set when the intent was called with a result
+     * @param resultCode
+     *      If the activity was completed or cancelled
+     * @param data
+     *      Resulting data from the intent
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 1){
+            if(resultCode == Activity.RESULT_OK){
+                foodNameToAdd = data.getStringExtra("FoodName");
+                foodQuantityToAdd = data.getIntExtra("FoodQuantity", 0);
+
+                addToShoppingList(new foodItem(foodNameToAdd, foodQuantityToAdd));
+                refreshShoppingList();
+            }
+
+            if(resultCode == Activity.RESULT_CANCELED){
+                Log.d("UserInputEmpty", "Nothing returned");
+            }
+        }
+
+        if(requestCode == 2){
+            if(resultCode == Activity.RESULT_OK){
+                foodName = data.getStringExtra("FoodName");
+
+                removeFromShoppingList(foodName);
+                refreshShoppingList();
+
+            }
+
+            if(resultCode == Activity.RESULT_CANCELED){
+                Log.d("UserInputEmpty", "Nothing returned");
+            }
+        }
     }
 
     /**
@@ -111,7 +149,6 @@ public class ShoppingListView extends AppCompatActivity {
      * dependent on the length of the shopping list
      */
     public void showShoppingList(){
-        // sets up layout for the textviews etc to be dynamically added to
         LinearLayout linearLayout=findViewById(R.id.scrllinear);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -141,26 +178,67 @@ public class ShoppingListView extends AppCompatActivity {
         }
     }
 
-    // Testing
+    /**
+     * add items to shopping list (from other object) and
+     * update the local foodArray
+     * @param toAdd
+     *      foodItem object to be added
+     */
     public void addToShoppingList(foodItem toAdd){
         shoppingList.addToShoppingList(toAdd);
+        foodArray = shoppingList.getShoppingList();
+    }
+
+    /**
+     * Search through list with name, remove name from shoppingList object
+     * Update local foodArray
+     * @param foodName
+     *      Name of food to be removed
+     */
+    public void removeFromShoppingList(String foodName){
+        int i = searchShoppingList(foodName.toUpperCase());
+        if(i>=0){
+            shoppingList.removeByIndex(i);
+            foodArray = shoppingList.getShoppingList();
+        }else{
+
+            showMessage(foodName + " does't exist in the shopping list");
+            Log.d("error", "Food not found in list");
+        }
+    }
+
+    /**
+     * Searches through list to find name to remove
+     * Convert everything to upper case so users case doesn't matter
+     * @param foodName
+     *      Name of food trying to find an remove
+     * @return
+     *      Return index of the food to remove (or -1 for not found)
+     */
+    public int searchShoppingList(String foodName){
+        for(int i = 0; i<foodArray.size(); i++){
+            if(foodArray.get(i).getFoodName().toUpperCase().equals(foodName)){
+                Log.d("success?", "FOOD NAME FOUND");
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Removes all views from layout
+     * and calls method to show the foodArray again
+     */
+    private void refreshShoppingList(){
+        LinearLayout linearLayout=findViewById(R.id.scrllinear);
+        linearLayout.removeAllViews();
+        showShoppingList();
     }
 
     private void showMessage(String msg) {
         Context c = getApplicationContext();
         Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
         t.show();
-    }
-
-    private void refreshShoppingList(){
-        LinearLayout linearLayout=findViewById(R.id.scrllinear);
-        linearLayout.removeView(scrollingText1);
-        linearLayout.removeView(scrollingText2);
-        showShoppingList();
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        refreshShoppingList();
     }
 }
 
