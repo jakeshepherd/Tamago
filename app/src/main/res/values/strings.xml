@@ -24,4 +24,5 @@
     </string>
     <string name="food_name">Food Name</string>
     <string name="quantity">Quantity</string>
+    <string name="delete">Delete</string>
 </resources>

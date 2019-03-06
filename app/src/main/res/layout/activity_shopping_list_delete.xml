@@ -6,65 +6,77 @@
     android:layout_height="match_parent"
     tools:context=".ShoppingListDelete">
 
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="371dp"
-        android:layout_height="47dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginBottom="108dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/insert"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="right|bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editDeleteQuantity" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        tools:showIn="@layout/shopping_list_entry">
 
-    <EditText
-        android:id="@+id/editRemoveName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="66dp"
-        android:layout_marginEnd="85dp"
-        android:ems="10"
-        android:hint="@string/food_name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="371dp"
+            android:layout_height="47dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginStart="7dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorPrimary"
+            android:text="Delete"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/editDeleteQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="86dp"
-        android:ems="10"
-        android:hint="@string/quantity"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editRemoveName" />
+        <ImageView
+            android:id="@+id/cameraImage"
+            android:layout_width="182dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="114dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="115dp"
+            android:layout_marginBottom="489dp"
+            android:contentDescription="a simple trolley"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="144dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="66dp"
-        app:layout_constraintBottom_toTopOf="@+id/editRemoveName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        <TextView
+            android:id="@+id/addFood"
+            android:layout_width="214dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="223dp"
+            android:layout_marginEnd="148dp"
+            android:layout_marginBottom="472dp"
+            android:text="Remove food"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:justificationMode="inter_word" />
+
+        <EditText
+            android:id="@+id/editRemoveName"
+            android:layout_width="315dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="272dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="357dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Food Item"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

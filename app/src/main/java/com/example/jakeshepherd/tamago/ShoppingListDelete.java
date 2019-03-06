@@ -18,27 +18,23 @@ public class ShoppingListDelete extends AppCompatActivity {
         setUpClickListeners();
     }
 
+    /**
+     * On button click:
+     * Check length of input, then set errors
+     * then send data back through intent
+     */
     public void setUpClickListeners(){
         Button delButton = findViewById(R.id.deleteButton);
         delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-
                 EditText foodName = findViewById(R.id.editRemoveName);
-                EditText foodQuantity = findViewById(R.id.editDeleteQuantity);
 
-                if(foodName.getText().length() == 0 || foodQuantity.getText().length() == 0){
-                    if(foodName.getText().length() == 0){
-                        foodName.setError("Cannot be blank");
-                    }
-                    if(foodQuantity.getText().length() == 0){
-                        foodQuantity.setError("Cannot be blank");
-                    }
+                if(foodName.getText().length() == 0 ){
+                    foodName.setError("Cannot be blank");
                 }else{
-                    returnIntent.putExtra("FoodName", String.valueOf(foodName.getText()));
-                    returnIntent.putExtra("FoodQuantity", Integer.parseInt(String.valueOf(foodQuantity.getText())));
-
+                    returnIntent.putExtra("FoodName", String.valueOf(foodName.getText()).toUpperCase());
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }

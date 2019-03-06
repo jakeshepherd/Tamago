@@ -6,8 +6,7 @@ public class ShoppingList {
     private static ShoppingList myShoppingList = new ShoppingList();
     ArrayList<foodItem> shoppingListItems = new ArrayList<>();
 
-    private ShoppingList(){
-    }
+    private ShoppingList(){}
 
     public static ShoppingList getInstance(){
         return myShoppingList;
