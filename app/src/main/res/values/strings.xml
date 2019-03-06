@@ -4,7 +4,6 @@
     <string name="scan_food">Scan food</string>
     <string name="food_item">Food Item</string>
     <string name="expiration_date_yyyy_mm_dd">Expiry Date</string>
-    <string name="quantity">Quantity</string>
     <string name="insert">Insert</string>
     <string name="a_simple_camera">Camera Logo</string>
     <string name="title_activity_shopping_list_view">ShoppingListView</string>
@@ -23,4 +22,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="food_name">Food Name</string>
+    <string name="quantity">Quantity</string>
 </resources>

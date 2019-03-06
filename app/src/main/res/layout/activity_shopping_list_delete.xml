@@ -8,44 +8,51 @@
 
     <Button
         android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="16dp"
-        android:text="Delete"
+        android:layout_width="371dp"
+        android:layout_height="47dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginBottom="108dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/insert"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="right|bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editDeleteQuantity" />
 
     <EditText
         android:id="@+id/editRemoveName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
+        android:layout_marginTop="66dp"
         android:layout_marginEnd="85dp"
-        android:layout_marginBottom="188dp"
         android:ems="10"
-        android:hint="Food Name"
+        android:hint="@string/food_name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/editDeleteQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="83dp"
+        android:layout_marginTop="34dp"
         android:layout_marginEnd="86dp"
-        android:layout_marginBottom="108dp"
         android:ems="10"
-        android:hint="Quantity"
+        android:hint="@string/quantity"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRemoveName" />
 
     <ImageView
         android:id="@+id/imageView"

@@ -23,9 +23,9 @@ public class ShoppingListView extends AppCompatActivity {
     ShoppingList shoppingList;
     ArrayList<foodItem> foodArray;
     TextView scrollingText1, scrollingText2;
-    String foodName;
-    int foodQuantity;
-    int refreshCount = 0;
+    String foodName, foodNameToAdd;
+    int foodQuantity, foodQuantityToAdd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,44 +40,43 @@ public class ShoppingListView extends AppCompatActivity {
         foodArray = shoppingList.getShoppingList();
 
 
-
         // testing stuff
 
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
-        addToShoppingList(new foodItem("Egg", 2));
-        addToShoppingList(new foodItem("Bacon", 500));
-        addToShoppingList(new foodItem("Banana", 6));
-        addToShoppingList(new foodItem("Yogurt", 1));
-        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
+//        addToShoppingList(new foodItem("Egg", 2));
+//        addToShoppingList(new foodItem("Bacon", 500));
+//        addToShoppingList(new foodItem("Banana", 6));
+//        addToShoppingList(new foodItem("Yogurt", 1));
+//        addToShoppingList(new foodItem("Granola", 100));
 
         showShoppingList();
         setupOnClickListeners();
@@ -101,13 +100,6 @@ public class ShoppingListView extends AppCompatActivity {
             }
         });
 
-        Button del = findViewById(R.id.deleteTextButton);
-        del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("WORK", "PLEASE JUST WORK");
-            }
-        });
 
 
     }
@@ -124,9 +116,6 @@ public class ShoppingListView extends AppCompatActivity {
         //-------
 
         //-------
-
-        refreshCount++;
-        Log.d("RefreshCount: ", String.valueOf(refreshCount));
 
         // iterates through entire foodArray
         for (int i = 0; i < foodArray.size(); i++) {
@@ -153,6 +142,7 @@ public class ShoppingListView extends AppCompatActivity {
     // Testing
     public void addToShoppingList(foodItem toAdd){
         shoppingList.addToShoppingList(toAdd);
+        foodArray = shoppingList.getShoppingList();
     }
 
     private void showMessage(String msg) {
@@ -174,10 +164,23 @@ public class ShoppingListView extends AppCompatActivity {
                 foodQuantity = data.getIntExtra("FoodQuantity", 0);
                 showMessage("name: " + foodName + " Quantity: " + foodQuantity);
 
-                // todo -- params might need changing
                 removeFromShoppingList(foodName);
                 refreshShoppingList();
 
+            }
+
+            if(resultCode == Activity.RESULT_CANCELED){
+                Log.d("UserInputEmpty", "Nothing returned");
+            }
+        }
+        if(requestCode == 1){
+            if(resultCode == Activity.RESULT_OK){
+                foodNameToAdd = data.getStringExtra("FoodName");
+                foodQuantityToAdd = data.getIntExtra("FoodQuantity", 0);
+                showMessage("name: " + foodNameToAdd + " Quantity: " + foodQuantityToAdd);
+
+                addToShoppingList(new foodItem(foodNameToAdd, foodQuantityToAdd));
+                refreshShoppingList();
             }
 
             if(resultCode == Activity.RESULT_CANCELED){
@@ -201,18 +204,8 @@ public class ShoppingListView extends AppCompatActivity {
     public void removeFromShoppingList(String foodName){
         int i = searchShoppingList(foodName);
         if(i>=0){
-            for(int j = 0; j<foodArray.size(); j++){
-                Log.d("BEFORE food " + j, foodArray.get(j).getFoodName());
-            }
             shoppingList.removeByIndex(i);
-            //foodArray.remove(i);
-
             foodArray = shoppingList.getShoppingList();
-
-            for(int j = 0; j<foodArray.size(); j++){
-                Log.d("AFTER food " + j, foodArray.get(j).getFoodName());
-            }
-
         }else{
             //todo -- better error thing
             Log.d("error", "ERROR");

@@ -28,11 +28,20 @@ public class ShoppingListDelete extends AppCompatActivity {
                 EditText foodName = findViewById(R.id.editRemoveName);
                 EditText foodQuantity = findViewById(R.id.editDeleteQuantity);
 
-                returnIntent.putExtra("FoodName", String.valueOf(foodName.getText()));
-                returnIntent.putExtra("FoodQuantity", Integer.parseInt(String.valueOf(foodQuantity.getText())));
+                if(foodName.getText().length() == 0 || foodQuantity.getText().length() == 0){
+                    if(foodName.getText().length() == 0){
+                        foodName.setError("Cannot be blank");
+                    }
+                    if(foodQuantity.getText().length() == 0){
+                        foodQuantity.setError("Cannot be blank");
+                    }
+                }else{
+                    returnIntent.putExtra("FoodName", String.valueOf(foodName.getText()));
+                    returnIntent.putExtra("FoodQuantity", Integer.parseInt(String.valueOf(foodQuantity.getText())));
 
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                }
             }
         });
     }
