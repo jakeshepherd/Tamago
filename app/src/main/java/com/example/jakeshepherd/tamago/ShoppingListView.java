@@ -49,7 +49,10 @@ public class ShoppingListView extends AppCompatActivity {
 
         // local arraylist to store shopping list
         foodArray = shoppingList.getShoppingList();
-        loadShoppingList(foodArray);
+        if(foodArray.size() == 0){
+            loadShoppingList(foodArray);
+        }
+
 
 
         //-----------
