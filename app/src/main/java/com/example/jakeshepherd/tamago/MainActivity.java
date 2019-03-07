@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity{
                 startActivityForResult(new Intent(MainActivity.this, ManualEntry.class), 2);
             }
         });
-        
+
+        /*
         Button button = findViewById(R.id.testingButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(new Intent(MainActivity.this, ShoppingListView.class));
             }
         });
+        */
         
         del.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        /*
         Button button = findViewById(R.id.testingButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(new Intent(MainActivity.this, ShoppingListView.class));
             }
         });
+        */
         updateFridge();
 
     }

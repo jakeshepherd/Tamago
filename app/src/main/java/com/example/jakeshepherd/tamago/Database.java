@@ -50,7 +50,7 @@ public class Database extends SQLiteOpenHelper {
      * Insert individual data to the database
      */
 
-    protected boolean insertDataFromObject(FoodItem toAdd) {
+    protected boolean insertDataFromObject(foodItem toAdd) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -79,7 +79,7 @@ public class Database extends SQLiteOpenHelper {
      * @param toUpdate Item to be updated
      * @return true if update works
      */
-    protected boolean updateData(String foodNum, FoodItem toUpdate) {
+    protected boolean updateData(String foodNum, foodItem toUpdate) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 

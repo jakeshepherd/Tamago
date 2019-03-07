@@ -79,7 +79,7 @@ public class ManualEntry extends AppCompatActivity {
                 }
 
                 Database db = new Database(ManualEntry.this);
-                db.insertDataFromObject(new FoodItem(foodName, foodCategory, integerQuantity, foodExpirationDate));
+                db.insertDataFromObject(new foodItem(foodName, foodCategory, integerQuantity, foodExpirationDate));
                 List <String> listOfData = db.getAllFoodNames();
                 for(String x: listOfData)
                     Log.d("data", x);

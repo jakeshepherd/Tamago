@@ -22,14 +22,17 @@ public class foodItem implements Serializable {
 
     public foodItem(String newFoodName, int newQuantity){
         foodName = newFoodName;
-        quantity = newQuantity;
+        foodQuantity = newQuantity;
     }
 
     protected foodItem(String foodName, String foodCategory, int foodQuantity, String expiryDate){
         this.foodName = foodName;
         this.foodCategory = foodCategory;
         this.foodQuantity = foodQuantity;
-        this.expiryDate = expiryDate;
+        //convert string to date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateExpiryDate = LocalDate.parse(expiryDate, formatter);
+        this.expiryDate = dateExpiryDate;
     }
 
     protected String getFoodName(){
@@ -45,7 +48,7 @@ public class foodItem implements Serializable {
     }
 
     protected String getExpiryDate(){
-        return expiryDate;
+        return expiryDate.toString();
     }
 }
 

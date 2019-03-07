@@ -154,7 +154,7 @@ public class ShoppingListView extends AppCompatActivity {
             // build TextView 2
             scrollingText2 = new TextView(this);
 
-            scrollingText2.setText(new StringBuilder().append("     Amount: ").append(foodArray.get(i).getQuantity()).toString());
+            scrollingText2.setText(new StringBuilder().append("     Amount: ").append(foodArray.get(i).getFoodQuantity()).toString());
             scrollingText2.setTextSize(14);
             scrollingText2.setTextColor(Color.DKGRAY);
 
