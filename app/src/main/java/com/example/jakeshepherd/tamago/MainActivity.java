@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        ShoppingList.getInstance();
         db.deleteTable();
         db.manuallyCreateTable();
         super.onCreate(savedInstanceState);
@@ -41,6 +42,15 @@ public class MainActivity extends AppCompatActivity{
                 startActivityForResult(new Intent(MainActivity.this, ManualEntry.class), 2);
             }
         });
+        
+        Button button = findViewById(R.id.testingButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ShoppingListView.class));
+            }
+        });
+        
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
