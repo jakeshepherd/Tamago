@@ -15,6 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 // TODO -- move everything to caps
@@ -24,8 +29,14 @@ public class ShoppingListView extends AppCompatActivity {
     ArrayList<foodItem> foodArray;
     TextView scrollingText1, scrollingText2;
     String foodName, foodNameToAdd;
+    String filename = "saved_shopping_list.txt";
     int foodQuantityToAdd;
 
+    private void printList(ArrayList<foodItem>foodArray){
+        for (int i = 0; i < foodArray.size(); i++){
+            Log.d("File I/O", foodArray.get(i).getFoodName());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,45 +49,15 @@ public class ShoppingListView extends AppCompatActivity {
 
         // local arraylist to store shopping list
         foodArray = shoppingList.getShoppingList();
+        if(foodArray.size() == 0){
+            loadShoppingList(foodArray);
+        }
 
 
-        // testing stuff
 
-//        addToShoppingList(new foodItem("Egg", 2));
-//        addToShoppingList(new foodItem("Bacon", 500));
-//        addToShoppingList(new foodItem("Banana", 6));
-//        addToShoppingList(new foodItem("Yogurt", 1));
-//        addToShoppingList(new foodItem("Granola", 100));
-//        addToShoppingList(new foodItem("Egg", 2));
-//        addToShoppingList(new foodItem("Bacon", 500));
-//        addToShoppingList(new foodItem("Banana", 6));
-//        addToShoppingList(new foodItem("Yogurt", 1));
-//        addToShoppingList(new foodItem("Granola", 100));
-//        addToShoppingList(new foodItem("Egg", 2));
-//        addToShoppingList(new foodItem("Bacon", 500));
-//        addToShoppingList(new foodItem("Banana", 6));
-//        addToShoppingList(new foodItem("Yogurt", 1));
-//        addToShoppingList(new foodItem("Granola", 100));
-//        addToShoppingList(new foodItem("Egg", 2));
-//        addToShoppingList(new foodItem("Bacon", 500));
-//        addToShoppingList(new foodItem("Banana", 6));
-//        addToShoppingList(new foodItem("Yogurt", 1));
-//        addToShoppingList(new foodItem("Granola", 100));
-//        addToShoppingList(new foodItem("Egg", 2));
-//        addToShoppingList(new foodItem("Bacon", 500));
-//        addToShoppingList(new foodItem("Banana", 6));
-//        addToShoppingList(new foodItem("Yogurt", 1));
-//        addToShoppingList(new foodItem("Granola", 100));
-//        addToShoppingList(new foodItem("Egg", 2));
-//        addToShoppingList(new foodItem("Bacon", 500));
-//        addToShoppingList(new foodItem("Banana", 6));
-//        addToShoppingList(new foodItem("Yogurt", 1));
-//        addToShoppingList(new foodItem("Granola", 100));
-//        addToShoppingList(new foodItem("Egg", 2));
-//        addToShoppingList(new foodItem("Bacon", 500));
-//        addToShoppingList(new foodItem("Banana", 6));
-//        addToShoppingList(new foodItem("Yogurt", 1));
-//        addToShoppingList(new foodItem("Granola", 100));
+        //-----------
+        printList(foodArray);
+        //-----------
 
         showShoppingList();
         setupOnClickListeners();
@@ -120,7 +101,12 @@ public class ShoppingListView extends AppCompatActivity {
                 foodNameToAdd = data.getStringExtra("FoodName");
                 foodQuantityToAdd = data.getIntExtra("FoodQuantity", 0);
 
+                printList(foodArray);
+                Log.d("Before Add","Above");
                 addToShoppingList(new foodItem(foodNameToAdd, foodQuantityToAdd));
+                printList(foodArray);
+                saveShoppingList(foodArray);
+                printList(foodArray);
                 refreshShoppingList();
             }
 
@@ -232,6 +218,7 @@ public class ShoppingListView extends AppCompatActivity {
     private void refreshShoppingList(){
         LinearLayout linearLayout=findViewById(R.id.scrllinear);
         linearLayout.removeAllViews();
+        saveShoppingList(foodArray);
         showShoppingList();
     }
 
@@ -239,6 +226,46 @@ public class ShoppingListView extends AppCompatActivity {
         Context c = getApplicationContext();
         Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
         t.show();
+    }
+
+    private void saveShoppingList(ArrayList<foodItem> foodArray){
+
+        try{
+            FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
+            ObjectOutputStream out = new ObjectOutputStream(fos);
+            out.writeObject(foodArray);
+            out.close();
+            fos.close();
+            showMessage("Saving Successful");
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            showMessage("Saving was Unsuccessful");
+        }
+    }
+
+    private void loadShoppingList(ArrayList<foodItem> initialList){
+        ArrayList<foodItem> toReturn = initialList;
+
+        try{
+            FileInputStream is = openFileInput(filename);
+            ObjectInputStream in = new ObjectInputStream(is);
+            toReturn = (ArrayList<foodItem>)in.readObject();
+            in.close();
+            is.close();
+            showMessage("Loading Succeeded");
+            for (int i = 0; i < toReturn.size(); i++){
+                shoppingList.addToShoppingList(toReturn.get(i));
+            }
+        }
+        catch (IOException | ClassNotFoundException e){
+            e.printStackTrace();
+            showMessage("Loading Failed");
+        }
+
+        Log.d("File I/O", toReturn.toString());
+
+
     }
 }
 
