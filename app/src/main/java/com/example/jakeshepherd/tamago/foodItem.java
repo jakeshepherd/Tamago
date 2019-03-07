@@ -1,8 +1,29 @@
 package com.example.jakeshepherd.tamago;
 
-public class foodItem {
-    private String foodName, foodCategory, expiryDate;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
+public class foodItem implements Serializable {
+    private String foodName;
+    private LocalDate expiryDate;
+    private String foodCategory;
     private int foodQuantity;
+
+    public foodItem(String newFoodName, String newExpiryDate, String newFoodCategory){
+        foodName = newFoodName;
+        foodCategory = newFoodCategory;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        expiryDate = LocalDate.parse(newExpiryDate, formatter);
+    }
+
+    public foodItem(String newFoodName, int newQuantity){
+        foodName = newFoodName;
+        quantity = newQuantity;
+    }
 
     protected foodItem(String foodName, String foodCategory, int foodQuantity, String expiryDate){
         this.foodName = foodName;
@@ -26,10 +47,5 @@ public class foodItem {
     protected String getExpiryDate(){
         return expiryDate;
     }
-
-    /* protected int getDaysToExpiry(){
-        Period period = Period.between(LocalDate.now(), getExpiryDate());
-        return period.getDays();
-    } */
 }
 

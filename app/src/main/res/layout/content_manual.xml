@@ -49,6 +49,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="30dp"
         android:autofillHints=""
+
         android:ems="10"
         android:hint="@string/food_item"
         android:inputType="textPersonName"
@@ -79,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/foodItem" />
 
     <EditText
-        android:id="@+id/quantity"
+        android:id="@+id/editDeleteQuantity"
         android:layout_width="313dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"

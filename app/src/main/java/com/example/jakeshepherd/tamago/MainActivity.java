@@ -65,7 +65,16 @@ public class MainActivity extends AppCompatActivity{
                     tester.setVisibility(View.VISIBLE);
             }
         });
+
+        Button button = findViewById(R.id.testingButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ShoppingListView.class));
+            }
+        });
         updateFridge();
+
     }
 
     
