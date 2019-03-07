@@ -9,4 +9,10 @@
     <string name="food_category">Food Category</string>
     <string name="appName">Tamago</string>
     <string name="welcome_message">Welcome to Tamago!</string>
+	<string name="title_activity_shopping_list_view">ShoppingListView</string>
+    <string name="enter_shopping_list">Enter Shopping List...</string>
+    <string name="todo">TODO</string>
+    <string name="title_activity_shopping_list_add">Sign in</string>
+    <string name="food_name">Food Name</string>
+    <string name="delete">Delete</string>
 </resources>
