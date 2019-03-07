@@ -1,6 +1,5 @@
 package com.example.jakeshepherd.tamago;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class ManualEntry extends AppCompatActivity {
 
-    protected static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +78,7 @@ public class ManualEntry extends AppCompatActivity {
                 }
 
                 Database db = new Database(ManualEntry.this);
-                db.insertDataFromObject(new foodItem(foodName, foodCategory, integerQuantity, foodExpirationDate));
+                db.insertDataFromObject(new FoodItem(foodName, foodCategory, integerQuantity, foodExpirationDate));
                 List <String> listOfData = db.getAllFoodNames();
                 for(String x: listOfData)
                     Log.d("data", x);
@@ -138,18 +137,18 @@ public class ManualEntry extends AppCompatActivity {
         return true;
     }
 
-
-    protected boolean isExpired(String date) {
+    protected int daysToExpiry(String date){
         try {
-            Date expiryDate = sdf.parse(date);
-            Date todayDate = sdf.parse(sdf.format(new Date()));
-            if(todayDate.compareTo(expiryDate) > 0)
-                return true;
-            else return false;
+            return sdf.parse(sdf.format(new Date())).compareTo(sdf.parse(date));
         }
         catch (ParseException e) {
-            return true;
+            Log.d("Error", "Couldn't parse date in 'daysToExpiry'");
+            System.exit(-1);
+            return Integer.MAX_VALUE;   // shouldn't reach this line anyway
         }
+    }
 
+    protected boolean isExpired(String date) {
+        return daysToExpiry(date) <= 0;
     }
 }

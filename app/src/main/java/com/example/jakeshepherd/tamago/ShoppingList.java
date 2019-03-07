@@ -3,8 +3,9 @@ package com.example.jakeshepherd.tamago;
 import java.util.ArrayList;
 
 public class ShoppingList {
+
     private static ShoppingList myShoppingList = new ShoppingList();
-    ArrayList<foodItem> shoppingListItems = new ArrayList<>();
+    private ArrayList <FoodItem> shoppingListItems = new ArrayList <>();
 
     private ShoppingList(){}
 
@@ -12,15 +13,15 @@ public class ShoppingList {
         return myShoppingList;
     }
 
-    public void addToShoppingList(foodItem toAdd){
+    public void addToShoppingList(FoodItem toAdd){
         shoppingListItems.add(toAdd);
     }
 
-    public ArrayList<foodItem> getShoppingList(){
+    public ArrayList <FoodItem> getShoppingList(){
         return shoppingListItems;
     }
 
-    public void removeItem(foodItem foodItem){
+    public void removeItem(FoodItem foodItem){
         shoppingListItems.remove(foodItem);
     }
 

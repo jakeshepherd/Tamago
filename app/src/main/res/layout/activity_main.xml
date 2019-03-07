@@ -27,7 +27,7 @@
         layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/addFoodButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -64,7 +64,7 @@
             android:layout_marginTop="463dp"
             android:layout_marginEnd="883dp"
             android:layout_marginBottom="42dp"
-            android:text="Shopping List"
+            android:text="@string/shopping_list"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

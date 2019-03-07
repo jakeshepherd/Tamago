@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,18 +16,17 @@ public class MainActivity extends AppCompatActivity{
 
     private Database db = new Database(this);
     private LinearLayout fridge;
-    private TextView foodView, tester;
-    private FloatingActionButton fab, del;
+    private TextView tester;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        ShoppingList.getInstance();
+        // ShoppingList.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fab = findViewById(R.id.fab);
-        del = findViewById(R.id.delete);
+        FloatingActionButton fab = findViewById(R.id.addFoodButton);
+        FloatingActionButton del = findViewById(R.id.delete);
         tester = findViewById(R.id.tester);
 
         if(db.getNumberOfRows() > 1)
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void updateFridge(){
         String temp;
+        TextView foodView;
         fridge = findViewById(R.id.fridge);
         for(int i = 0; i < db.getNumberOfRows(); i ++){
             foodView = new TextView(findViewById(R.id.scrollView).getContext());

@@ -15,4 +15,5 @@
     <string name="title_activity_shopping_list_add">Sign in</string>
     <string name="food_name">Food Name</string>
     <string name="delete">Delete</string>
+    <string name="shopping_list">Shopping List</string>
 </resources>

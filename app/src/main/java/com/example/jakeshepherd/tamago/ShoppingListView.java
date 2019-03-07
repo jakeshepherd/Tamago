@@ -26,13 +26,13 @@ import java.util.ArrayList;
 
 public class ShoppingListView extends AppCompatActivity {
     ShoppingList shoppingList;
-    ArrayList<foodItem> foodArray;
+    ArrayList <FoodItem> foodArray;
     TextView scrollingText1, scrollingText2;
     String foodName, foodNameToAdd;
     String filename = "saved_shopping_list.txt";
     int foodQuantityToAdd;
 
-    private void printList(ArrayList<foodItem>foodArray){
+    private void printList(ArrayList <FoodItem> foodArray){
         for (int i = 0; i < foodArray.size(); i++){
             Log.d("File I/O", foodArray.get(i).getFoodName());
         }
@@ -42,12 +42,12 @@ public class ShoppingListView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /* Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); */
 
         shoppingList = ShoppingList.getInstance();
 
-        // local arraylist to store shopping list
+        // local ArrayList to store shopping list
         foodArray = shoppingList.getShoppingList();
         if(foodArray.size() == 0){
             loadShoppingList(foodArray);
@@ -67,7 +67,7 @@ public class ShoppingListView extends AppCompatActivity {
      * Set up on click listeners for delete and add button
      */
     public void setupOnClickListeners(){
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.addFoodButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +103,7 @@ public class ShoppingListView extends AppCompatActivity {
 
                 printList(foodArray);
                 Log.d("Before Add","Above");
-                addToShoppingList(new foodItem(foodNameToAdd, foodQuantityToAdd));
+                addToShoppingList(new FoodItem(foodNameToAdd, foodQuantityToAdd));
                 printList(foodArray);
                 saveShoppingList(foodArray);
                 printList(foodArray);
@@ -170,7 +170,7 @@ public class ShoppingListView extends AppCompatActivity {
      * @param toAdd
      *      foodItem object to be added
      */
-    public void addToShoppingList(foodItem toAdd){
+    public void addToShoppingList(FoodItem toAdd){
         shoppingList.addToShoppingList(toAdd);
         foodArray = shoppingList.getShoppingList();
     }
@@ -228,7 +228,7 @@ public class ShoppingListView extends AppCompatActivity {
         t.show();
     }
 
-    private void saveShoppingList(ArrayList<foodItem> foodArray){
+    private void saveShoppingList(ArrayList <FoodItem> foodArray){
 
         try{
             FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
@@ -244,13 +244,13 @@ public class ShoppingListView extends AppCompatActivity {
         }
     }
 
-    private void loadShoppingList(ArrayList<foodItem> initialList){
-        ArrayList<foodItem> toReturn = initialList;
+    private void loadShoppingList(ArrayList <FoodItem> initialList){
+        ArrayList <FoodItem> toReturn = initialList;
 
         try{
             FileInputStream is = openFileInput(filename);
             ObjectInputStream in = new ObjectInputStream(is);
-            toReturn = (ArrayList<foodItem>)in.readObject();
+            toReturn = (ArrayList <FoodItem>)in.readObject();
             in.close();
             is.close();
             showMessage("Loading Succeeded");

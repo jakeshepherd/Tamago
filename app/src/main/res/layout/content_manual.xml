@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/foodItem" />
 
     <EditText
-        android:id="@+id/editDeleteQuantity"
+        android:id="@+id/quantity"
         android:layout_width="313dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"

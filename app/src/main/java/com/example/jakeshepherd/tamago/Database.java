@@ -50,8 +50,8 @@ public class Database extends SQLiteOpenHelper {
      * Insert individual data to the database
      */
 
-    protected boolean insertDataFromObject(foodItem toAdd) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+    void insertDataFromObject(FoodItem toAdd) {
+        // SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_1, finalID ++);
@@ -60,7 +60,7 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_4, toAdd.getFoodQuantity());
         contentValues.put(COL_5, toAdd.getExpiryDate());
         Log.d("debug", "finalID: " + finalID);
-        return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
+        // return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
     }
 
     /**
@@ -68,7 +68,7 @@ public class Database extends SQLiteOpenHelper {
      *
      * @return Return cursor containing data from database
      */
-    protected Cursor getAllData() {
+    private Cursor getAllData() {
         return this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
@@ -79,7 +79,7 @@ public class Database extends SQLiteOpenHelper {
      * @param toUpdate Item to be updated
      * @return true if update works
      */
-    protected boolean updateData(String foodNum, foodItem toUpdate) {
+    protected boolean updateData(String foodNum, FoodItem toUpdate) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -93,7 +93,7 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
-    protected void deleteRowData(int id) {
+    void deleteRowData(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_NAME + " where " + COL_1 + " = " + id);
         id ++;
@@ -104,7 +104,10 @@ public class Database extends SQLiteOpenHelper {
         finalID --;
     }
 
-    protected List <Integer> getAllFoodIDs() {
+
+    // This was a good debugging method so I'll leave it in for now
+
+    /* protected List <Integer> getAllFoodIDs() {
         List <Integer> list = new ArrayList<>();
         Cursor res = getAllData();
         if (res.moveToFirst()) {
@@ -120,7 +123,7 @@ public class Database extends SQLiteOpenHelper {
             }
         }
         return list;
-    }
+    } */
 
 
     /**
@@ -128,7 +131,7 @@ public class Database extends SQLiteOpenHelper {
      *
      * @return String relating to the foodID that was requested
      */
-    protected String getFoodName(int foodID){
+    String getFoodName(int foodID){
         return getAllFoodNames().get(foodID);
     }
 
@@ -137,7 +140,7 @@ public class Database extends SQLiteOpenHelper {
      *
      * @return ArrayList containing all food in database
      */
-    protected List <String> getAllFoodNames() {
+     List <String> getAllFoodNames() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
         if (res.moveToFirst()) {
@@ -149,11 +152,11 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    protected String getFoodCategory(int foodID) {  // is this the most efficient way???
+    String getFoodCategory(int foodID) {  // is this the most efficient way???
         return getAllCategories().get(foodID);
     }
 
-    protected List <String> getAllCategories() {
+    private List <String> getAllCategories() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
 
@@ -166,11 +169,11 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    protected int getFoodQuantity(int foodID) {  // is this the most efficient way???
+    int getFoodQuantity(int foodID) {  // is this the most efficient way???
         return getAllQuantities().get(foodID);
     }
 
-    protected List <Integer> getAllQuantities() {
+    private List <Integer> getAllQuantities() {
         List <Integer> list = new ArrayList<>();
         Cursor res = getAllData();
         if (res.moveToFirst()) {
@@ -188,11 +191,11 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    protected String getFoodExpiryDate(int foodID){
+    String getFoodExpiryDate(int foodID){
         return getAllExpiryDates().get(foodID);
     }
 
-    protected List <String> getAllExpiryDates() {
+    private List <String> getAllExpiryDates() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
 
@@ -208,7 +211,7 @@ public class Database extends SQLiteOpenHelper {
 
 
 
-    protected int getNumberOfRows() {
+    int getNumberOfRows() {
         SQLiteDatabase db = this.getReadableDatabase();
         int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
         return count;
