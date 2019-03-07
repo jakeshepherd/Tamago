@@ -10,7 +10,7 @@ public class foodItem implements Serializable {
     private String foodName;
     private LocalDate expiryDate;
     private String foodCategory;
-    private int quantity;
+    private int foodQuantity;
 
     public foodItem(String newFoodName, String newExpiryDate, String newFoodCategory){
         foodName = newFoodName;
@@ -25,27 +25,27 @@ public class foodItem implements Serializable {
         quantity = newQuantity;
     }
 
-    public String getFoodName(){
+    protected foodItem(String foodName, String foodCategory, int foodQuantity, String expiryDate){
+        this.foodName = foodName;
+        this.foodCategory = foodCategory;
+        this.foodQuantity = foodQuantity;
+        this.expiryDate = expiryDate;
+    }
+
+    protected String getFoodName(){
         return foodName;
     }
 
-
-    public LocalDate getExpiryDate(){
-        return expiryDate;
-    }
-
-    public String getFoodCategory(){
+    protected String getFoodCategory(){
         return foodCategory;
     }
 
-    public int getDaysToExpiry(){
-        Period period = Period.between(LocalDate.now(), getExpiryDate());
-        return period.getDays();
-
+    protected int getFoodQuantity(){
+        return foodQuantity;
     }
 
-    public int getQuantity(){
-        return quantity;
+    protected String getExpiryDate(){
+        return expiryDate;
     }
 }
 

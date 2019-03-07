@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -16,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/appName" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -24,22 +26,30 @@
         android:id="@+id/include"
         layout="@layout/content_main" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/tamagoColour"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="right|bottom"
-        app:srcCompat="@drawable/tamagoicon" />
+        app:layout_anchorGravity="bottom|right"
+        app:srcCompat="@drawable/tamagoicon"
+        app:useCompatPadding="false" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@android:color/tertiary_text_light"
+        app:fabSize="auto"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="left|bottom"
+        app:maxImageSize="@android:dimen/notification_large_icon_width"
+        app:srcCompat="@android:drawable/ic_delete"
+        app:useCompatPadding="true" />
 
 
     <android.support.constraint.ConstraintLayout

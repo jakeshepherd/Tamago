@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Indstillinger</string>
+    <string name="scan_food">Scan En Fødevare</string>
+    <string name="insert">Indsæt</string>
+    <string name="food_item">Fødevare</string>
+    <string name="quantity">Antal</string>
+    <string name="a_simple_camera">Kameraslogo</string>
+    <string name="food_category">Madskategori</string>
+    <string name="expiration_date">Udløbsdato</string>
+    <string name="welcome_message">Velkommen Til Tamago</string>
+    <string name="appName">Tamago</string>
+</resources>
