@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,11 +26,16 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db.deleteTable();
+        db.manuallyCreateTable();
+
         FloatingActionButton fab = findViewById(R.id.addFoodButton);
         FloatingActionButton del = findViewById(R.id.delete);
         tester = findViewById(R.id.tester);
 
-        if(db.getNumberOfRows() > 1)
+        Log.d("debug", "" + db.getNumberOfRows());
+
+        if(db.getNumberOfRows() > 0)
             tester.setVisibility(View.GONE);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +118,7 @@ public class MainActivity extends AppCompatActivity{
         String temp;
         TextView foodView;
         fridge = findViewById(R.id.fridge);
-        for(int i = 0; i < db.getNumberOfRows(); i ++){
+        for(int i = 1; i <= db.getNumberOfRows(); i ++){
             foodView = new TextView(findViewById(R.id.scrollView).getContext());
             temp = db.getFoodName(i) + "\n" + db.getFoodCategory(i) + "\n" +
                     db.getFoodQuantity(i) + "\n" + db.getFoodExpiryDate(i);

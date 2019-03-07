@@ -24,7 +24,6 @@ public class Database extends SQLiteOpenHelper {
             COL_5 = "EXPIRY_DATE",
             typeInt = " INTEGER",
             typeString = " TEXT";
-    private static int finalID = 1;
 
     Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -51,15 +50,14 @@ public class Database extends SQLiteOpenHelper {
      */
 
     void insertDataFromObject(FoodItem toAdd) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_1, finalID ++);
+        contentValues.put(COL_1, getNumberOfRows() + 1);
         contentValues.put(COL_2, toAdd.getFoodName());
         contentValues.put(COL_3, toAdd.getFoodCategory());
         contentValues.put(COL_4, toAdd.getFoodQuantity());
         contentValues.put(COL_5, toAdd.getExpiryDate());
-        sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
+        this.getWritableDatabase().insert(TABLE_NAME, null, contentValues);
         // return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
     }
 
@@ -80,7 +78,6 @@ public class Database extends SQLiteOpenHelper {
      * @return true if update works
      */
     protected boolean updateData(String foodNum, FoodItem toUpdate) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_1, foodNum);
@@ -89,7 +86,7 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_4, toUpdate.getFoodQuantity());
         contentValues.put(COL_5, toUpdate.getExpiryDate());
 
-        sqLiteDatabase.update(TABLE_NAME, contentValues, COL_1 + " = ?", new String[]{foodNum});
+        this.getWritableDatabase().update(TABLE_NAME, contentValues, COL_1 + " = ?", new String[]{foodNum});
         return true;
     }
 
@@ -97,11 +94,10 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_NAME + " where " + COL_1 + " = " + id);
         id ++;
-        while(id < getNumberOfRows()){
+        while(id < getNumberOfRows()){ // when deleting a row, decrement the lower rows' IDs
             db.execSQL("update " + TABLE_NAME + " set " + COL_1 + " = " + (id - 1) + " where " + COL_1 + " = " + id);
             id ++;
         }
-        finalID --;
     }
 
 
@@ -125,28 +121,25 @@ public class Database extends SQLiteOpenHelper {
         return list;
     } */
 
-    String getFoodName2(int foodID){
-        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_2 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
-        if(cursor.moveToFirst())
-            return cursor.getString(0);
-        return "error";
-    }
-
-
     /**
      * Get specific food name
      *
      * @return String relating to the foodID that was requested
      */
     String getFoodName(int foodID){
-        return getAllFoodNames().get(foodID);
+        String returnString;
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_2 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
+        if(cursor.moveToFirst())
+            returnString = cursor.getString(0);
+        else returnString = "error";
+        cursor.close();
+        return returnString;
     }
 
-    /**
-     * Get all food stored in database
-     *
-     * @return ArrayList containing all food in database
-     */
+                // these 'getAll' methods are really inefficient, I'll gladly rewrite them if
+                // they're ever needed - Alex B
+
+    /*
      List <String> getAllFoodNames() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
@@ -156,15 +149,21 @@ public class Database extends SQLiteOpenHelper {
                 res.moveToNext();
             }
         }
-        // res.close();
+        res.close();
         return list;
+    } */
+
+    String getFoodCategory(int foodID) {
+        String returnString;
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_3 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
+        if(cursor.moveToFirst())
+            returnString = cursor.getString(0);
+        else returnString = "error";
+        cursor.close();
+        return returnString;
     }
 
-    String getFoodCategory(int foodID) {  // is this the most efficient way???
-        return getAllCategories().get(foodID);
-    }
-
-    private List <String> getAllCategories() {
+    /*List <String> getAllCategories() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
 
@@ -174,14 +173,27 @@ public class Database extends SQLiteOpenHelper {
                 res.moveToNext();
             }
         }
+        res.close();
         return list;
+    } */
+
+    int getFoodQuantity(int foodID){
+        String returnString;
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_4 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
+        if(cursor.moveToFirst())
+            returnString = cursor.getString(0);
+        else returnString = "error";
+        cursor.close();
+        try{
+            return Integer.parseInt(returnString);
+        }
+        catch(NumberFormatException e){
+            Log.d("error", "Couldn't parse food quantity string");
+            return -1;
+        }
     }
 
-    int getFoodQuantity(int foodID) {  // is this the most efficient way???
-        return getAllQuantities().get(foodID);
-    }
-
-    private List <Integer> getAllQuantities() {
+    /* List <Integer> getAllQuantities() {
         List <Integer> list = new ArrayList<>();
         Cursor res = getAllData();
         if (res.moveToFirst()) {
@@ -196,14 +208,21 @@ public class Database extends SQLiteOpenHelper {
                 res.moveToNext();
             }
         }
+        res.close();
         return list;
-    }
+    } */
 
     String getFoodExpiryDate(int foodID){
-        return getAllExpiryDates().get(foodID);
+        String returnString;
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_5 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
+        if(cursor.moveToFirst())
+            returnString = cursor.getString(0);
+        else returnString = "error";
+        cursor.close();
+        return returnString;
     }
 
-    private List <String> getAllExpiryDates() {
+    /* List <String> getAllExpiryDates() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
 
@@ -213,32 +232,25 @@ public class Database extends SQLiteOpenHelper {
                 res.moveToNext();
             }
         }
+        res.close();
         return list;
-    }
-
-
-
+    } */
 
     int getNumberOfRows() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
-        return count;
+        return (int) DatabaseUtils.queryNumEntries(this.getReadableDatabase(), TABLE_NAME);
     }
 
     protected void deleteTable(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("drop table if exists " + TABLE_NAME);
+        this.getWritableDatabase().execSQL("drop table if exists " + TABLE_NAME);
         Log.d("info", "dropped table: " + TABLE_NAME);
     }
 
     protected void deleteAllRows(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from " + TABLE_NAME);
+        this.getWritableDatabase().execSQL("delete from " + TABLE_NAME);
     }
 
     protected void manuallyCreateTable(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt +
+        this.getWritableDatabase().execSQL("create table if not exists " + TABLE_NAME + "(" + COL_1 + typeInt +
                 " PRIMARY KEY, " + COL_2 + typeString + ", " + COL_3 + typeString
                 + ", " + COL_4 + typeInt + ", " + COL_5 + typeString + ")");
         Log.d("info", "manually created new table: " + TABLE_NAME);
