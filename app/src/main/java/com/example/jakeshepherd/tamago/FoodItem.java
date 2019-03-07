@@ -1,10 +1,10 @@
 package com.example.jakeshepherd.tamago;
 
-public class FoodItem {
+public class foodItem {
     private String foodName, foodCategory, expiryDate;
     private int foodQuantity;
 
-    protected FoodItem(String foodName, String foodCategory, int foodQuantity, String expiryDate){
+    protected foodItem(String foodName, String foodCategory, int foodQuantity, String expiryDate){
         this.foodName = foodName;
         this.foodCategory = foodCategory;
         this.foodQuantity = foodQuantity;
