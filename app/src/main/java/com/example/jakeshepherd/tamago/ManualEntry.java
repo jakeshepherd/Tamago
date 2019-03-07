@@ -12,12 +12,17 @@ import android.widget.Button;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ManualEntry extends AppCompatActivity {
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,17 +143,10 @@ public class ManualEntry extends AppCompatActivity {
     }
 
     protected int daysToExpiry(String date){
-        try {
-            return sdf.parse(sdf.format(new Date())).compareTo(sdf.parse(date));
-        }
-        catch (ParseException e) {
-            Log.d("Error", "Couldn't parse date in 'daysToExpiry'");
-            System.exit(-1);
-            return Integer.MAX_VALUE;   // shouldn't reach this line anyway
-        }
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
-    protected boolean isExpired(String date) {
+    protected boolean isExpired(String date){
         return daysToExpiry(date) <= 0;
     }
 }

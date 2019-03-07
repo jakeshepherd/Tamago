@@ -1,11 +1,8 @@
 package com.example.jakeshepherd.tamago;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 
-class FoodItem implements Serializable {
+public class FoodItem implements Serializable {
     private String foodName, expiryDate, foodCategory;
     private int foodQuantity;
 

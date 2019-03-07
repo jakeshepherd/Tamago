@@ -51,7 +51,7 @@ public class Database extends SQLiteOpenHelper {
      */
 
     void insertDataFromObject(FoodItem toAdd) {
-        // SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_1, finalID ++);
@@ -59,7 +59,7 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_3, toAdd.getFoodCategory());
         contentValues.put(COL_4, toAdd.getFoodQuantity());
         contentValues.put(COL_5, toAdd.getExpiryDate());
-        Log.d("debug", "finalID: " + finalID);
+        sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         // return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
     }
 
@@ -89,7 +89,7 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COL_4, toUpdate.getFoodQuantity());
         contentValues.put(COL_5, toUpdate.getExpiryDate());
 
-        sqLiteDatabase.update(TABLE_NAME, contentValues, "FOOD_NUMBER = ?", new String[]{foodNum});
+        sqLiteDatabase.update(TABLE_NAME, contentValues, COL_1 + " = ?", new String[]{foodNum});
         return true;
     }
 
@@ -125,6 +125,13 @@ public class Database extends SQLiteOpenHelper {
         return list;
     } */
 
+    String getFoodName2(int foodID){
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_2 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
+        if(cursor.moveToFirst())
+            return cursor.getString(0);
+        return "error";
+    }
+
 
     /**
      * Get specific food name
@@ -149,6 +156,7 @@ public class Database extends SQLiteOpenHelper {
                 res.moveToNext();
             }
         }
+        // res.close();
         return list;
     }
 

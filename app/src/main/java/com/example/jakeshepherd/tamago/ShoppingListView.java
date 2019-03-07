@@ -250,8 +250,8 @@ public class ShoppingListView extends AppCompatActivity {
         try{
             FileInputStream is = openFileInput(filename);
             ObjectInputStream in = new ObjectInputStream(is);
-            toReturn = (ArrayList <FoodItem>)in.readObject();
-            in.close();
+            toReturn = (ArrayList <FoodItem>)in.readObject();   // need to 'check' this cast,
+            in.close();                                         // whatever that means
             is.close();
             showMessage("Loading Succeeded");
             for (int i = 0; i < toReturn.size(); i++){
