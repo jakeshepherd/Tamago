@@ -36,8 +36,11 @@ public class Popup extends AppCompatActivity {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setElevation(20);
 <<<<<<< HEAD
+<<<<<<< HEAD
         getWindow().setLayout((int) (width*0.6), (int) (height*0.25));
 
+=======
+>>>>>>> parent of 421094f... thing next thing might break the app
 =======
 >>>>>>> parent of 421094f... thing next thing might break the app
         setOnCLickListeners();
