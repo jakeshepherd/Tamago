@@ -103,6 +103,11 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
+    void deleteRowDataFromName(String toDelete){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME + " where " + COL_2 + " = " + toDelete);
+    }
+
 
     // This was a good debugging method so I'll leave it in for now
 

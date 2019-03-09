@@ -1,10 +1,12 @@
 package com.example.jakeshepherd.tamago;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
@@ -26,14 +29,12 @@ public class MainActivity extends AppCompatActivity
 
     Database db = new Database(this);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,12 +65,39 @@ public class MainActivity extends AppCompatActivity
         deleteFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivityForResult(new Intent(MainActivity.this, Popup.class), 1); //1 for popup return
+
                 Log.d("should: ", "remove data from database");
             }
         });
     }
 
-    public void showDBList(){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        String foodName;
+        if(requestCode == 1){
+            if(resultCode == Activity.RESULT_OK){
+                foodName = data.getStringExtra("FoodName");
+                removeFromDB(foodName);
+                refreshList();
+
+            }else{
+                Log.d("returned: ", "nothing");
+            }
+        }
+    }
+
+    public void refreshList(){
+        LinearLayout linearLayout=findViewById(R.id.scrllinearMain);
+        linearLayout.removeAllViews();
+        showDBList();
+    }
+
+    public void removeFromDB(String toRemove){
+        db.deleteRowDataFromName(toRemove);
+    }
+
+
+        public void showDBList(){
         LinearLayout linearLayout=findViewById(R.id.scrllinearMain);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -159,4 +187,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

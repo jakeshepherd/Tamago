@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context=".Popup">
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="70dp" />
+
+    <EditText
+        android:id="@+id/editFoodName"
+        android:layout_width="143dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center_horizontal|top"
+        android:hint="Food Name"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="25dp"
+        />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:text="What do you want to remove?"
+        android:textSize="24sp">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/buttonConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        tools:layout_editor_absoluteX="245dp"
+        tools:layout_editor_absoluteY="70dp" />
+
+</android.support.constraint.ConstraintLayout>
