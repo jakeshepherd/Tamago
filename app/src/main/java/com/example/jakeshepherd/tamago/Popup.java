@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 //TODO -- the popup is insanely ugly but its being a nightmare
-//TODO -- upercase thing for deleting
 public class Popup extends AppCompatActivity {
     Button cancelButton, confirmButton;
     EditText nameToDelete;
@@ -32,17 +31,9 @@ public class Popup extends AppCompatActivity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width*0.65), (int) (height*0.25));
-
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setElevation(20);
-<<<<<<< HEAD
-<<<<<<< HEAD
-        getWindow().setLayout((int) (width*0.6), (int) (height*0.25));
 
-=======
->>>>>>> parent of 421094f... thing next thing might break the app
-=======
->>>>>>> parent of 421094f... thing next thing might break the app
         setOnCLickListeners();
     }
 
