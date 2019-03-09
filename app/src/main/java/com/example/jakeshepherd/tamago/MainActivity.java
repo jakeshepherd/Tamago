@@ -1,6 +1,7 @@
 package com.example.jakeshepherd.tamago;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,11 +20,10 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    //TODO -- need to add deleting properly
 
     TextView scrollingText1, scrollingText2;
 
@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity
                 foodName = data.getStringExtra("FoodName");
                 removeFromDB(foodName);
                 refreshList();
-
             }else{
                 Log.d("returned: ", "nothing");
             }
@@ -93,7 +92,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void removeFromDB(String toRemove){
-        db.deleteRowDataFromName(toRemove);
+        int i = db.deleteRowDataFromName(toRemove);
+        if(i < 0){
+            showMessage("Could not find item in database");
+        }else{
+            db.deleteRowData(i);
+        }
     }
 
 
@@ -186,6 +190,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showMessage(String msg) {
+        Context c = getApplicationContext();
+        Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
+        t.show();
     }
 
 

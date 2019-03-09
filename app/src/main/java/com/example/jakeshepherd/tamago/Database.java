@@ -92,20 +92,31 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
+//    public Integer deleteRowData(int id){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        return db.delete(TABLE_NAME, "FOOD_NAME = ?", new Integer[] {id});
+//    }
+
     void deleteRowData(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_NAME + " where " + COL_1 + " = " + id);
         id ++;
 
-        while(id < getNumberOfRows()){ // when deleting a row, decrement the lower rows' IDs
+        while(id <= getNumberOfRows()){ // when deleting a row, decrement the lower rows' IDs
             db.execSQL("update " + TABLE_NAME + " set " + COL_1 + " = " + (id - 1) + " where " + COL_1 + " = " + id);
             id ++;
         }
     }
 
-    void deleteRowDataFromName(String toDelete){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from " + TABLE_NAME + " where " + COL_2 + " = " + toDelete);
+    int deleteRowDataFromName(String toDelete){
+        for(int i = 0; i<getNumberOfRows(); i++){
+            if(toDelete.equals(getFoodName(i))){
+                return i;
+            }
+        }
+
+        //if fail to find
+        return -1;
     }
 
 

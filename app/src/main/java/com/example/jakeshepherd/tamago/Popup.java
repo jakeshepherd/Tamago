@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+//TODO -- the popup is insanely ugly but its being a nightmare
+//TODO -- upercase thing for deleting
 public class Popup extends AppCompatActivity {
     Button cancelButton, confirmButton;
     EditText nameToDelete;
@@ -26,7 +29,7 @@ public class Popup extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width*0.8), (int) (height*0.6));
+        getWindow().setLayout((int) (width*0.6), (int) (height*0.3));
 
         setOnCLickListeners();
     }
@@ -51,7 +54,7 @@ public class Popup extends AppCompatActivity {
                 if(nameToDelete.getText().length() == 0){
                     nameToDelete.setError("Must be filled in");
                 }else{
-                    returnIntent.putExtra("FoodName", nameToDelete.getText());
+                    returnIntent.putExtra("FoodName", String.valueOf(nameToDelete.getText()));
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }
