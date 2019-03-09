@@ -13,14 +13,12 @@ import android.widget.Button;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class ManualEntry extends AppCompatActivity {
+    Database db = new Database(this);
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 
@@ -29,6 +27,7 @@ public class ManualEntry extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manualentrylayout);
 
+
         Button insert = findViewById(R.id.insertButton);
 
         insert.setOnClickListener(new View.OnClickListener(){
@@ -36,10 +35,12 @@ public class ManualEntry extends AppCompatActivity {
             public void onClick(View view) {
                 boolean validName, validCategory, validQuantity, validDate, alreadyExpired;
                 String foodName, foodCategory, foodQuantity, foodExpirationDate;
+
                 foodName = ((EditText)findViewById(R.id.foodItem)).getText().toString().trim();
                 foodCategory = ((EditText)findViewById(R.id.foodCategory)).getText().toString().trim();
                 foodQuantity = ((EditText)findViewById(R.id.quantity)).getText().toString().trim();
                 foodExpirationDate = ((EditText)findViewById(R.id.expirationDate)).getText().toString().trim();
+
                 int integerQuantity;
 
                 try{
@@ -82,11 +83,9 @@ public class ManualEntry extends AppCompatActivity {
                     return;
                 }
 
-                Database db = new Database(ManualEntry.this);
                 db.insertDataFromObject(new FoodItem(foodName, foodCategory, integerQuantity, foodExpirationDate));
-                // making a FoodItem here is entirely redundant at the moment
-                setResult(2, new Intent());
-                finish();
+
+                startActivity(new Intent(ManualEntry.this, MainActivity.class));
             }
         });
 
