@@ -86,7 +86,7 @@
         android:layout_marginBottom="150dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/expiration_date"
+        android:hint="Expiry Date (DD/MM/YYYY)"
         android:inputType="date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

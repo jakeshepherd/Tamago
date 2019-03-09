@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
     public void removeFromDB(String toRemove){
         int i = db.deleteRowDataFromName(toRemove);
         if(i < 0){
-            showMessage("Could not find item in database");
+            showMessage("Could not find item in your ingredients");
         }else{
             db.deleteRowData(i);
         }

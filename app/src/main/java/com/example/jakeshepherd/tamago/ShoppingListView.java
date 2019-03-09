@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -212,26 +213,34 @@ public class ShoppingListView extends AppCompatActivity
 
         //-------
 
-        // iterates through entire foodArray
-        for (int i = 0; i < foodArray.size(); i++) {
-            // build TextView 1
-            scrollingText1 = new TextView(this);
+        if(foodArray.size()<=0){
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.trolley);
 
-            scrollingText1.setText(new StringBuilder().append("  ").append(foodArray.get(i).getFoodName()).toString());
-            scrollingText1.setTextSize(30);
-            scrollingText1.setTextColor(Color.BLACK);
+            linearLayout.addView(imageView, lp);
+        }else{
+            for (int i = 0; i < foodArray.size(); i++) {
+                // build TextView 1
+                scrollingText1 = new TextView(this);
 
-            // build TextView 2
-            scrollingText2 = new TextView(this);
+                scrollingText1.setText(new StringBuilder().append("  ").append(foodArray.get(i).getFoodName()).toString());
+                scrollingText1.setTextSize(30);
+                scrollingText1.setTextColor(Color.BLACK);
 
-            scrollingText2.setText(new StringBuilder().append("     Amount: ").append(foodArray.get(i).getFoodQuantity()).toString());
-            scrollingText2.setTextSize(14);
-            scrollingText2.setTextColor(Color.DKGRAY);
+                // build TextView 2
+                scrollingText2 = new TextView(this);
 
-            // add the dynamically created views
-            linearLayout.addView(scrollingText1, lp);
-            linearLayout.addView(scrollingText2, lp);
+                scrollingText2.setText(new StringBuilder().append("     Amount: ").append(foodArray.get(i).getFoodQuantity()).toString());
+                scrollingText2.setTextSize(14);
+                scrollingText2.setTextColor(Color.DKGRAY);
+
+                // add the dynamically created views
+                linearLayout.addView(scrollingText1, lp);
+                linearLayout.addView(scrollingText2, lp);
+            }
         }
+        // iterates through entire foodArray
+
     }
 
     /**

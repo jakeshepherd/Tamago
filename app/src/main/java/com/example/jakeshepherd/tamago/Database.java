@@ -92,11 +92,6 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
-//    public Integer deleteRowData(int id){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        return db.delete(TABLE_NAME, "FOOD_NAME = ?", new Integer[] {id});
-//    }
-
     void deleteRowData(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_NAME + " where " + COL_1 + " = " + id);
