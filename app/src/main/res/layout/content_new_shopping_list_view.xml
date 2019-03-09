@@ -29,6 +29,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="26dp"
         android:clickable="true"
+        app:backgroundTint="@color/tamagoColour"
         app:srcCompat="@drawable/tamagoicon" />
 
     <android.support.design.widget.FloatingActionButton
