@@ -8,34 +8,34 @@
         <item
             android:id="@+id/nav_home"
             android:enabled="true"
-            android:icon="@mipmap/ic_launcher_round"
+            android:icon="@drawable/ic_home"
             android:title="Home"
             android:visible="true"
             app:showAsAction="never" />
         <item
             android:id="@+id/nav_shopping_list"
-            android:icon="@drawable/trolley"
+            android:icon="@drawable/ic_action_name"
             android:title="Shopping List" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Blank" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Blank" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Blank">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Blank" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Blank" />
         </menu>
     </item>
 
