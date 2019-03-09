@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg"
+    android:background="@color/colorAccent"
     tools:context=".Popup">
 
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|center_horizontal"
-        android:text="Remove Food"
+        android:text="What do you want to remove?"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
@@ -34,14 +34,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            tools:layout_editor_absoluteX="55dp"
-            tools:layout_editor_absoluteY="70dp" />
-
-        <Button
             android:id="@+id/buttonConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,6 +41,13 @@
             tools:layout_editor_absoluteX="245dp"
             tools:layout_editor_absoluteY="70dp" />
 
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            tools:layout_editor_absoluteX="55dp"
+            tools:layout_editor_absoluteY="70dp" />
     </LinearLayout>
 
     <LinearLayout
