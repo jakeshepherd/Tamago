@@ -54,7 +54,7 @@ public class Popup extends AppCompatActivity {
                 if(nameToDelete.getText().length() == 0){
                     nameToDelete.setError("Must be filled in");
                 }else{
-                    returnIntent.putExtra("FoodName", String.valueOf(nameToDelete.getText()));
+                    returnIntent.putExtra("FoodName", String.valueOf(nameToDelete.getText()).toUpperCase());
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }

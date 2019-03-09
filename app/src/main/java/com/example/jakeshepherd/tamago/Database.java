@@ -105,7 +105,7 @@ public class Database extends SQLiteOpenHelper {
 
     int deleteRowDataFromName(String toDelete){
         for(int i = 0; i<getNumberOfRows(); i++){
-            if(toDelete.equals(getFoodName(i))){
+            if(toDelete.equals(getFoodName(i).toUpperCase())){
                 return i;
             }
         }
