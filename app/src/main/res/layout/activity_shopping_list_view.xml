@@ -9,7 +9,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/shoppingListToolbar"
+        android:id="@+id/tamagoToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -18,7 +18,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         android:visibility="visible"
-        app:title="Shopping List" />
+        app:title="Your Shopping List..." />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addFoodButton"
@@ -35,7 +35,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/shoppingListToolbar"
+        android:layout_below="@+id/tamagoToolbar"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"

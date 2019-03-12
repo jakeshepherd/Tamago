@@ -52,12 +52,14 @@ public class Database extends SQLiteOpenHelper {
     void insertDataFromObject(FoodItem toAdd) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_1, getNumberOfRows() + 1);
+        contentValues.put(COL_1, getNumberOfRows());
         contentValues.put(COL_2, toAdd.getFoodName());
         contentValues.put(COL_3, toAdd.getFoodCategory());
         contentValues.put(COL_4, toAdd.getFoodQuantity());
         contentValues.put(COL_5, toAdd.getExpiryDate());
+
         this.getWritableDatabase().insert(TABLE_NAME, null, contentValues);
+
         // return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
     }
 
@@ -94,10 +96,22 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_NAME + " where " + COL_1 + " = " + id);
         id ++;
-        while(id < getNumberOfRows()){ // when deleting a row, decrement the lower rows' IDs
+
+        while(id <= getNumberOfRows()){ // when deleting a row, decrement the lower rows' IDs
             db.execSQL("update " + TABLE_NAME + " set " + COL_1 + " = " + (id - 1) + " where " + COL_1 + " = " + id);
             id ++;
         }
+    }
+
+    int deleteRowDataFromName(String toDelete){
+        for(int i = 0; i<getNumberOfRows(); i++){
+            if(toDelete.equals(getFoodName(i).toUpperCase())){
+                return i;
+            }
+        }
+
+        //if fail to find
+        return -1;
     }
 
 
@@ -139,7 +153,7 @@ public class Database extends SQLiteOpenHelper {
                 // these 'getAll' methods are really inefficient, I'll gladly rewrite them if
                 // they're ever needed - Alex B
 
-    /*
+
      List <String> getAllFoodNames() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
@@ -151,7 +165,7 @@ public class Database extends SQLiteOpenHelper {
         }
         res.close();
         return list;
-    } */
+    }
 
     String getFoodCategory(int foodID) {
         String returnString;
