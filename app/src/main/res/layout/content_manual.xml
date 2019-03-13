@@ -78,34 +78,43 @@
         app:layout_constraintTop_toBottomOf="@+id/foodItem" />
 
     <EditText
-        android:id="@+id/expirationDate"
-        android:layout_width="313dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="150dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="Expiry Date (DD/MM/YYYY)"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
         android:id="@+id/quantity"
         android:layout_width="312dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="49dp"
-        android:layout_marginBottom="33dp"
         android:ems="10"
         android:hint="Quantity"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/expirationDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodCategory" />
+
+    <ImageView
+        android:id="@+id/calenderView"
+        android:layout_width="43dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="540dp"
+        android:layout_marginEnd="316dp"
+        android:layout_marginBottom="150dp"
+        android:src="@android:drawable/ic_menu_my_calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/calender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="249dp"
+        android:layout_marginBottom="160dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/calenderView"
+        app:layout_constraintTop_toBottomOf="@+id/quantity" />
 
 </android.support.constraint.ConstraintLayout>
