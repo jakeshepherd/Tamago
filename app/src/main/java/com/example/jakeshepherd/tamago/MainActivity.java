@@ -18,15 +18,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView scrollingText1, scrollingText2;
+    ImageView imageView;
 
     Database db = new Database(this);
 
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     public void setOnClickListeners(){
         FloatingActionButton addFood = findViewById(R.id.addFoodButton);
         FloatingActionButton deleteFood = findViewById(R.id.delete);
+
 
 
         addFood.setOnClickListener(new View.OnClickListener() {
@@ -130,9 +136,23 @@ public class MainActivity extends AppCompatActivity
             scrollingText2.setTextSize(14);
             scrollingText2.setTextColor(Color.DKGRAY);
 
+            imageView = new ImageView(this);
+
             // add the dynamically created views
             linearLayout.addView(scrollingText1, lp);
             linearLayout.addView(scrollingText2, lp);
+
+            if(db.getFoodCategory(i).toUpperCase().equals("MEAT")){
+                imageView.setImageResource(R.drawable.ic_baon);
+
+                linearLayout.addView(imageView, lp);
+            }else if(db.getFoodCategory(i).toUpperCase().equals("FRUIT")){
+                imageView.setImageResource(R.drawable.ic_fruit);
+                linearLayout.addView(imageView, lp);
+            }else if(db.getFoodCategory(i).toUpperCase().equals("DRINK")){
+                imageView.setImageResource(R.drawable.ic_drink);
+                linearLayout.addView(imageView, lp);
+            }
         }
     }
 
@@ -162,9 +182,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this, Settings.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -182,8 +202,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_sync) {
+            showMessage("working");
+            SyncData syncData = new SyncData();
+            syncData.addShoppingToDB();
         } else if (id == R.id.nav_send) {
 
         }
