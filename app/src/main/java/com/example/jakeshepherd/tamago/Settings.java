@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
+
     Database db = new Database(this);
 
     @Override
@@ -18,6 +19,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         Button deleteButton = findViewById(R.id.confirmButton);
+        Button SLdeleteButton = findViewById(R.id.SLDeleteButton);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +29,14 @@ public class Settings extends AppCompatActivity {
                 startActivity(new Intent(Settings.this, MainActivity.class));
             }
         });
+
+        // need to get this to work properly
+//        SLdeleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ShoppingList.getInstance().removeAll();
+//            }
+//        });
     }
 
     private void showMessage(String msg) {

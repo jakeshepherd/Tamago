@@ -25,6 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
@@ -142,17 +143,12 @@ public class MainActivity extends AppCompatActivity
             linearLayout.addView(scrollingText1, lp);
             linearLayout.addView(scrollingText2, lp);
 
-            if(db.getFoodCategory(i).toUpperCase().equals("MEAT")){
-                imageView.setImageResource(R.drawable.ic_baon);
-
-                linearLayout.addView(imageView, lp);
-            }else if(db.getFoodCategory(i).toUpperCase().equals("FRUIT")){
-                imageView.setImageResource(R.drawable.ic_fruit);
-                linearLayout.addView(imageView, lp);
-            }else if(db.getFoodCategory(i).toUpperCase().equals("DRINK")){
-                imageView.setImageResource(R.drawable.ic_drink);
-                linearLayout.addView(imageView, lp);
-            }
+            scrollingText1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMessage("clicked");
+                }
+            });
         }
     }
 
@@ -203,9 +199,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_sync) {
-            showMessage("working");
-            SyncData syncData = new SyncData();
-            syncData.addShoppingToDB();
+            new SyncData(this).doSyncing();
+            refreshList();
+            showMessage("Items from your shopping list have been added to your fridge");
         } else if (id == R.id.nav_send) {
 
         }

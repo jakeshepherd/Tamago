@@ -1,35 +1,25 @@
 package com.example.jakeshepherd.tamago;
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.content.Context;
 
 import java.util.ArrayList;
-//TODO -- get this to sync properly, it almsot sort of works i think
-public class SyncData extends AppCompatActivity {
+
+//TODO -- doesnt sync properly when you have equal amounts of items
+// this is quite buggy
+public class SyncData{
     Database db;
-    ShoppingList shoppingList;
-    ArrayList<FoodItem> foodArray;
-
-    SyncData(){
-        db = new Database(this);
-        shoppingList = ShoppingList.getInstance();
+    SyncData(Context context){
+        db = new Database(context);
     }
 
-    public ArrayList<FoodItem> getShoppingListData(){
-         return shoppingList.getShoppingList();
-    }
-
-    public void addShoppingToDB(){
-        foodArray = getShoppingListData();
-
-        for(int i = 0; i<foodArray.size(); i++){
-            if(foodArray.get(i).getFoodName().equals(db.getFoodName(i))){
-                Log.d("hhee", "already exists");
+    public void doSyncing(){
+        ArrayList<FoodItem> shoppingListArray = ShoppingList.getInstance().getShoppingList();
+        for(int i = 0; i<shoppingListArray.size(); i++){
+            if(!shoppingListArray.get(i).getFoodName().toUpperCase().equals(db.getFoodName(i).toUpperCase())){
+                db.insertDataFromObject(new FoodItem(shoppingListArray.get(i).getFoodName(), shoppingListArray.get(i).getFoodQuantity()));
             }else{
-                db.insertDataFromObject(new FoodItem(foodArray.get(i).getFoodName(), foodArray.get(i).getFoodCategory(),
-                        foodArray.get(i).getFoodQuantity(), foodArray.get(i).getExpiryDate()));
+                i++;
             }
         }
     }
-
 }
