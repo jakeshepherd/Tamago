@@ -8,77 +8,79 @@
     tools:context=".Popup">
 
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top|center_horizontal"
-        android:text="Edit Food"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="4dp">
-
-    </TextView>
-
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="182dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="45dp"
+        android:layout_width="260dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.011">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <Button
             android:id="@+id/updateCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="107dp"
+            android:layout_height="33dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="214dp"
+            android:layout_marginBottom="87dp"
+            android:background="@android:color/white"
             android:text="Cancel"
-            tools:layout_editor_absoluteX="55dp"
-            tools:layout_editor_absoluteY="70dp" />
+            android:textColor="@color/design_default_color_primary_dark"
+            app:backgroundTint="@android:color/white"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/updateConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="34dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="214dp"
+            android:layout_marginBottom="87dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
             android:text="Confirm"
-            tools:layout_editor_absoluteX="245dp"
-            tools:layout_editor_absoluteY="70dp" />
+            android:textColor="@color/design_default_color_primary_dark"
+            app:backgroundTint="@android:color/white"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="311dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="35dp"
+        android:layout_width="315dp"
+        android:layout_height="292dp"
+        android:layout_marginStart="48dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/text"
-        app:layout_constraintHorizontal_bias="0.015"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text">
+        app:layout_constraintTop_toBottomOf="@+id/text">
 
         <EditText
             android:id="@+id/updateFoodName"
-            android:layout_width="157dp"
+            android:layout_width="159dp"
             android:layout_height="56dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="6dp"
             android:backgroundTint="@android:color/white"
             android:ems="10"
             android:gravity="center_horizontal|top"
-            android:hint="Food Name"
+            android:hint="Name"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
             android:textColorLink="@android:color/white"
-            android:textCursorDrawable="@null"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintTop_toBottomOf="@+id/text"
             app:layout_constraintVertical_bias="0.991"
@@ -88,28 +90,22 @@
             android:id="@+id/updateFoodCategory"
             android:layout_width="159dp"
             android:layout_height="56dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="6dp"
             android:backgroundTint="@android:color/white"
             android:ems="10"
-            android:gravity="center_horizontal|top"
-            android:hint="Food Category"
+            android:gravity="center|center_horizontal"
+            android:hint="Category"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
-            android:textColorLink="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/text"
-            app:layout_constraintVertical_bias="0.991"
-            tools:layout_editor_absoluteX="134dp" />
+            android:textColorLink="@android:color/white" />
 
         <EditText
             android:id="@+id/updateFoodQuantity"
-            android:layout_width="163dp"
-            android:layout_height="wrap_content"
+            android:layout_width="159dp"
+            android:layout_height="56dp"
             android:backgroundTint="@android:color/white"
             android:ems="10"
-            android:gravity="center_horizontal|top"
-            android:hint="Food Quantity"
+            android:gravity="center|center_horizontal"
+            android:hint="Quantity"
             android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorLink="@android:color/white" />
@@ -129,5 +125,21 @@
             android:textColorLink="@android:color/white" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="168dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="17dp"
+        android:gravity="center_horizontal"
+        android:text="Edit Food:"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.312" />
 
 </android.support.constraint.ConstraintLayout>
