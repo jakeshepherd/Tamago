@@ -7,6 +7,45 @@
     tools:context=".MainActivityOld"
     tools:showIn="@layout/manualentrylayout">
 
+    <Button
+        android:id="@+id/insertButton"
+        android:layout_width="181dp"
+        android:layout_height="47dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/white"
+        android:text="@string/insert"
+        android:textColor="@color/design_default_color_primary_dark"
+        app:backgroundTint="@android:color/white"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="right|bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cancelButton" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="181dp"
+        android:layout_height="47dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="214dp"
+        android:layout_marginBottom="87dp"
+        android:background="@android:color/white"
+        android:text="Cancel"
+        android:textColor="@color/design_default_color_primary_dark"
+        app:backgroundTint="@android:color/white"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="right|bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/cameraImage"
         android:layout_width="182dp"

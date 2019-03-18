@@ -121,7 +121,7 @@ public class EditPopup extends AppCompatActivity {
     private void showDatePicker() {
         Calendar calender = Calendar.getInstance();
 
-        DatePickerDialog dpd = new DatePickerDialog(EditPopup.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dpd = new DatePickerDialog(EditPopup.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month) + "/" + Integer.toString(year);

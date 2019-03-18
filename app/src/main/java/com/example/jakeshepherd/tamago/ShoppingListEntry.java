@@ -25,7 +25,8 @@ public class ShoppingListEntry extends AppCompatActivity {
      * then send data back through intents
      */
     public void setupOnClickListeners(){
-        Button insertButton = findViewById(R.id.insertButton);
+        Button insertButton = findViewById(R.id.shoppingInsertButton);
+        Button cancelButton = findViewById(R.id.shoppingCancelButton);
 
         insertButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,8 +53,15 @@ public class ShoppingListEntry extends AppCompatActivity {
                         setResult(Activity.RESULT_OK, returnIntent);
                         finish();
                     }
-
                 }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED);
+                finish();
             }
         });
 

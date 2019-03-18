@@ -14,9 +14,11 @@
         android:layout_height="match_parent"
         android:gravity="top|center_horizontal"
         android:text="Remove Food"
+        android:textColor="@android:color/white"
+        android:textColorLink="@android:color/white"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="62dp">
 
     </TextView>
 
@@ -68,10 +70,14 @@
             android:layout_height="56dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="6dp"
+            android:backgroundTint="@android:color/white"
             android:ems="10"
             android:gravity="center_horizontal|top"
             android:hint="Food Name"
             android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textColorLink="@android:color/white"
+            android:textCursorDrawable="@null"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintTop_toBottomOf="@+id/text"
             app:layout_constraintVertical_bias="0.991"
