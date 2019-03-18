@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/apilayout">
+
+    <TextView
+        android:id="@+id/APITest"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="472dp"
+        android:text="@string/api_test"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:justificationMode="inter_word" />
+
+    <TextView
+        android:id="@+id/testResults"
+        android:layout_width="308dp"
+        android:layout_height="295dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="329dp"
+        android:text="@string/test_results"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/APITest" />
+
+
+</android.support.constraint.ConstraintLayout>
