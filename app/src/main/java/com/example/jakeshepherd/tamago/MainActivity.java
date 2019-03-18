@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity
         FloatingActionButton addFood = findViewById(R.id.addFoodButton);
         FloatingActionButton deleteFood = findViewById(R.id.delete);
 
-
-
         addFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,13 +140,6 @@ public class MainActivity extends AppCompatActivity
             // add the dynamically created views
             linearLayout.addView(scrollingText1, lp);
             linearLayout.addView(scrollingText2, lp);
-
-            scrollingText1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMessage("clicked");
-                }
-            });
         }
     }
 
@@ -179,6 +170,10 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this, Settings.class));
+            return true;
+        }
+        if(id == R.id.app_update){
+            startActivity(new Intent(MainActivity.this, EditPopup.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

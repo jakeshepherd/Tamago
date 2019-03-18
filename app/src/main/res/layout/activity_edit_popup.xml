@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/drawable_bg"
+    tools:context=".Popup">
+
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:text="Edit Food"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="4dp">
+
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="182dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="436dp"
+        android:layout_marginEnd="44dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/updateCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            tools:layout_editor_absoluteX="55dp"
+            tools:layout_editor_absoluteY="70dp" />
+
+        <Button
+            android:id="@+id/updateConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            tools:layout_editor_absoluteX="245dp"
+            tools:layout_editor_absoluteY="70dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="311dp"
+        android:layout_height="330dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="31dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/text"
+        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:layout_constraintVertical_bias="1.0">
+
+        <EditText
+            android:id="@+id/updateFoodName"
+            android:layout_width="157dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="6dp"
+            android:ems="10"
+            android:gravity="center_horizontal|top"
+            android:hint="Food Name"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:layout_constraintVertical_bias="0.991"
+            tools:layout_editor_absoluteX="134dp" />
+
+        <EditText
+            android:id="@+id/updateFoodCategory"
+            android:layout_width="159dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="6dp"
+            android:ems="10"
+            android:gravity="center_horizontal|top"
+            android:hint="Food Category"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:layout_constraintVertical_bias="0.991"
+            tools:layout_editor_absoluteX="134dp" />
+
+        <EditText
+            android:id="@+id/updateFoodQuantity"
+            android:layout_width="163dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center_horizontal|top"
+            android:hint="Food Quantity"
+            android:inputType="number" />
+
+        <ImageView
+            android:id="@+id/updateExpirationDate"
+            android:layout_width="164dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+        <TextView
+            android:id="@+id/textCalender"
+            android:layout_width="166dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
