@@ -23,6 +23,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -199,5 +202,5 @@ public class MainActivity extends AppCompatActivity
         t.show();
     }
 
-
+    
 }
