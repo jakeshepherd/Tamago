@@ -4,9 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import android.view.View;
 import android.widget.DatePicker;
@@ -16,20 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-//TODO -- date picker activity
 
 public class ManualEntry extends AppCompatActivity {
     Database db = new Database(this);
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
     EditText foodNameText;
     EditText foodCategoryText;
     EditText quantityText;
@@ -45,9 +39,14 @@ public class ManualEntry extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manualentrylayout);
 
+        calenderSetter = findViewById(R.id.calender);
+        setupOnClickListeners();
+    }
+
+    public void setupOnClickListeners(){
         Button insert = findViewById(R.id.insertButton);
         ImageView calender = findViewById(R.id.calenderView);
-        calenderSetter = findViewById(R.id.calender);
+        Button cancel = findViewById(R.id.cancelButton);
 
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +61,6 @@ public class ManualEntry extends AppCompatActivity {
                 foodNameText = findViewById(R.id.foodItem);
                 foodCategoryText = findViewById(R.id.foodCategory);
                 quantityText = findViewById(R.id.quantity);
-
 
                 if (foodNameText.getText().length() == 0 || foodCategoryText.getText().length() == 0 || quantityText.getText().length() == 0) {
                     if (foodNameText.getText().length() == 0) {
@@ -89,13 +87,20 @@ public class ManualEntry extends AppCompatActivity {
                 }
             }
         });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ManualEntry.this, MainActivity.class));
+            }
+        });
     }
 
 
     private void showDatePicker() {
         Calendar calender = Calendar.getInstance();
 
-        DatePickerDialog dpd = new DatePickerDialog(ManualEntry.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dpd = new DatePickerDialog(ManualEntry.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month) + "/" + Integer.toString(year);

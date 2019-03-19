@@ -18,18 +18,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView scrollingText1, scrollingText2;
+    ImageView imageView;
 
     Database db = new Database(this);
 
@@ -57,7 +61,6 @@ public class MainActivity extends AppCompatActivity
     public void setOnClickListeners(){
         FloatingActionButton addFood = findViewById(R.id.addFoodButton);
         FloatingActionButton deleteFood = findViewById(R.id.delete);
-
 
         addFood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +136,8 @@ public class MainActivity extends AppCompatActivity
             scrollingText2.setTextSize(14);
             scrollingText2.setTextColor(Color.DKGRAY);
 
+            imageView = new ImageView(this);
+
             // add the dynamically created views
             linearLayout.addView(scrollingText1, lp);
             linearLayout.addView(scrollingText2, lp);
@@ -165,9 +170,13 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this, Settings.class));
             return true;
         }
-
+        if(id == R.id.app_update){
+            startActivity(new Intent(MainActivity.this, EditPopup.class));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -185,8 +194,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_sync) {
+            new SyncData(this).doSyncing();
+            refreshList();
+            showMessage("Items from your shopping list have been added to your fridge");
         } else if (id == R.id.nav_send) {
 
         }
