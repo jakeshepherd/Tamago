@@ -89,6 +89,11 @@
         app:layout_constraintTop_toBottomOf="@+id/text"
         app:layout_constraintVertical_bias="1.0">
 
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/editFoodName"
             android:layout_width="157dp"
