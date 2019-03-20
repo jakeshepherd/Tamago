@@ -20,6 +20,7 @@ public class APILink extends AppCompatActivity {
 
     private String apiKey = "ac668d27e9mshb785cfffd22f03dp1f71e6jsn171dfa398c3b";
     private String baseUrl = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/";
+    private SpoonClient sc = new SpoonClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,6 @@ public class APILink extends AppCompatActivity {
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SpoonClient sc = new SpoonClient();
                 /* For now will just assume that it is input in the correct form of a string
                  of ingredients split by comma and no whitespace (eg: "apples,flour,sugar") */
                 String ingredients = ((EditText)findViewById(R.id.foodItem)).getText().toString();
