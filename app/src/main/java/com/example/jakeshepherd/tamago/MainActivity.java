@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, MainActivity.class));
         } else if (id == R.id.nav_shopping_list) {
             startActivity(new Intent(this, ShoppingListView.class));
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_api_test) {
+            startActivity(new Intent(this, APILink.class));
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

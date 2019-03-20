@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.json.JSONObject;
+import org.json.JSONException;
 import com.tamago.spoonclient4.SpoonClient;
 
 public class APILink extends AppCompatActivity {
@@ -32,38 +34,24 @@ public class APILink extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SpoonClient sc = new SpoonClient();
-
+                /* For now will just assume that it is input in the correct form of a string
+                 of ingredients split by comma and no whitespace (eg: "apples,flour,sugar") */
                 String ingredients = ((EditText)findViewById(R.id.foodItem)).getText().toString();
+                /* Generates URL, again just for now we'll get one recipe back but can change
+                resultNum to get more once all of this is working */
                 String URL = sc.URLGeneratorRBI(ingredients, 1, 1);
-                String returnedIngredients[] = sc.getIngredientList(URL, apiKey);
-                //???the other thing);
-                TextView textView = (TextView) findViewById(R.id.foodItem);
-                textView.setText("");//returnIngredients);
+                try {
+                    JSONObject returnedRecipe = sc.getAllRecipeData(URL, apiKey, 1);
+                    /* For now I'm just getting the recipe instructions but there are other parameters
+                    to get back once it's all fully working */
+                    String returnedInstructions = returnedRecipe.get("instructions").toString();
+                    TextView textView = (TextView) findViewById(R.id.testResults);
+                    textView.setText(returnedInstructions);
+                } catch(JSONException e) {
+
+                }
             }
         });
     }
-
-    /*public FridgeLink() {
-        SpoonClient sc = new SpoonClient();
-    }
-
-    public String getURL(String ingredients, int resultNum, int ranking) {
-        url = sc.URLGeneratorRBI(ingredients, resultNum, ranking);
-        return url;
-    }
-
-    public String[] getList(String Url, String Key, int index) {
-        String[] ingredientsList = sc.getIngredientsList(Url, Key, index);
-        return ingredientsList;
-    }
-
-    public JSONObject getData(String Url, String Key, int index) {
-
-    }
-    public static void main(String args[]) {
-
-        FridgeLink testFridge = new FridgeLink();
-        System.out.println(testFridge.getURL("Steak", 1, 1,));
-    } */
 }
 
