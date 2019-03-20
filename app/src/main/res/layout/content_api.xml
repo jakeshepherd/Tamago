@@ -26,19 +26,38 @@
         app:layout_constraintVertical_bias="0.0"
         tools:justificationMode="inter_word" />
 
+
+    <EditText
+        android:id="@+id/foodItem"
+        android:layout_width="313dp"
+        android:layout_height="50dp"
+
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="585dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/test_item"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/testResults"
         android:layout_width="308dp"
         android:layout_height="295dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="53dp"
-        android:layout_marginBottom="329dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="150dp"
         android:text="@string/test_results"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/APITest" />
+        app:layout_constraintTop_toBottomOf="@+id/foodItem" />
 
 
 </android.support.constraint.ConstraintLayout>

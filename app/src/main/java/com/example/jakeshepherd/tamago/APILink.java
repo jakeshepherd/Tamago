@@ -12,7 +12,7 @@ import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-//import SpoonClient;
+import com.tamago.spoonclient4.SpoonClient;
 
 public class APILink extends AppCompatActivity {
 
@@ -24,21 +24,23 @@ public class APILink extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apilayout);
 
-        //SpoonClient sc = new SpoonClient();
 
-        //Button test = (Button) findViewById(R.id.testButton);
 
-        /*button.setOnClickListener(new View.OnClickListener() {
+        Button test = (Button) findViewById(R.id.testButton);
+
+        test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String ingredients = ((EditText)findViewById(R.id.ingredients)).getText().toString();
-                String URL = sc.getURL(ingredients, 1, 1);
+                SpoonClient sc = new SpoonClient();
+
+                String ingredients = ((EditText)findViewById(R.id.foodItem)).getText().toString();
+                String URL = sc.URLGeneratorRBI(ingredients, 1, 1);
                 String returnedIngredients[] = sc.getIngredientList(URL, apiKey);
                 //???the other thing);
-                TextView textView = (TextView) findViewById(R.id.textView);
+                TextView textView = (TextView) findViewById(R.id.foodItem);
                 textView.setText("");//returnIngredients);
             }
-        }); */
+        });
     }
 
     /*public FridgeLink() {

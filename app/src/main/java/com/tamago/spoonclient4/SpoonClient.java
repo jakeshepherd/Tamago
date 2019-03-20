@@ -1,3 +1,5 @@
+package com.tamago.spoonclient4;
+
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -34,7 +36,7 @@ public class SpoonClient {
     String urlTest = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=5&ranking=1&ingredients=apples%2Cflour%2Csugar";
 
     // Requesting Function if Endpoint returns JSONArray
-    public JSONArray getAsJSONArray(String Url, String Key){
+    public JSONArray getAsJSONArray(String Url, String Key) throws JSONException {
         JSONArray json;
         try {
             HttpResponse<JsonNode> response = Unirest.get(Url)
@@ -54,7 +56,7 @@ public class SpoonClient {
     }
 
     // Requesting function if Endpoint returns a JSONObject
-    public JSONObject getAsJSONObject(String Url, String Key) {
+    public JSONObject getAsJSONObject(String Url, String Key) throws JSONException{
         JSONObject json;
         try {
             HttpResponse<JsonNode> response = Unirest.get(Url)
@@ -81,7 +83,7 @@ public class SpoonClient {
      * @param index: index of the request result (which recipe) to get the image URL from
      * @return imageURL: string that links to the image resource of the recipe provided by API
      */
-    public String getRecipeImageURL(String Url, String Key, int index){
+    public String getRecipeImageURL(String Url, String Key, int index) throws JSONException{
         JSONArray json = getAsJSONArray(Url, Key);
         String ImageURL = json.getJSONObject(index).get("image").toString();
         return ImageURL;
@@ -94,14 +96,14 @@ public class SpoonClient {
      * @param index: index of the request result (which recipe) to get the recipe ID from
      * @return id: string of the requested recipe ID
      */
-    public String getRecipeID(String Url, String Key, int index){
+    public String getRecipeID(String Url, String Key, int index) throws JSONException{
         JSONArray json = getAsJSONArray(Url, Key);
         String ID = json.getJSONObject(index).get("id").toString();
         return ID;
     }
 
     //the following function obtains the JSONObject from the Get Recipe Information Endpoint
-    public JSONObject getRecipeInfo(String Url, String Key, int index){
+    public JSONObject getRecipeInfo(String Url, String Key, int index) throws JSONException{
         String ID = getRecipeID(Url, Key, index);
         String InfoUrl = String.format("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/%s/information",ID);
         JSONObject recipeJson = getAsJSONObject(InfoUrl, apiKey);
@@ -116,7 +118,7 @@ public class SpoonClient {
      * @param index: index of the request result (which recipe) to get the recipe info from
      * @return Instructions: String containing recipe instructions
      */
-    public String getRecipeInstructions(String Url, String Key, int index){
+    public String getRecipeInstructions(String Url, String Key, int index) throws JSONException{
         JSONObject json = getRecipeInfo(Url, Key, index);
         String Instructions = json.get("instructions").toString();
         return Instructions;
@@ -129,7 +131,7 @@ public class SpoonClient {
      * @param index: index of the request result (which recipe) to get the recipe info from
      * @return RecipeTitle: String of the Recipe's name given by the API
      */
-    public String getRecipeTitle(String Url, String Key, int index){
+    public String getRecipeTitle(String Url, String Key, int index) throws JSONException{
         JSONObject json = getRecipeInfo(Url, Key, index);
         String RecipeTitle = json.get("title").toString();
         return RecipeTitle;
@@ -142,7 +144,7 @@ public class SpoonClient {
      * @param index: index of the request result (which recipe) to get the recipe info from
      * @return RecipeMins: String of time needed to make recipe
      */
-    public String getRecipeMins(String Url, String Key, int index){
+    public String getRecipeMins(String Url, String Key, int index) throws JSONException{
         JSONObject json = getRecipeInfo(Url, Key, index);
         String RecipeMins = json.get("readyInMinutes").toString();
         return RecipeMins;
@@ -154,7 +156,7 @@ public class SpoonClient {
      * @param rIndex: index of which ingredient of the recipe to get name of
      * @return Ingredient: String of ingredient name and quantity needed for recipe
      */
-    public String getIngredientInfos(JSONArray IngredientsList, int rIndex){
+    public String getIngredientInfos(JSONArray IngredientsList, int rIndex) throws JSONException{
         String ingredient = IngredientsList.getJSONObject(rIndex).get("originalString").toString();
         return ingredient;
     }
@@ -166,7 +168,7 @@ public class SpoonClient {
      * @param index: index of the request result (which recipe) to get the recipe info from
      * @return ingredientsList: String array that contains all the ingredients for given recipe
      */
-    public String[] getIngredientList(String Url, String Key, int index) {
+    public String[] getIngredientList(String Url, String Key, int index) throws JSONException{
         JSONArray recipeInfo = getRecipeInfo(Url, Key, index).getJSONArray("extendedIngredients");
         int listLength = recipeInfo.length();
         String[] ingredientsList = new String[listLength];
@@ -184,7 +186,7 @@ public class SpoonClient {
      * @param index: index of the request result (which recipe) to get the recipe info from
      * @return a filtered version of the JSON Object returned by the Endpoint excluding ingredients data
      */
-    public JSONObject getAllRecipeData(String Url, String Key, int index){
+    public JSONObject getAllRecipeData(String Url, String Key, int index) throws JSONException{
         JSONObject recipeInfo = getRecipeInfo(Url, Key, index);
         JSONObject recipeArr = new JSONObject();
         //Vegetarian
