@@ -83,7 +83,7 @@ public class EditPopup extends AppCompatActivity {
             }
         });
 
-        //todo -- updating doesnt work properly
+        //todo -- updating not working because the search method is returning -1 every time
         updateConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,11 +102,9 @@ public class EditPopup extends AppCompatActivity {
                         updateQuantity.setError("Must be more than 0");
                     }
 
-                    // todo-- this will be a lot better with the drop down option
                     int i = searchShoppingList(String.valueOf(updateName.getSelectedItem()).toUpperCase());
 
-                    db.updateData(String.valueOf(i), new FoodItem(String.valueOf(newName), String.valueOf(updateCategory.getText()),
-                            Integer.parseInt(String.valueOf(updateQuantity.getText())), date));
+                    db.updateData(String.valueOf(i), newName.getText().toString(), updateCategory.getText().toString(), Integer.parseInt(updateQuantity.getText().toString()), date);
 
                     startActivity(new Intent(EditPopup.this, MainActivity.class));
 
@@ -116,13 +114,14 @@ public class EditPopup extends AppCompatActivity {
     }
 
     public int searchShoppingList(String foodName){
-        foodArray = shoppingList.getShoppingList();
-        for(int i = 0; i<foodArray.size(); i++){
-            if(foodArray.get(i).getFoodName().toUpperCase().equals(foodName)){
+
+        for(int i = 0; i<db.getNumberOfRows(); i++){
+            if(db.getFoodName(i).toUpperCase().equals(foodName)){
                 Log.d("success?", "FOOD NAME FOUND");
                 return i;
             }
         }
+        Log.d("Success? ", "FOOD NAME NOT FOUND");
         return -1;
     }
 
