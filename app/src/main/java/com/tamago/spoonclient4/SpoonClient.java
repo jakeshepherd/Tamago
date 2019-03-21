@@ -38,6 +38,7 @@ public class SpoonClient {
     // Requesting Function if Endpoint returns JSONArray
     public JSONArray getAsJSONArray(String Url, String Key) throws JSONException {
         JSONArray json;
+        System.out.println(Url);
         try {
             HttpResponse<JsonNode> response = Unirest.get(Url)
                     .header("X-RapidAPI-Key", Key)
