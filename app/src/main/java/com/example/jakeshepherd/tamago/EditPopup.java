@@ -105,7 +105,7 @@ public class EditPopup extends AppCompatActivity {
                     // todo-- this will be a lot better with the drop down option
                     int i = searchShoppingList(String.valueOf(updateName.getSelectedItem()).toUpperCase());
 
-                    db.updateData(i, new FoodItem(String.valueOf(newName), String.valueOf(updateCategory.getText()),
+                    db.updateData(String.valueOf(i), new FoodItem(String.valueOf(newName), String.valueOf(updateCategory.getText()),
                             Integer.parseInt(String.valueOf(updateQuantity.getText())), date));
 
                     startActivity(new Intent(EditPopup.this, MainActivity.class));
