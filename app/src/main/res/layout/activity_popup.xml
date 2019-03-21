@@ -9,46 +9,45 @@
 
 
     <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top|center_horizontal"
-        android:text="Remove Food"
+        android:id="@+id/text3"
+        android:layout_width="199dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="17dp"
+        android:gravity="center_horizontal"
+        android:text="Delete Food:"
         android:textColor="@android:color/white"
-        android:textColorLink="@android:color/white"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="62dp">
-
-    </TextView>
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.312" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="249dp"
         android:layout_height="83dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
-        app:layout_constraintStart_toEndOf="@+id/text"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <Button
             android:id="@+id/buttonCancel"
-            android:layout_width="107dp"
+            android:layout_width="64dp"
             android:layout_height="33dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="214dp"
             android:layout_marginBottom="564dp"
-            android:background="@android:color/white"
+            android:layout_weight="1"
+            android:background="@drawable/button_style"
             android:text="Cancel"
-            android:textColor="@color/design_default_color_primary_dark"
-            app:backgroundTint="@android:color/white"
-            app:layout_anchor="@+id/include"
+
+            android:textColor="@drawable/button_colours"
             app:layout_anchorGravity="right|bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,10 +64,9 @@
             android:layout_marginEnd="214dp"
             android:layout_marginBottom="87dp"
             android:layout_weight="1"
-            android:background="@android:color/white"
+            android:background="@drawable/button_style"
             android:text="Confirm"
-            android:textColor="@color/design_default_color_primary_dark"
-            app:backgroundTint="@android:color/white"
+            android:textColor="@drawable/button_colours"
             app:layout_anchor="@+id/include"
             app:layout_anchorGravity="right|bottom"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,39 +77,20 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="198dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="33dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="76dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/editFoodName"
-            android:layout_width="157dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="6dp"
-            android:backgroundTint="@android:color/white"
-            android:ems="10"
-            android:gravity="center_horizontal|top"
-            android:hint="Food Name"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/white"
-            android:textColorLink="@android:color/white"
-            android:textCursorDrawable="@null"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/text"
-            app:layout_constraintVertical_bias="0.991"
-            tools:layout_editor_absoluteX="134dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

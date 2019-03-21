@@ -12,19 +12,23 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+//todo -- this doesnt work LOL
 public class EditPopup extends AppCompatActivity {
     String date;
-    TextView calenderSetter, updateName, updateCategory, updateQuantity;
+    TextView calenderSetter, newName, updateCategory, updateQuantity;
     ImageView updateDate;
     Button updateCancel, updateConfirm;
+    Spinner updateName;
 
     Database db = new Database(this);
 
@@ -40,7 +44,6 @@ public class EditPopup extends AppCompatActivity {
 
         calenderSetter = findViewById(R.id.textCalender);
 
-        updateName = findViewById(R.id.updateFoodName);
         updateCategory = findViewById(R.id.updateFoodCategory);
         updateQuantity = findViewById(R.id.updateFoodQuantity);
 
@@ -54,10 +57,13 @@ public class EditPopup extends AppCompatActivity {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setElevation(20);
 
+        setUpDeleteSpinner();
         setOnCLickListeners();
     }
 
     public void setOnCLickListeners() {
+        updateName = findViewById(R.id.spinner3);
+        newName = findViewById(R.id.newNameUpdate);
         updateDate = findViewById(R.id.updateExpirationDate);
         updateCancel = findViewById(R.id.updateCancel);
         updateConfirm = findViewById(R.id.updateConfirm);
@@ -77,12 +83,13 @@ public class EditPopup extends AppCompatActivity {
             }
         });
 
+        //todo -- updating doesnt work properly
         updateConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (updateName.getText().length() == 0 || updateCategory.getText().length() == 0 || updateQuantity.getText().length() == 0) {
-                    if (updateName.getText().length() == 0) {
-                        updateName.setError("Cannot be blank");
+                if (newName.getText().length() == 0 || updateCategory.getText().length() == 0 || updateQuantity.getText().length() == 0) {
+                    if(newName.getText().length() == 0){
+                        newName.setError("Cannot be blank");
                     }
                     if (updateCategory.getText().length() == 0) {
                         updateCategory.setError("Cannot be blank");
@@ -90,16 +97,15 @@ public class EditPopup extends AppCompatActivity {
                     if (updateQuantity.getText().length() == 0) {
                         updateQuantity.setError("Cannot be blank");
                     }
-
                 } else {
                     if (Integer.parseInt(String.valueOf(updateQuantity.getText())) <= 0) {
                         updateQuantity.setError("Must be more than 0");
                     }
 
                     // todo-- this will be a lot better with the drop down option
-                    int i = searchShoppingList(String.valueOf(updateName.getText()));
+                    int i = searchShoppingList(String.valueOf(updateName.getSelectedItem()).toUpperCase());
 
-                    db.updateData(String.valueOf(i), new FoodItem(String.valueOf(updateName.getText()), String.valueOf(updateCategory.getText()),
+                    db.updateData(i, new FoodItem(String.valueOf(newName), String.valueOf(updateCategory.getText()),
                             Integer.parseInt(String.valueOf(updateQuantity.getText())), date));
 
                     startActivity(new Intent(EditPopup.this, MainActivity.class));
@@ -134,5 +140,27 @@ public class EditPopup extends AppCompatActivity {
         }, calender.get(Calendar.YEAR), calender.get(Calendar.MONTH), calender.get(Calendar.DAY_OF_MONTH));
 
         dpd.show();
+    }
+
+    public void setUpDeleteSpinner() {
+        /*
+        ShoppingList msl = ShoppingList.getInstance();
+        Spinner ddb = findViewById(R.id.spinner);
+        ArrayList<FoodItem> currentShoppingList = msl.getShoppingList();
+        ArrayList<String> currentStringList = new ArrayList<>();
+        for (FoodItem item : currentShoppingList){
+            currentStringList.add(item.getFoodName());
+        }
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ddb.setAdapter(myAdapter);
+        */
+
+        Spinner updateSpinner = findViewById(R.id.spinner3);
+        ArrayList<String> currentStringList = (ArrayList<String>) db.getAllFoodNames();
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        updateSpinner.setAdapter(myAdapter);
     }
 }

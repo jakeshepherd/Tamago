@@ -18,17 +18,16 @@
 
         <Button
             android:id="@+id/updateCancel"
-            android:layout_width="107dp"
+            android:layout_width="100dp"
             android:layout_height="33dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="214dp"
             android:layout_marginBottom="87dp"
-            android:background="@android:color/white"
+            android:background="@drawable/button_style"
             android:text="Cancel"
-            android:textColor="@color/design_default_color_primary_dark"
-            app:backgroundTint="@android:color/white"
+            android:textColor="@drawable/button_colours"
             app:layout_anchor="@+id/include"
             app:layout_anchorGravity="right|bottom"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,10 +45,9 @@
             android:layout_marginEnd="214dp"
             android:layout_marginBottom="87dp"
             android:layout_weight="1"
-            android:background="@android:color/white"
+            android:background="@drawable/button_style"
             android:text="Confirm"
-            android:textColor="@color/design_default_color_primary_dark"
-            app:backgroundTint="@android:color/white"
+            android:textColor="@drawable/button_colours"
             app:layout_anchor="@+id/include"
             app:layout_anchorGravity="right|bottom"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,23 +66,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text">
 
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="159dp"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center" />
+
         <EditText
-            android:id="@+id/updateFoodName"
+            android:id="@+id/newNameUpdate"
             android:layout_width="159dp"
             android:layout_height="56dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="6dp"
             android:backgroundTint="@android:color/white"
             android:ems="10"
-            android:gravity="center_horizontal|top"
-            android:hint="Name"
+            android:gravity="center|center_horizontal"
+            android:hint="New Name"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
-            android:textColorLink="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/text"
-            app:layout_constraintVertical_bias="0.991"
-            tools:layout_editor_absoluteX="134dp" />
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <EditText
             android:id="@+id/updateFoodCategory"
@@ -93,9 +93,10 @@
             android:backgroundTint="@android:color/white"
             android:ems="10"
             android:gravity="center|center_horizontal"
-            android:hint="Category"
+            android:hint="New Category"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
             android:textColorLink="@android:color/white" />
 
         <EditText
@@ -105,9 +106,10 @@
             android:backgroundTint="@android:color/white"
             android:ems="10"
             android:gravity="center|center_horizontal"
-            android:hint="Quantity"
+            android:hint="New Quantity"
             android:inputType="number"
             android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
             android:textColorLink="@android:color/white" />
 
         <ImageView
