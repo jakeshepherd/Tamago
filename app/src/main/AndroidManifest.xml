@@ -30,6 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".APILink">
+
+        </activity>
         <activity
             android:name=".ManualEntry"
             android:label="Manual Entry" />
