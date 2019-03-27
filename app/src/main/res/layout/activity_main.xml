@@ -1,44 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tamagoToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_main" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:visibility="visible"
+        app:title="Your Ingredients..." />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/addFoodButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="right|bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="26dp"
+        android:clickable="true"
+        app:backgroundTint="@color/tamagoColour"
         app:srcCompat="@drawable/tamagoicon" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="334dp"
+        android:layout_marginBottom="23dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:maxImageSize="@android:dimen/app_icon_size"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/openSLButton"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="680dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:maxImageSize="@android:dimen/app_icon_size"
+        app:srcCompat="@drawable/trolley" />
+
+    <ScrollView
+        android:id="@+id/Scroller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tamagoToolbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/scrllinearMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

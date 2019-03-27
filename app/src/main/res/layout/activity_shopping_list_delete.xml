@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShoppingListDelete">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivityOld"
+        tools:showIn="@layout/shopping_list_entry">
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="371dp"
+            android:layout_height="47dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginStart="7dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorPrimary"
+            android:text="Delete"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/cameraImage"
+            android:layout_width="182dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="114dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="115dp"
+            android:layout_marginBottom="489dp"
+            android:contentDescription="a simple trolley"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
+        <TextView
+            android:id="@+id/addFood"
+            android:layout_width="214dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="223dp"
+            android:layout_marginEnd="148dp"
+            android:layout_marginBottom="472dp"
+            android:text="Remove food"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:justificationMode="inter_word" />
+
+        <EditText
+            android:id="@+id/editRemoveName"
+            android:layout_width="315dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="272dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="357dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Food Item"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
