@@ -29,4 +29,8 @@ public class ShoppingList {
         shoppingListItems.remove(i);
     }
 
+    public void removeAll(){
+        shoppingListItems.removeAll(shoppingListItems);
+    }
+
 }

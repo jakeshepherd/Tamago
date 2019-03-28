@@ -10,14 +10,21 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //TODO -- the popup is insanely ugly but its being a nightmare
+//todo -- i reaaaalllyyy want to change the text colour of the spinner
 public class Popup extends AppCompatActivity {
     Button cancelButton, confirmButton;
-    EditText nameToDelete;
+    Spinner deleteSpinner;
+    Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +37,22 @@ public class Popup extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width*0.65), (int) (height*0.25));
+        getWindow().setLayout((int) (width * 0.65), (int) (height * 0.25));
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setElevation(20);
 
+        db = new Database(this);
+
+        setUpDeleteSpinner();
         setOnCLickListeners();
     }
 
-    public void setOnCLickListeners(){
+    public void setOnCLickListeners() {
         final Intent returnIntent = new Intent();
         cancelButton = findViewById(R.id.buttonCancel);
         confirmButton = findViewById(R.id.buttonConfirm);
-        nameToDelete = findViewById(R.id.editFoodName);
+        deleteSpinner = findViewById(R.id.spinner2);
+
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,14 +65,33 @@ public class Popup extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nameToDelete.getText().length() == 0){
-                    nameToDelete.setError("Must be filled in");
-                }else{
-                    returnIntent.putExtra("FoodName", String.valueOf(nameToDelete.getText()).toUpperCase());
-                    setResult(Activity.RESULT_OK, returnIntent);
-                    finish();
-                }
+                returnIntent.putExtra("FoodName", String.valueOf(deleteSpinner.getSelectedItem()).toUpperCase());
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
+
             }
         });
+    }
+
+    public void setUpDeleteSpinner() {
+        /*
+        ShoppingList msl = ShoppingList.getInstance();
+        Spinner ddb = findViewById(R.id.spinner);
+        ArrayList<FoodItem> currentShoppingList = msl.getShoppingList();
+        ArrayList<String> currentStringList = new ArrayList<>();
+        for (FoodItem item : currentShoppingList){
+            currentStringList.add(item.getFoodName());
+        }
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ddb.setAdapter(myAdapter);
+        */
+
+        Spinner deleteSpinner = findViewById(R.id.spinner2);
+        ArrayList<String> currentStringList = (ArrayList<String>) db.getAllFoodNames();
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        deleteSpinner.setAdapter(myAdapter);
     }
 }

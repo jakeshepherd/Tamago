@@ -76,19 +76,21 @@ public class Database extends SQLiteOpenHelper {
      * Update database, depending on the food number requested
      *
      * @param foodNum  Food to be updated
-     * @param toUpdate Item to be updated
      * @return true if update works
      */
-    protected boolean updateData(String foodNum, FoodItem toUpdate) {
+    protected boolean updateData(String foodNum, String foodName, String foodCategory, int foodQuantity, String expiryDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_1, foodNum);
-        contentValues.put(COL_2, toUpdate.getFoodName());
-        contentValues.put(COL_3, toUpdate.getFoodCategory());
-        contentValues.put(COL_4, toUpdate.getFoodQuantity());
-        contentValues.put(COL_5, toUpdate.getExpiryDate());
+        contentValues.put(COL_2, foodName);
+        contentValues.put(COL_3, foodCategory);
+        contentValues.put(COL_4, foodQuantity);
+        contentValues.put(COL_5, expiryDate);
 
-        this.getWritableDatabase().update(TABLE_NAME, contentValues, COL_1 + " = ?", new String[]{foodNum});
+        db.update(TABLE_NAME, contentValues, "FOOD_ID = ?", new String[] {foodNum});
+
+
         return true;
     }
 
@@ -147,6 +149,7 @@ public class Database extends SQLiteOpenHelper {
             returnString = cursor.getString(0);
         else returnString = "error";
         cursor.close();
+
         return returnString;
     }
 

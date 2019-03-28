@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="tamagoColour">#00C4AC</color>
+    <color name="popupBackground">#26a7f2</color>
+    <color name="white">#FFFFFF</color>
 </resources>

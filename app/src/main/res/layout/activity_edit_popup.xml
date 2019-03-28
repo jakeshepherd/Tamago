@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/drawable_bg"
+    tools:context=".Popup">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="260dp"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <Button
+            android:id="@+id/updateCancel"
+            android:layout_width="100dp"
+            android:layout_height="33dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="214dp"
+            android:layout_marginBottom="87dp"
+            android:background="@drawable/button_style"
+            android:text="Cancel"
+            android:textColor="@drawable/button_colours"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/updateConfirm"
+            android:layout_width="60dp"
+            android:layout_height="34dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="214dp"
+            android:layout_marginBottom="87dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_style"
+            android:text="Confirm"
+            android:textColor="@drawable/button_colours"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="right|bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="315dp"
+        android:layout_height="292dp"
+        android:layout_marginStart="48dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text">
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="159dp"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/newNameUpdate"
+            android:layout_width="159dp"
+            android:layout_height="56dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:gravity="center|center_horizontal"
+            android:hint="New Name"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <EditText
+            android:id="@+id/updateFoodCategory"
+            android:layout_width="159dp"
+            android:layout_height="56dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:gravity="center|center_horizontal"
+            android:hint="New Category"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColorLink="@android:color/white" />
+
+        <EditText
+            android:id="@+id/updateFoodQuantity"
+            android:layout_width="159dp"
+            android:layout_height="56dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:gravity="center|center_horizontal"
+            android:hint="New Quantity"
+            android:inputType="number"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColorLink="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/updateExpirationDate"
+            android:layout_width="164dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+        <TextView
+            android:id="@+id/textCalender"
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textColorLink="@android:color/white" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="168dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="17dp"
+        android:gravity="center_horizontal"
+        android:text="Edit Food:"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.312" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,150 +1,132 @@
 package com.example.jakeshepherd.tamago;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class ManualEntry extends AppCompatActivity {
     Database db = new Database(this);
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+    EditText foodNameText;
+    EditText foodCategoryText;
+    EditText quantityText;
+
+    TextView calenderSetter;
+
+    String date;
+
+    boolean dateValid = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manualentrylayout);
 
+        calenderSetter = findViewById(R.id.calender);
+        setupOnClickListeners();
+    }
+
+    public void setupOnClickListeners(){
         Button insert = findViewById(R.id.insertButton);
+        ImageView calender = findViewById(R.id.calenderView);
+        Button cancel = findViewById(R.id.cancelButton);
+
+        calender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
 
         insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean validName, validCategory, validQuantity, validDate, alreadyExpired;
-                String foodName, foodCategory, foodQuantity, foodExpirationDate;
+                foodNameText = findViewById(R.id.foodItem);
+                foodCategoryText = findViewById(R.id.foodCategory);
+                quantityText = findViewById(R.id.quantity);
 
-                foodName = ((EditText) findViewById(R.id.foodItem)).getText().toString().trim();
-                foodCategory = ((EditText) findViewById(R.id.foodCategory)).getText().toString().trim();
-                foodQuantity = ((EditText) findViewById(R.id.quantity)).getText().toString().trim();
-                foodExpirationDate = ((EditText) findViewById(R.id.expirationDate)).getText().toString().trim();
-                int integerQuantity;
-
-                try {
-                    integerQuantity = Integer.parseInt(foodQuantity);
-                } catch (NumberFormatException e) {
-                    integerQuantity = 0;
-                }
-
-                validName = checkName(foodName);
-                validCategory = checkName(foodCategory);    // checkName() method is sufficient for this, so far
-                validQuantity = checkQuantity(integerQuantity);
-                validDate = checkDateFormat(foodExpirationDate);
-                alreadyExpired = isExpired(foodExpirationDate);
-
-                int numberOfErrors = 0;
-                if (!validName) numberOfErrors++;
-                if (!validCategory) numberOfErrors++;
-                if (!validQuantity) numberOfErrors++;
-                if (!validDate) numberOfErrors++;
-                if (alreadyExpired) numberOfErrors++;
-
-                if (numberOfErrors == 0)
-                    Snackbar.make(view, "Accepted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                else if (numberOfErrors == 1) {
-                    if (!validName)
-                        Snackbar.make(view, "Invalid name", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    if (!validCategory)
-                        Snackbar.make(view, "Invalid food category", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    if (!validQuantity)
-                        Snackbar.make(view, "Invalid quantity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    if (!validDate){
-                        Snackbar.make(view, "Invalid date format", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                if (foodNameText.getText().length() == 0 || foodCategoryText.getText().length() == 0 || quantityText.getText().length() == 0) {
+                    if (foodNameText.getText().length() == 0) {
+                        foodNameText.setError("Cannot be blank");
+                    }
+                    if (foodCategoryText.getText().length() == 0) {
+                        foodCategoryText.setError("Cannot be blank");
+                    }
+                    if (quantityText.getText().length() == 0) {
+                        quantityText.setError("Cannot be blank");
                     }
 
-                    else if (alreadyExpired){
-                        Snackbar.make(view, "Food has already expired", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-                        ((EditText) findViewById(R.id.expirationDate)).setError("Date not possible");
-
-                    }
-                    return;
                 } else {
-                    Snackbar.make(view, "Multiple input errors", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    return;
+                    if (Integer.parseInt(String.valueOf(quantityText.getText())) <= 0) {
+                        quantityText.setError("Must be more than 0");
+                    }
+
+                    if (dateValid) {
+                        db.insertDataFromObject(new FoodItem(String.valueOf(foodNameText.getText()), String.valueOf(foodCategoryText.getText()),
+                                Integer.parseInt(String.valueOf(quantityText.getText())), date));
+
+                        startActivity(new Intent(ManualEntry.this, MainActivity.class));
+                    }
                 }
+            }
+        });
 
-
-                db.insertDataFromObject(new FoodItem(foodName, foodCategory, integerQuantity, foodExpirationDate));
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(new Intent(ManualEntry.this, MainActivity.class));
-
-
             }
         });
     }
 
 
-            protected boolean checkName(String name) {
-                if (name.equals("") || name.length() == 0) {
-                    Log.d("myTag", "Insert a food name");
-                    return false;
-                } else {
-                    return true;
-                }
+    private void showDatePicker() {
+        Calendar calender = Calendar.getInstance();
+
+        DatePickerDialog dpd = new DatePickerDialog(ManualEntry.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month) + "/" + Integer.toString(year);
+
+                //todo add the is expired thing
+                calenderSetter.setText(date);
+                dateValid = true;
             }
+        }, calender.get(Calendar.YEAR), calender.get(Calendar.MONTH), calender.get(Calendar.DAY_OF_MONTH));
 
-            protected boolean checkQuantity(int quantity) {
-                return quantity > 0;
-            }
+        dpd.show();
+    }
 
-            protected boolean checkDateFormat(String date) {   // more comprehensive date checking
-                try {
-                    sdf.parse(date);
+    protected int daysToExpiry(String date) {
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+    }
 
-                    int day, month, year, maxDay;
-                    day = Integer.parseInt(date.substring(0, 2));
-                    month = Integer.parseInt(date.substring(3, 5));
-                    year = Integer.parseInt(date.substring(6));
+    protected boolean isExpired(String date) {
+        return daysToExpiry(date) <= 0;
+    }
 
-                    if (month < 1 || month > 12)
-                        return false;
-                    if (month == 4 || month == 6 || month == 9 || month == 11)
-                        maxDay = 30;
-                    else if (month == 2)
-                        if (year % 4 == 0)
-                            maxDay = 29;
-                        else maxDay = 28;
-                    else maxDay = 31;
-                    if (day < 1 || day > maxDay)
-                        return false;
-                    if (year < 2000 || year > 2050)
-                        return false;
-                } catch (ParseException e) {
-                    Log.d("myTag", "Invalid format");
-                    return false;
-                } catch (NumberFormatException e2) {
-                    Log.d("myTag", "Invalid date");
-                    return false;
-                }
-                return true;
-            }
+    private void showMessage(String msg) {
+        Context c = getApplicationContext();
+        Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
+        t.show();
+    }
+}
 
-            protected int daysToExpiry(String date) {
-                return (int) ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            }
 
-            protected boolean isExpired(String date) {
-                return daysToExpiry(date) <= 0;
-            }
-        }

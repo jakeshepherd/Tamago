@@ -13,9 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_tamago_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Popup"
-            android:theme="@style/AppTheme.CustomTheme">
+        <activity android:name=".EditPopup"
+            android:theme="@style/AppTheme.CustomTheme" >
         </activity>
+        <activity android:name=".Settings" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".Popup"
+            android:theme="@style/AppTheme.CustomTheme" />
         <activity
             android:name=".ShoppingListView"
             android:label="@string/title_activity_new_shopping_list_view"

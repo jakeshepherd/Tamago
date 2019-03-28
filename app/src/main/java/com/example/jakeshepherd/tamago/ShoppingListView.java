@@ -145,8 +145,9 @@ public class ShoppingListView extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_sync) {
+            new SyncData(this).doSyncing();
+            showMessage("Items from your shopping list have been added to your fridge");
         } else if (id == R.id.nav_send) {
 
         }

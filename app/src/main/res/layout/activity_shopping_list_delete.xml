@@ -12,6 +12,15 @@
         tools:context=".MainActivityOld"
         tools:showIn="@layout/shopping_list_entry">
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="395dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="312dp"
+            app:layout_constraintBottom_toTopOf="@+id/deleteButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="371dp"
@@ -60,23 +69,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:justificationMode="inter_word" />
-
-        <EditText
-            android:id="@+id/editRemoveName"
-            android:layout_width="315dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="272dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="357dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="Food Item"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
