@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -25,9 +27,17 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.xml.datatype.Duration;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     ImageView imageView;
 
     Database db = new Database(this);
+    Calendar myCal = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +139,9 @@ public class MainActivity extends AppCompatActivity
             scrollingText1.setText(new StringBuilder().append("  ").append(db.getFoodName(i)).toString());
             scrollingText1.setTextSize(30);
             scrollingText1.setTextColor(Color.BLACK);
+            scrollingText1.setBackgroundColor(calculateColourFromDate(i));
+            scrollingText1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
 
             // build TextView 2
             scrollingText2 = new TextView(this);
@@ -135,6 +149,8 @@ public class MainActivity extends AppCompatActivity
             scrollingText2.setText(new StringBuilder().append("     Quantity: ").append(String.valueOf(db.getFoodQuantity(i))).append("\n     Expiry Date: ").append(String.valueOf(db.getFoodExpiryDate(i))).toString());
             scrollingText2.setTextSize(14);
             scrollingText2.setTextColor(Color.DKGRAY);
+            scrollingText2.setBackgroundColor(calculateColourFromDate(i));
+            scrollingText2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             imageView = new ImageView(this);
 
@@ -211,6 +227,31 @@ public class MainActivity extends AppCompatActivity
         Context c = getApplicationContext();
         Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
         t.show();
+    }
+
+    private int calculateColourFromDate (int foodID){
+        String foodDateString = db.getFoodExpiryDate(foodID);
+        try {
+            Date foodDate = new SimpleDateFormat("dd/MM/yyyy").parse(foodDateString);
+            Date today = new Date();
+            long diff = foodDate.getTime() - today.getTime();
+            long daysToExpiry = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            Log.d("date Colour", foodDate.toString());
+            Log.d("date Colour", today.toString());
+            Log.d("date Colour", Long.toString(daysToExpiry));
+
+            if(daysToExpiry > 3){
+                return Color.GREEN;
+            }
+
+            if (daysToExpiry > 0){
+                return Color.YELLOW;
+            }
+
+            return Color.RED;
+        } catch (ParseException e) {
+            return Color.TRANSPARENT;
+        }
     }
 
     

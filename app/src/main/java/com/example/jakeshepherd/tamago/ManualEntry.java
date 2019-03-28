@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -81,6 +82,7 @@ public class ManualEntry extends AppCompatActivity {
                     if (dateValid) {
                         db.insertDataFromObject(new FoodItem(String.valueOf(foodNameText.getText()), String.valueOf(foodCategoryText.getText()),
                                 Integer.parseInt(String.valueOf(quantityText.getText())), date));
+                        Log.d("DB Insert", date);
 
                         startActivity(new Intent(ManualEntry.this, MainActivity.class));
                     }
@@ -103,7 +105,7 @@ public class ManualEntry extends AppCompatActivity {
         DatePickerDialog dpd = new DatePickerDialog(ManualEntry.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month) + "/" + Integer.toString(year);
+                date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month+1) + "/" + Integer.toString(year);
 
                 //todo add the is expired thing
                 calenderSetter.setText(date);
@@ -113,14 +115,16 @@ public class ManualEntry extends AppCompatActivity {
 
         dpd.show();
     }
-
+/*
     protected int daysToExpiry(String date) {
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
+
     protected boolean isExpired(String date) {
         return daysToExpiry(date) <= 0;
     }
+*/
 
     private void showMessage(String msg) {
         Context c = getApplicationContext();
