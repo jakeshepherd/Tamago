@@ -2,6 +2,7 @@ package com.example.jakeshepherd.tamago;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +39,9 @@ public class APILink extends AppCompatActivity {
                 /* For now I'm just getting the recipe instructions but there are other parameters
                 to get back once it's all fully working */
                 TextView textView = (TextView) findViewById(R.id.testResults);
+                textView.setMovementMethod(new ScrollingMovementMethod());
                 textView.setText(returnedInstructions);
+
 
             }
         });
