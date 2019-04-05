@@ -131,7 +131,7 @@ public class EditPopup extends AppCompatActivity {
         DatePickerDialog dpd = new DatePickerDialog(EditPopup.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month) + "/" + Integer.toString(year);
+                date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month+1) + "/" + Integer.toString(year);
 
                 //todo add the is expired thing
                 calenderSetter.setText(date);
