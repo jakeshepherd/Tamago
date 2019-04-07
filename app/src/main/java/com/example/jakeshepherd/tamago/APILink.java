@@ -18,6 +18,9 @@ public class APILink extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apilayout);
+        String returnedTitle;
+        String returnedInstructions;
+
 
 
 
@@ -35,12 +38,35 @@ public class APILink extends AppCompatActivity {
                 /* Generates URL, again just for now we'll get one recipe back but can change
                 resultNum to get more once all of this is working */
                 String searchQuery = RDB.getRecipeIDwithIng(ingredient);
-                String returnedInstructions = RDB.getInstructions(searchQuery);
-                /* For now I'm just getting the recipe instructions but there are other parameters
-                to get back once it's all fully working */
-                TextView textView = (TextView) findViewById(R.id.testResults);
-                textView.setMovementMethod(new ScrollingMovementMethod());
-                textView.setText(returnedInstructions);
+
+                TextView name = (TextView) findViewById(R.id.name);
+                TextView ingredients = (TextView) findViewById(R.id.ingredients);
+                ingredients.setMovementMethod( new ScrollingMovementMethod());
+                TextView recipe = (TextView) findViewById(R.id.recipe);
+                recipe.setMovementMethod(new ScrollingMovementMethod());
+
+                String returnedName;
+                String returnedIngredients;
+                String returnedRecipe;
+
+                if (searchQuery == "error"){
+
+                    returnedName = "No recipe found";
+                    returnedIngredients = "";
+                    returnedRecipe = "";
+
+                }
+                else{
+                    returnedName = RDB.getRecipeName(searchQuery);
+                    returnedIngredients = RDB.getIngredients(searchQuery);
+                    returnedRecipe = RDB.getInstructions(searchQuery);
+
+                }
+
+                name.setText(returnedName);
+                ingredients.setText(returnedIngredients);
+                recipe.setText(returnedRecipe);
+
 
 
             }
