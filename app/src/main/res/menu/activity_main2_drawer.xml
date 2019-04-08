@@ -20,15 +20,10 @@
             android:id="@+id/nav_api_test"
             android:icon="@drawable/ic_fast_food"
             android:title="Recipe FInder" />
+        <item
+            android:id="@+id/nav_sync"
+            android:icon="@drawable/ic_sync_black_24dp"
+            android:title="Synchronise" />
     </group>
-
-    <item android:title="Blank">
-        <menu>
-            <item
-                android:id="@+id/nav_sync"
-                android:icon="@drawable/ic_sync_black_24dp"
-                android:title="Synchronise" />
-        </menu>
-    </item>
 
 </menu>

@@ -17,7 +17,7 @@ public class APILink extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.apilayout);
+        setContentView(R.layout.activity_api_layout);
         String returnedTitle;
         String returnedInstructions;
 
