@@ -1,13 +1,20 @@
 package com.example.jakeshepherd.tamago;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -36,14 +43,18 @@ import java.util.Date;
 import java.util.Set;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.datatype.Duration;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static String CHANNEL_ID = "default";
+
     TextView scrollingText1, scrollingText2;
     ImageView imageView;
+    FoodItem priority;
 
     Database db = new Database(this);
     Calendar myCal = Calendar.getInstance();
@@ -65,11 +76,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        createNotificationChannel();
+
+        setAlarmForFood(db.getFoodExpiryDate(0));
         setOnClickListeners();
         showDBList();
     }
 
-    public void setOnClickListeners(){
+    public void setOnClickListeners() {
         FloatingActionButton addFood = findViewById(R.id.addFoodButton);
         FloatingActionButton deleteFood = findViewById(R.id.delete);
 
@@ -90,44 +104,48 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String foodName;
-        if(requestCode == 1){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
                 foodName = data.getStringExtra("FoodName");
                 removeFromDB(foodName);
                 refreshList();
-            }else{
+            } else {
                 Log.d("returned: ", "nothing");
             }
         }
     }
 
-    public void refreshList(){
-        LinearLayout linearLayout=findViewById(R.id.scrllinearMain);
+    public void setAlarm() {
+
+    }
+
+    public void refreshList() {
+        LinearLayout linearLayout = findViewById(R.id.scrllinearMain);
         linearLayout.removeAllViews();
         showDBList();
     }
 
-    public void removeFromDB(String toRemove){
+    public void removeFromDB(String toRemove) {
         int i = db.deleteRowDataFromName(toRemove);
-        if(i < 0){
+        if (i < 0) {
             showMessage("Could not find item in your ingredients");
-        }else{
+        } else {
             db.deleteRowData(i);
         }
     }
 
 
-    public void showDBList(){
-        LinearLayout linearLayout=findViewById(R.id.scrllinearMain);
+    public void showDBList() {
+        LinearLayout linearLayout = findViewById(R.id.scrllinearMain);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         //-------
 
         //-------
         Log.d("Database", String.valueOf(db.getNumberOfRows()));
-        for(int i = 1; i<db.getNumberOfRows(); i++){
+        for (int i = 1; i < db.getNumberOfRows(); i++) {
             Log.d("Items", db.getFoodName(i));
         }
 
@@ -153,6 +171,7 @@ public class MainActivity extends AppCompatActivity
             scrollingText2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             imageView = new ImageView(this);
+
 
             // add the dynamically created views
             linearLayout.addView(scrollingText1, lp);
@@ -189,7 +208,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, Settings.class));
             return true;
         }
-        if(id == R.id.app_update){
+        if (id == R.id.app_update) {
             startActivity(new Intent(MainActivity.this, EditPopup.class));
             return true;
         }
@@ -225,9 +244,9 @@ public class MainActivity extends AppCompatActivity
         t.show();
     }
 
-    private int calculateColourFromDate (int foodID){
+    private int calculateColourFromDate(int foodID) {
         String foodDateString = db.getFoodExpiryDate(foodID);
-        if (db.getFoodExpiryDate(foodID) == null){
+        if (db.getFoodExpiryDate(foodID) == null) {
             return Color.TRANSPARENT;
         }
         try {
@@ -239,11 +258,11 @@ public class MainActivity extends AppCompatActivity
             Log.d("date Colour", today.toString());
             Log.d("date Colour", Long.toString(daysToExpiry));
 
-            if(daysToExpiry > 3){
+            if (daysToExpiry > 3) {
                 return Color.GREEN;
             }
 
-            if (daysToExpiry > 0){
+            if (daysToExpiry > 0) {
                 return Color.YELLOW;
             }
 
@@ -253,5 +272,50 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    
+    // foodItem is just date rn
+    public void setAlarmForFood(String foodItem) {
+
+        String[] individualComponents = foodItem.split("/");
+        int day = Integer.parseInt(individualComponents[0]);
+        int month = Integer.parseInt(individualComponents[1]);
+        int year = Integer.parseInt(individualComponents[2]);
+
+        Intent alertIntent = new Intent(this, AlertReceiver.class);
+        alertIntent.putExtra("date", foodItem);
+        //alertIntent.putExtra("Quantity", foodItem.getFoodQuantity());
+        //alertIntent.putExtra("expiryDate", foodItem.getExpiryDate());
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        
+        // set alarm based on inputted data
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+
+        // months work like arrays (jan = 0)
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.YEAR, year);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 17);
+        calendar.set(Calendar.MINUTE, 36);
+        calendar.set(Calendar.SECOND, 0);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), PendingIntent.getBroadcast(this, 1,
+                alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+
+
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Money Manager Notification";
+            String description = "Channel to send notifications from Money Manager";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }
