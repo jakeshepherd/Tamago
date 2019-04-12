@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,10 +18,11 @@ public class AlertReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Alert", "ALERT RECEIVED");
+        String name = intent.getStringExtra("name");
+        int quantity = intent.getIntExtra("quantity", 0);
+        String date = intent.getStringExtra("expiryDate");
 
-        String date = intent.getStringExtra("date");
-        createNotification(context, "TITLE", date);
+        createNotification(context, "Tamago", "Your " + quantity + " " + name + "'s goes out of date on the " + date);
     }
 
     public static int getID() {

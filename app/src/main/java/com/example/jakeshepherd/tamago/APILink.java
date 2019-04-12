@@ -1,5 +1,6 @@
 package com.example.jakeshepherd.tamago;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -21,7 +22,16 @@ public class APILink extends AppCompatActivity {
         String returnedTitle;
         String returnedInstructions;
 
-
+        Button soonest = findViewById(R.id.buttonGetSoonest);
+        soonest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                String foodName = intent.getStringExtra("foodName");
+                EditText editText = findViewById(R.id.foodItem);
+                editText.setText(foodName);
+            }
+        });
 
 
         Button test = (Button) findViewById(R.id.testButton);
@@ -66,9 +76,6 @@ public class APILink extends AppCompatActivity {
                 name.setText(returnedName);
                 ingredients.setText(returnedIngredients);
                 recipe.setText(returnedRecipe);
-
-
-
             }
         });
     }

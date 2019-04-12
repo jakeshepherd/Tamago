@@ -54,16 +54,17 @@
     <EditText
         android:id="@+id/foodItem"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_marginStart="98dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="598dp"
+        android:layout_marginBottom="612dp"
         android:ems="10"
         android:hint="Food Item"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -72,15 +73,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
-        android:layout_marginTop="38dp"
         android:layout_marginEnd="169dp"
-        android:layout_marginBottom="541dp"
+        android:layout_marginBottom="492dp"
         android:text="Recipe Title"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodItem" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/testButton"
@@ -95,5 +94,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe" />
+
+    <Button
+        android:id="@+id/buttonGetSoonest"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginBottom="17dp"
+        android:text="Use soonest to expire"
+        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodItem" />
 
 </android.support.constraint.ConstraintLayout>

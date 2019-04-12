@@ -8,14 +8,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NotificationCompat;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -54,10 +49,12 @@ public class MainActivity extends AppCompatActivity
 
     TextView scrollingText1, scrollingText2;
     ImageView imageView;
-    FoodItem priority;
+    String foodNamePriority, foodCategoryPriority, foodExpiryPriority;
+    int foodQuantityPriority;
 
     Database db = new Database(this);
     Calendar myCal = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +75,12 @@ public class MainActivity extends AppCompatActivity
 
         createNotificationChannel();
 
-        setAlarmForFood(db.getFoodExpiryDate(0));
+        searchForNextOutOfDate();
+
+        setAlarmForFood(new FoodItem(foodNamePriority, foodCategoryPriority , foodQuantityPriority, foodExpiryPriority));
+
+
+
         setOnClickListeners();
         showDBList();
     }
@@ -117,9 +119,26 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void setAlarm() {
+    //TODO robustness for shopping list sync
+    public void searchForNextOutOfDate(){
+        List<String> expiries = db.getAllExpiryDates();
+        int soonest = 31;
 
+        for(int i = 0; i<db.getNumberOfRows(); i++){
+
+//            if ((expiries.get(i) == null){
+//
+//            }
+            if(Integer.parseInt(expiries.get(i).split("/")[0]) < soonest){
+                soonest = Integer.parseInt(expiries.get(i).split("/")[0]);
+                foodNamePriority = db.getFoodName(i);
+                foodCategoryPriority = db.getFoodCategory(i);
+                foodExpiryPriority = db.getFoodExpiryDate(i);
+                foodQuantityPriority = db.getFoodQuantity(i);
+            }
+        }
     }
+
 
     public void refreshList() {
         LinearLayout linearLayout = findViewById(R.id.scrllinearMain);
@@ -226,7 +245,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_shopping_list) {
             startActivity(new Intent(this, ShoppingListView.class));
         } else if (id == R.id.nav_api_test) {
-            startActivity(new Intent(this, APILink.class));
+            Intent intent = new Intent(this, APILink.class);
+            intent.putExtra("foodName", foodNamePriority);
+            startActivity(intent);
         } else if (id == R.id.nav_sync) {
             new SyncData(this).doSyncing();
             refreshList();
@@ -272,39 +293,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // foodItem is just date rn
-    public void setAlarmForFood(String foodItem) {
-
-        String[] individualComponents = foodItem.split("/");
-        int day = Integer.parseInt(individualComponents[0]);
-        int month = Integer.parseInt(individualComponents[1]);
-        int year = Integer.parseInt(individualComponents[2]);
-
+    public void setAlarmForFood(FoodItem foodItem) {
         Intent alertIntent = new Intent(this, AlertReceiver.class);
-        alertIntent.putExtra("date", foodItem);
-        //alertIntent.putExtra("Quantity", foodItem.getFoodQuantity());
-        //alertIntent.putExtra("expiryDate", foodItem.getExpiryDate());
+        alertIntent.putExtra("name", foodNamePriority);
+        alertIntent.putExtra("quantity", foodQuantityPriority);
+        alertIntent.putExtra("expiryDate", foodExpiryPriority);
 
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, alertIntent, PendingIntent.FLAG_ONE_SHOT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        
-        // set alarm based on inputted data
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
 
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-
-        // months work like arrays (jan = 0)
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.YEAR, year);
-
-        calendar.set(Calendar.HOUR_OF_DAY, 17);
-        calendar.set(Calendar.MINUTE, 36);
-        calendar.set(Calendar.SECOND, 0);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), PendingIntent.getBroadcast(this, 1,
-                alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-
-
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
     }
 
     private void createNotificationChannel() {
