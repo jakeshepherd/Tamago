@@ -116,27 +116,6 @@ public class Database extends SQLiteOpenHelper {
         return -1;
     }
 
-
-    // This was a good debugging method so I'll leave it in for now
-
-    /* protected List <Integer> getAllFoodIDs() {
-        List <Integer> list = new ArrayList<>();
-        Cursor res = getAllData();
-        if (res.moveToFirst()) {
-            while (!res.isAfterLast()) {
-                try{
-                    list.add(Integer.parseInt(res.getString(res.getColumnIndex(COL_1))));
-                }
-                catch(NumberFormatException e){
-                    Log.d("DatabaseError", "Couldn't parse string");
-                    break;
-                }
-                res.moveToNext();
-            }
-        }
-        return list;
-    } */
-
     /**
      * Get specific food name
      *
@@ -152,9 +131,6 @@ public class Database extends SQLiteOpenHelper {
 
         return returnString;
     }
-
-                // these 'getAll' methods are really inefficient, I'll gladly rewrite them if
-                // they're ever needed - Alex B
 
 
      List <String> getAllFoodNames() {
@@ -180,20 +156,6 @@ public class Database extends SQLiteOpenHelper {
         return returnString;
     }
 
-    /*List <String> getAllCategories() {
-        List <String> list = new ArrayList<>();
-        Cursor res = getAllData();
-
-        if (res.moveToFirst()) {
-            while (!res.isAfterLast()){
-                list.add(res.getString(res.getColumnIndex(COL_3)));
-                res.moveToNext();
-            }
-        }
-        res.close();
-        return list;
-    } */
-
     int getFoodQuantity(int foodID){
         String returnString;
         Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_4 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
@@ -210,25 +172,6 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    /* List <Integer> getAllQuantities() {
-        List <Integer> list = new ArrayList<>();
-        Cursor res = getAllData();
-        if (res.moveToFirst()) {
-            while (!res.isAfterLast()) {
-                try{
-                    list.add(Integer.parseInt(res.getString(res.getColumnIndex(COL_4))));
-                }
-                catch(NumberFormatException e){
-                    Log.d("DatabaseError", "Couldn't parse string");
-                    break;
-                }
-                res.moveToNext();
-            }
-        }
-        res.close();
-        return list;
-    } */
-
     String getFoodExpiryDate(int foodID){
         String returnString;
         Cursor cursor = this.getReadableDatabase().rawQuery("SELECT " + COL_5 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + foodID, null);
@@ -239,7 +182,8 @@ public class Database extends SQLiteOpenHelper {
         return returnString;
     }
 
-    /* List <String> getAllExpiryDates() {
+
+    List <String> getAllExpiryDates() {
         List <String> list = new ArrayList<>();
         Cursor res = getAllData();
 
@@ -251,7 +195,7 @@ public class Database extends SQLiteOpenHelper {
         }
         res.close();
         return list;
-    } */
+    }
 
     int getNumberOfRows() {
         return (int) DatabaseUtils.queryNumEntries(this.getReadableDatabase(), TABLE_NAME);

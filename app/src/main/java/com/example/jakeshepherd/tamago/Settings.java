@@ -29,14 +29,6 @@ public class Settings extends AppCompatActivity {
                 startActivity(new Intent(Settings.this, MainActivity.class));
             }
         });
-
-        // need to get this to work properly
-//        SLdeleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ShoppingList.getInstance().removeAll();
-//            }
-//        });
     }
 
     private void showMessage(String msg) {

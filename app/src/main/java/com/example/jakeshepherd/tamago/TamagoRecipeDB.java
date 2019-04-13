@@ -226,6 +226,7 @@ public class TamagoRecipeDB extends SQLiteOpenHelper {
             returnString = cursor.getString(0);
         else returnString = "error";
         cursor.close();
+        Log.d("Db Debug", returnString);
         return returnString;
     }
 

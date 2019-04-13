@@ -131,7 +131,7 @@ public class EditPopup extends AppCompatActivity {
         DatePickerDialog dpd = new DatePickerDialog(EditPopup.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month) + "/" + Integer.toString(year);
+                date = Integer.toString(dayOfMonth) + "/" + Integer.toString(month+1) + "/" + Integer.toString(year);
 
                 //todo add the is expired thing
                 calenderSetter.setText(date);
@@ -142,19 +142,6 @@ public class EditPopup extends AppCompatActivity {
     }
 
     public void setUpDeleteSpinner() {
-        /*
-        ShoppingList msl = ShoppingList.getInstance();
-        Spinner ddb = findViewById(R.id.spinner);
-        ArrayList<FoodItem> currentShoppingList = msl.getShoppingList();
-        ArrayList<String> currentStringList = new ArrayList<>();
-        for (FoodItem item : currentShoppingList){
-            currentStringList.add(item.getFoodName());
-        }
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ddb.setAdapter(myAdapter);
-        */
-
         Spinner updateSpinner = findViewById(R.id.spinner3);
         ArrayList<String> currentStringList = (ArrayList<String>) db.getAllFoodNames();
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);

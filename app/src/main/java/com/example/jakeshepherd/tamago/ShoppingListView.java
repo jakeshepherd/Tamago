@@ -140,16 +140,11 @@ public class ShoppingListView extends AppCompatActivity
             startActivity(new Intent(this, MainActivity.class));
         } else if (id == R.id.nav_shopping_list) {
             startActivity(new Intent(this, ShoppingListView.class));
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_api_test) {
+            startActivity(new Intent(this, APILink.class));
         } else if (id == R.id.nav_sync) {
             new SyncData(this).doSyncing();
             showMessage("Items from your shopping list have been added to your fridge");
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

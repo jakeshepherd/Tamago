@@ -37,7 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".APILink">
+        <activity android:name=".APILink"
+            android:windowSoftInputMode="adjustNothing">
 
         </activity>
         <activity
@@ -47,6 +48,9 @@
             android:name=".ShoppingListEntry"
             android:label="ShoppingListEntry" />
         <activity android:name=".ShoppingListDelete" />
+
+        <receiver android:name="AlertReceiver"/>
+
     </application>
 
 </manifest>

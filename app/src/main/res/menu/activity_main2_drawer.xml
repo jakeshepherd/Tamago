@@ -18,25 +18,12 @@
             android:title="Shopping List" />
         <item
             android:id="@+id/nav_api_test"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="API Test" />
+            android:icon="@drawable/ic_fast_food"
+            android:title="Recipe Finder" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Blank" />
+            android:id="@+id/nav_sync"
+            android:icon="@drawable/ic_sync_black_24dp"
+            android:title="Synchronise" />
     </group>
-
-    <item android:title="Blank">
-        <menu>
-            <item
-                android:id="@+id/nav_sync"
-                android:icon="@drawable/ic_sync_black_24dp"
-                android:title="Synchronise" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Blank" />
-        </menu>
-    </item>
 
 </menu>

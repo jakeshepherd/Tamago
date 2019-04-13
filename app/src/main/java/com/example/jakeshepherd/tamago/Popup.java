@@ -19,8 +19,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO -- the popup is insanely ugly but its being a nightmare
-//todo -- i reaaaalllyyy want to change the text colour of the spinner
 public class Popup extends AppCompatActivity {
     Button cancelButton, confirmButton;
     Spinner deleteSpinner;
@@ -74,19 +72,6 @@ public class Popup extends AppCompatActivity {
     }
 
     public void setUpDeleteSpinner() {
-        /*
-        ShoppingList msl = ShoppingList.getInstance();
-        Spinner ddb = findViewById(R.id.spinner);
-        ArrayList<FoodItem> currentShoppingList = msl.getShoppingList();
-        ArrayList<String> currentStringList = new ArrayList<>();
-        for (FoodItem item : currentShoppingList){
-            currentStringList.add(item.getFoodName());
-        }
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ddb.setAdapter(myAdapter);
-        */
-
         Spinner deleteSpinner = findViewById(R.id.spinner2);
         ArrayList<String> currentStringList = (ArrayList<String>) db.getAllFoodNames();
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currentStringList);

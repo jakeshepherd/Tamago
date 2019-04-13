@@ -1,14 +1,16 @@
 package com.example.jakeshepherd.tamago;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -36,17 +38,22 @@ import java.util.Date;
 import java.util.Set;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.datatype.Duration;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static String CHANNEL_ID = "default";
+
     TextView scrollingText1, scrollingText2;
     ImageView imageView;
+    String foodNamePriority, foodCategoryPriority, foodExpiryPriority;
+    int foodQuantityPriority;
 
     Database db = new Database(this);
-    Calendar myCal = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +72,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        createNotificationChannel();
+        searchForNextOutOfDate();
+        setAlarmForFood();
         setOnClickListeners();
         showDBList();
     }
 
-    public void setOnClickListeners(){
+    public void setOnClickListeners() {
         FloatingActionButton addFood = findViewById(R.id.addFoodButton);
         FloatingActionButton deleteFood = findViewById(R.id.delete);
 
@@ -90,44 +100,69 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String foodName;
-        if(requestCode == 1){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
                 foodName = data.getStringExtra("FoodName");
                 removeFromDB(foodName);
                 refreshList();
-            }else{
+            } else {
                 Log.d("returned: ", "nothing");
             }
         }
     }
 
-    public void refreshList(){
-        LinearLayout linearLayout=findViewById(R.id.scrllinearMain);
+    //TODO robustness for shopping list sync
+    public void searchForNextOutOfDate() {
+        List<String> expiries = db.getAllExpiryDates();
+        int soonest = 31;
+
+        for (int i = 0; i < db.getNumberOfRows(); i++) {
+
+            if ((expiries.get(i) == null)) {
+                foodNamePriority = db.getFoodName(i);
+                foodCategoryPriority = db.getFoodCategory(i);
+                foodExpiryPriority = "null";
+                foodQuantityPriority = db.getFoodQuantity(i);
+            } else {
+                if (Integer.parseInt(expiries.get(i).split("/")[0]) < soonest) {
+                    soonest = Integer.parseInt(expiries.get(i).split("/")[0]);
+                    foodNamePriority = db.getFoodName(i);
+                    foodCategoryPriority = db.getFoodCategory(i);
+                    foodExpiryPriority = db.getFoodExpiryDate(i);
+                    foodQuantityPriority = db.getFoodQuantity(i);
+                }
+            }
+        }
+    }
+
+
+    public void refreshList() {
+        LinearLayout linearLayout = findViewById(R.id.scrllinearMain);
         linearLayout.removeAllViews();
         showDBList();
     }
 
-    public void removeFromDB(String toRemove){
+    public void removeFromDB(String toRemove) {
         int i = db.deleteRowDataFromName(toRemove);
-        if(i < 0){
+        if (i < 0) {
             showMessage("Could not find item in your ingredients");
-        }else{
+        } else {
             db.deleteRowData(i);
         }
     }
 
 
-    public void showDBList(){
-        LinearLayout linearLayout=findViewById(R.id.scrllinearMain);
+    public void showDBList() {
+        LinearLayout linearLayout = findViewById(R.id.scrllinearMain);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         //-------
 
         //-------
         Log.d("Database", String.valueOf(db.getNumberOfRows()));
-        for(int i = 1; i<db.getNumberOfRows(); i++){
+        for (int i = 1; i < db.getNumberOfRows(); i++) {
             Log.d("Items", db.getFoodName(i));
         }
 
@@ -153,6 +188,7 @@ public class MainActivity extends AppCompatActivity
             scrollingText2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             imageView = new ImageView(this);
+
 
             // add the dynamically created views
             linearLayout.addView(scrollingText1, lp);
@@ -189,7 +225,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, Settings.class));
             return true;
         }
-        if(id == R.id.app_update){
+        if (id == R.id.app_update) {
             startActivity(new Intent(MainActivity.this, EditPopup.class));
             return true;
         }
@@ -207,15 +243,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_shopping_list) {
             startActivity(new Intent(this, ShoppingListView.class));
         } else if (id == R.id.nav_api_test) {
-            startActivity(new Intent(this, APILink.class));
-        } else if (id == R.id.nav_manage) {
-
+            Intent intent = new Intent(this, APILink.class);
+            intent.putExtra("foodName", foodNamePriority);
+            startActivity(intent);
         } else if (id == R.id.nav_sync) {
             new SyncData(this).doSyncing();
             refreshList();
             showMessage("Items from your shopping list have been added to your fridge");
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -229,8 +263,11 @@ public class MainActivity extends AppCompatActivity
         t.show();
     }
 
-    private int calculateColourFromDate (int foodID){
+    private int calculateColourFromDate(int foodID) {
         String foodDateString = db.getFoodExpiryDate(foodID);
+        if (db.getFoodExpiryDate(foodID) == null) {
+            return Color.TRANSPARENT;
+        }
         try {
             Date foodDate = new SimpleDateFormat("dd/MM/yyyy").parse(foodDateString);
             Date today = new Date();
@@ -240,11 +277,11 @@ public class MainActivity extends AppCompatActivity
             Log.d("date Colour", today.toString());
             Log.d("date Colour", Long.toString(daysToExpiry));
 
-            if(daysToExpiry > 3){
+            if (daysToExpiry > 3) {
                 return Color.GREEN;
             }
 
-            if (daysToExpiry > 0){
+            if (daysToExpiry > 0) {
                 return Color.YELLOW;
             }
 
@@ -254,5 +291,27 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    
+    public void setAlarmForFood() {
+        Intent alertIntent = new Intent(this, AlertReceiver.class);
+        alertIntent.putExtra("name", foodNamePriority);
+        alertIntent.putExtra("quantity", foodQuantityPriority);
+        alertIntent.putExtra("expiryDate", foodExpiryPriority);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, alertIntent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Money Manager Notification";
+            String description = "Channel to send notifications from Money Manager";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }
