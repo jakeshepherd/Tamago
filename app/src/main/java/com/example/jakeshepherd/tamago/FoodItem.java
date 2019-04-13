@@ -6,14 +6,6 @@ public class FoodItem implements Serializable {
     private String foodName, expiryDate, foodCategory;
     private int foodQuantity;
 
-    /* public foodItem(String newFoodName, String newExpiryDate, String newFoodCategory){
-        foodName = newFoodName;
-        foodCategory = newFoodCategory;
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        expiryDate = LocalDate.parse(newExpiryDate, formatter);
-    } */
-
     FoodItem(String newFoodName, int newQuantity){
         foodName = newFoodName;
         foodQuantity = newQuantity;

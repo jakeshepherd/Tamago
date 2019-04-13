@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity
     int foodQuantityPriority;
 
     Database db = new Database(this);
-    Calendar myCal = Calendar.getInstance();
 
 
     @Override
@@ -74,13 +73,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         createNotificationChannel();
-
         searchForNextOutOfDate();
-
-        setAlarmForFood(new FoodItem(foodNamePriority, foodCategoryPriority , foodQuantityPriority, foodExpiryPriority));
-
-
-
+        setAlarmForFood();
         setOnClickListeners();
         showDBList();
     }
@@ -120,21 +114,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     //TODO robustness for shopping list sync
-    public void searchForNextOutOfDate(){
+    public void searchForNextOutOfDate() {
         List<String> expiries = db.getAllExpiryDates();
         int soonest = 31;
 
-        for(int i = 0; i<db.getNumberOfRows(); i++){
+        for (int i = 0; i < db.getNumberOfRows(); i++) {
 
-//            if ((expiries.get(i) == null){
-//
-//            }
-            if(Integer.parseInt(expiries.get(i).split("/")[0]) < soonest){
-                soonest = Integer.parseInt(expiries.get(i).split("/")[0]);
+            if ((expiries.get(i) == null)) {
                 foodNamePriority = db.getFoodName(i);
                 foodCategoryPriority = db.getFoodCategory(i);
-                foodExpiryPriority = db.getFoodExpiryDate(i);
+                foodExpiryPriority = "null";
                 foodQuantityPriority = db.getFoodQuantity(i);
+            } else {
+                if (Integer.parseInt(expiries.get(i).split("/")[0]) < soonest) {
+                    soonest = Integer.parseInt(expiries.get(i).split("/")[0]);
+                    foodNamePriority = db.getFoodName(i);
+                    foodCategoryPriority = db.getFoodCategory(i);
+                    foodExpiryPriority = db.getFoodExpiryDate(i);
+                    foodQuantityPriority = db.getFoodQuantity(i);
+                }
             }
         }
     }
@@ -293,7 +291,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void setAlarmForFood(FoodItem foodItem) {
+    public void setAlarmForFood() {
         Intent alertIntent = new Intent(this, AlertReceiver.class);
         alertIntent.putExtra("name", foodNamePriority);
         alertIntent.putExtra("quantity", foodQuantityPriority);

@@ -35,17 +35,12 @@ public class ManualEntry extends AppCompatActivity {
     String date;
     int alertDay, alertMonth, alertYear;
 
-
-    private static String CHANNEL_ID = "default";
-
     boolean dateValid = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manualentrylayout);
-
-
 
         calenderSetter = findViewById(R.id.calender);
         setupOnClickListeners(this);
@@ -91,11 +86,6 @@ public class ManualEntry extends AppCompatActivity {
                                 Integer.parseInt(String.valueOf(quantityText.getText())), date));
                         Log.d("DB Insert", date);
 
-                        //setAlarm(String.valueOf(foodNameText.getText()), Integer.parseInt(String.valueOf(quantityText.getText())), date);
-
-
-                        //createNotification(context, "Tamago", "Your " + String.valueOf(foodNameText.getText()) + " goes out of date on: " +date);
-
                         startActivity(new Intent(ManualEntry.this, MainActivity.class));
                     }
                 }
@@ -121,21 +111,12 @@ public class ManualEntry extends AppCompatActivity {
                 alertMonth = month+1;
                 alertYear = year;
 
-                //todo add the is expired thing
                 calenderSetter.setText(date);
                 dateValid = true;
             }
         }, calender.get(Calendar.YEAR), calender.get(Calendar.MONTH), calender.get(Calendar.DAY_OF_MONTH));
 
         dpd.show();
-    }
-
-
-
-    private void showMessage(String msg) {
-        Context c = getApplicationContext();
-        Toast t = Toast.makeText(c, msg, Toast.LENGTH_SHORT);
-        t.show();
     }
 }
 

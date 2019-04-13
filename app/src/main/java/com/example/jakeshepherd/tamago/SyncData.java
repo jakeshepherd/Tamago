@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 //TODO -- doesnt sync properly when you have equal amounts of items
-// this is quite buggy
+
 public class SyncData{
     Database db;
     SyncData(Context context){
